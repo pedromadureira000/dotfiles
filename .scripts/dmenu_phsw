@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -e 'first\nsecond\nthird' | dmenu -h 25 -fn "sans-10:normal"

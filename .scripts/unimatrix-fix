@@ -1,0 +1,4 @@
+#!/bin/bash
+COLUMNS=
+LINES=
+(alacritty --class unimatrix -e unimatrix $@ & ) > /dev/null 2>&1

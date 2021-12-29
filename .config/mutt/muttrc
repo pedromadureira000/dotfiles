@@ -1,0 +1,8 @@
+# =================================== Mutt Wizard
+
+source /usr/share/mutt-wizard/mutt-wizard.muttrc
+
+source /home/phsw/.config/mutt/accounts/1-contato@phsolucoesweb.com.br.muttrc
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/phsw/.config/mutt/accounts/1-contato@phsolucoesweb.com.br.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to contato@phsolucoesweb.com.br"
+macro index,pager i2 '<sync-mailbox><enter-command>source /home/phsw/.config/mutt/accounts/2-dev@phsolucoesweb.com.br.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to dev@phsolucoesweb.com.br"
+macro index,pager i3 '<sync-mailbox><enter-command>source /home/phsw/.config/mutt/accounts/3-contas@phsolucoesweb.com.br.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to contas@phsolucoesweb.com.br"
