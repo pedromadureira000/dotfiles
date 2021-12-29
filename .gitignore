@@ -1,0 +1,33 @@
+# Ignore everything
+*
+
+# Except for:
+!.config/alacritty/alacritty.yml
+!.config/mutt/*
+!.config/nitrogen/*
+!.config/nvim/UltiSnips/*
+!.config/nvim/coc-settings.json
+!.config/nvim/coc.nvimrc
+!.config/nvim/fzf.nvimrc
+!.config/nvim/init.vim
+!.config/qtile/icons/*
+!.config/qtile/icons/config.py
+!.config/ranger/colorschemes/rooks.py
+!.config/ranger/commands.py
+!.config/ranger/rc.conf
+!.config/zathura/zathurarc
+!.gnupg/gpg.conf
+!.gnupg/gpg-agent.conf
+!.scripts/*
+
+!.gitignore
+!.bashrc
+!.gitignore_global
+!.xinitrc
+!.Xmodmap
+
+# ...even if they are in subdirectories
+
+# if the files to be tracked are in subdirectories
+#!*/a/b/file1.txt
+#!*/a/b/c/*

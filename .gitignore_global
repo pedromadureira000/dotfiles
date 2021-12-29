@@ -1,0 +1,6 @@
+#pycharm files
+.idea/
+*.sqlite3
+
+#binarios
+bin/
