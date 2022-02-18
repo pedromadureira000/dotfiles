@@ -74,8 +74,8 @@ set tabstop=2
 set expandtab
 " save text folding
 autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
-
+" autocmd BufWinEnter *.* silent loadview
+autocmd BufWinEnter *.* silent! loadview
 "------------------------------/theme/-------------------------
 "--/truecolor configs
 if (has('nvim'))
@@ -167,14 +167,26 @@ let g:Hexokinase_ftAutoload = ['css', 'less']
 "
 " ---------------------------/Vimwiki
 set nocompatible
-let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
+" let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
 
+" hi VimwikiHeader1 guifg=#00a7b5
+hi VimwikiHeader1 guifg=#ea8e2e
+hi VimwikiHeader2 guifg=#f0c53f
+hi VimwikiHeader3 guifg=#fce5cd
+" :hi VimwikiHeader4 guifg=#FF00FF
+" :hi VimwikiHeader5 guifg=#00FFFF
+" :hi VimwikiHeader6 guifg=#FFFF00
 " let g:vimwiki_list = [{'path': '~/my_site/', 'path_html': '~/public_html/', 'syntax': 'markdown', 'ext': '.md}]
 
+
 "----------------------/Remaps/----------------------------
-"ex mode is useless
+" map <leader>z q
+map z @
 map Q :q! <Cr>
 map q :q <Cr>
+nnoremap Z q
+" nnoremap <leader>q :q <Cr>
+" nnoremap <leader>Q :q! <Cr>
 
 "Case insensitive search
 nnoremap <leader>/ /\c
@@ -193,14 +205,15 @@ cnoremap <C-B> <Left>
 
 " nnoremap H B
 " nnoremap L W
+nnoremap c "_c
+xnoremap c "_c
 nnoremap <leader>d "_d
 xnoremap <leader>d "_d
 nnoremap <leader>D "_D
+xnoremap <leader>D "_D
 nnoremap <leader>o :NERDTreeToggle <Cr>
 " nnoremap <leader>w :w! <Cr>
 map s :w! <Cr>
-" nnoremap <leader>q :q <Cr>
-" nnoremap <leader>Q :q! <Cr>
 nnoremap <leader>n :bnext<esc>
 nnoremap <leader>p :bprevious<esc>
 nnoremap <leader>x :bd<esc>
@@ -219,7 +232,10 @@ inoremap <C-k> <C-p>
 map <F12> :PlugInstall <CR>
 map <F1> :! firefox "%"<CR>
 map <F2> :! mng runserver<CR>
-map <F6> :setlocal spell! spelllang=en_us<CR>
+map fl :setlocal spell! spelllang=en_us<CR>
+nnoremap fw z=
+xnoremap fw z=
+
 " grant sudo permissions and save
 " map <F3> :w !sudo tee %
 

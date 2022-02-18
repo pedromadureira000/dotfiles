@@ -32,6 +32,7 @@ alias vim='nvim'
 alias ranger='ranger-fix'
 alias unimatrix='unimatrix-fix'
 alias la='ls -A'
+alias du='du -h --max-depth=1'
 alias grep='grep --color=auto'
 alias ..='cd ..'
 

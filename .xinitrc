@@ -5,7 +5,7 @@ if [ -x /usr/bin/gpg-agent ]; then
 	eval "$(/usr/bin/gpg-agent --daemon)"
 fi
 
-ExecStartPre=/usr/bin/sleep 1
+ExecStartPre=/usr/bin/sleep 5
 
 #---pam-gnupg END
 

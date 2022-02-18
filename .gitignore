@@ -11,15 +11,14 @@
 !.config/nvim/fzf.nvimrc
 !.config/nvim/init.vim
 !.config/qtile/icons/*
-!.config/qtile/icons/config.py
+!.config/qtile/config.py
 !.config/ranger/colorschemes/rooks.py
 !.config/ranger/commands.py
 !.config/ranger/rc.conf
 !.config/zathura/zathurarc
 !.gnupg/gpg.conf
 !.gnupg/gpg-agent.conf
-#!.scripts/*
-!.scripts/dmenu_phsw
+!.scripts/*
 
 !.gitignore
 !.bashrc
