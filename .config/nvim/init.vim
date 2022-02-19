@@ -233,6 +233,7 @@ map <F12> :PlugInstall <CR>
 map <F1> :! firefox "%"<CR>
 map <F2> :! mng runserver<CR>
 map fl :setlocal spell! spelllang=en_us<CR>
+map fL :setlocal spell! spelllang=pt<CR>
 nnoremap fw z=
 xnoremap fw z=
 
