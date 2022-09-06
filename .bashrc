@@ -26,7 +26,7 @@ export PIPENV_VENV_IN_PROJECT=1
 # pipenv read pyenv python version
 export PIPENV_PYTHON="/home/phsw/.pyenv/shims/python"
 
-# mng alias
+# Aliases
 alias mng='python $VIRTUAL_ENV/../manage.py'
 alias vim='nvim'
 alias ranger='ranger-fix'
@@ -35,6 +35,12 @@ alias la='ls -A'
 alias du='du -h --max-depth=1'
 alias grep='grep --color=auto'
 alias ..='cd ..'
+alias gc='git commit -m'
+alias gp='git push'
+alias ga='git add'
+alias gs='git status'
+alias gd='git diff'
+alias gl='git log --graph --abbrev-commit --all'
 
 # set default programs
 export PATH=$PATH:$HOME/.scripts
