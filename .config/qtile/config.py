@@ -107,7 +107,8 @@ keys = [
             #  dmenu_command="dmenu"
             #  dmenu_lines=42
         #  ))),
-    Key([mod, "control"], "d", lazy.spawn("dmenu_phsw")),
+    Key([mod, "control"], "d", lazy.spawn("discord")),
+    Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -h 25 -fn 'sans-10'")),
     Key([mod, "control"], "9", lazy.spawn("sudo killall wpa_supplicant")),
     Key([mod, "control"], "8", lazy.spawn("sudo systemctl start wpa_supplicant@wlp0s20f3.service")),
@@ -117,11 +118,12 @@ keys = [
     Key([mod], "1", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.8")),
     Key([mod], "2", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.7")),
     Key([mod], "3", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.6")),
+    Key([mod], "4", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.4")),
     # Documents
     #  Key([mod], "t", lazy.spawn(terminal + " -e nvim /home/phsw/Documents/ideals/todo")),  <--- old vim command
-    Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/vimwiki/Todo.wiki"))),
-    Key([mod], "n", lazy.spawn(fix_cli_app("nvim /tmp/newfile"))),
-    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/vimwiki/index.wiki"))),
+    Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
+    Key([mod], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/draft.md"))),
+    #  Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/vimwiki/index.wiki"))),
     # configs
     Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app("sudo nvim /home/phsw/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/qtile/config.py"))),
@@ -202,7 +204,7 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.Systray(),
+                #  widget.Systray(),
 
                 widget.Prompt(),
 
@@ -210,8 +212,8 @@ screens = [
                     sub_folders=[{'label': 'Inbox', 'path': 'INBOX'}],
                     #  sub_folders=[{'label': 'Home mail', 'path': 'INBOX'}, {'label': 'Home junk', 'path': 'spam'}],
                     hide_when_empty=True,
-                    update_interval=10
-                    ),
+                    update_interval=30
+                ),
 
                 widget.Sep(
                        linewidth = 0,

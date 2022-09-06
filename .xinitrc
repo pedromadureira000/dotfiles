@@ -1,11 +1,11 @@
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 #----pam-gnupg 
-if [ -x /usr/bin/gpg-agent ]; then
-	eval "$(/usr/bin/gpg-agent --daemon)"
-fi
+# if [ -x /usr/bin/gpg-agent ]; then
+	# eval "$(/usr/bin/gpg-agent --daemon)"
+# fi
 
-ExecStartPre=/usr/bin/sleep 5
+# ExecStartPre=/usr/bin/sleep 5
 
 #---pam-gnupg END
 
