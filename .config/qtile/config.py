@@ -252,7 +252,7 @@ screens = [
                        padding = 0,
                        fontsize = 22
                        ),
-                widget.Battery(format='{percent:2.0%}', foreground='#ffffff'),
+                widget.Battery(format='{percent:2.0%}', foreground='#ffffff', low_percentage=0.15),
 
                 widget.TextBox(text = '  |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
 

@@ -1,7 +1,6 @@
 call plug#begin()
 
 "----------/theme
-Plug 'kaicataldo/material.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -35,9 +34,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 "Plug 'tpope/vim-fugitive'
 
-" ----------/Text Edit
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-
 call plug#end()
 "---------------------/configs/----------------------------
 let mapleader="\<space>"
@@ -68,19 +64,16 @@ autocmd BufWinEnter *.* silent! loadview
 "------------------------------/theme/-------------------------
 "--/truecolor configs
 if (has('nvim'))
-	let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 if (has('termguicolors'))
-	set termguicolors
+  set termguicolors
 endif
 
 "--/syntax highlighting
 syntax on
-" set background=dark
-
-" let g:material_theme_style = 'ocean-community'
-let g:material_theme_style = 'ocean'
-colorscheme material
+let g:material_theme_style = 'my_own_theme'
+colorscheme my_color_scheme
 
 "--/vim airline theme
 let g:airline_theme='behelit'
