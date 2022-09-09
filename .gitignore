@@ -11,6 +11,7 @@
 !.config/nvim/fzf.nvimrc
 !.config/nvim/init.vim
 !.config/nvim/colors/*
+!.config/nvim/after/syntax/markdown.vim 
 !.config/qtile/icons/*
 !.config/qtile/config.py
 !.config/ranger/colorschemes/rooks.py
