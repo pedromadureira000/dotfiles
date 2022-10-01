@@ -119,7 +119,8 @@ keys = [
     Key([mod], "1", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.8")),
     Key([mod], "2", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.7")),
     Key([mod], "3", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.6")),
-    Key([mod], "4", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.4")),
+    Key([mod], "4", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.5")),
+    Key([mod], "5", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.4")),
     # Documents
     #  Key([mod], "t", lazy.spawn(terminal + " -e nvim /home/phsw/Documents/ideals/todo")),  <--- old vim command
     Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
