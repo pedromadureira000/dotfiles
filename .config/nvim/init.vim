@@ -6,7 +6,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 "----------/Icons
 Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" XXX https://github.com/tiagofumo/vim-nerdtree-syntax-highlight/issues/53
 
 "----------/Syntex highlight
 Plug 'Yggdroot/indentLine'
