@@ -22,7 +22,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
 
 "----------/code completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}  XXX The versions above
+" v0.0.81 is overwriting  <TAB> completion. 
+Plug 'neoclide/coc.nvim', {'tag': 'v0.0.81'}
 
 "----------/Commenter
 Plug 'scrooloose/nerdcommenter'
@@ -83,7 +85,7 @@ let g:airline#extensions#whitespace#enabled = 0
 "--/dev icons
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
-set encoding=UTF-8
+" set encoding=UTF-8 XXX this is useless
 
 "--/Font
 set guifont=RobotoMono\ Nerd\ Font\ Mono:h12
