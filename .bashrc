@@ -26,6 +26,8 @@ export PIPENV_VENV_IN_PROJECT=1
 # pipenv read pyenv python version
 export PIPENV_PYTHON="/home/phsw/.pyenv/shims/python"
 
+eval "$(pyenv virtualenv-init -)"
+
 # Aliases
 alias mng='python $VIRTUAL_ENV/../manage.py'
 alias vim='nvim'
