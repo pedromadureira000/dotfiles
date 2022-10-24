@@ -42,7 +42,8 @@ alias gp='git push'
 alias ga='git add'
 alias gs='git status'
 alias gd='git diff'
-alias gl='git log --graph --abbrev-commit --all'
+# alias gl='git log --graph --abbrev-commit --all'  XXX This will get commits for other branches
+alias gl='git log --graph --abbrev-commit'
 alias gb='git branch'
 alias journal='journalctl -e'
 

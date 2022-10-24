@@ -89,8 +89,8 @@ keys = [
         desc="Spawn a command using a prompt widget"),
 
     #------/ SCREENSHOTS
-    Key([], "Print", lazy.spawn("scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures'")),
-    Key([mod], "Print", lazy.spawn("scrot -s  'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures'")),
+    Key([], "Print", lazy.spawn("scrot 'ArchLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures'")),
+    Key([mod], "Print", lazy.spawn("scrot -s  'ArchLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures'")),
 
     #------/ Key apps
     Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
@@ -125,7 +125,7 @@ keys = [
     #  Key([mod], "t", lazy.spawn(terminal + " -e nvim /home/phsw/Documents/ideals/todo")),  <--- old vim command
     Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
     Key([mod], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/draft.md"))),
-    #  Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/vimwiki/index.wiki"))),
+    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/10-22.md"))),
     # configs
     Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app("sudo nvim /home/phsw/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/qtile/config.py"))),

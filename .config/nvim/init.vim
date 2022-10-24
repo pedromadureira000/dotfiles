@@ -64,6 +64,14 @@ set expandtab
 " save text folding
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent! loadview
+
+" --/ Test new configs
+" last status
+" :silent! lua vim.o.ls=0
+" :redraw!
+" command height
+" :silent! lua vim.o.ch=0
+" :redraw!
 "------------------------------/theme/-------------------------
 "--/truecolor configs
 if (has('nvim'))
