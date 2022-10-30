@@ -63,6 +63,3 @@ if [[ "$(tty)" = "/dev/tty1" ]]; then
 	startx
 fi
 
-#pam-gnupg 
-GPG_TTY=$(tty)
-export GPG_TTY
