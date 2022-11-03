@@ -143,10 +143,12 @@ let g:Hexokinase_ftAutoload = ['css', 'less']
 "----------------------/Remaps/----------------------------
 "xnoremap = visual mode
 "nnoremap = normal mode
-map z @
+"run macro
+map r @
 map Q :q! <Cr>
 map q :q <Cr>
-nnoremap Z q
+" Take macro
+nnoremap t q
 
 "Case insensitive search
 nnoremap <leader>/ /\c
