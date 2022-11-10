@@ -141,8 +141,8 @@ let g:Hexokinase_ftAutoload = ['css', 'less']
 
 
 "----------------------/Remaps/----------------------------
-"xnoremap = visual mode
-"nnoremap = normal mode
+"XXX xnoremap = visual mode
+"XXX nnoremap = normal mode
 "run macro
 map r @
 map Q :q! <Cr>
@@ -182,13 +182,15 @@ nnoremap <leader>ls :CocList snippets <cr>
 nnoremap <leader>m za
 
 " ---/ Actions
-map <F12> :PlugInstall <CR>
-map <F1> :! firefox "%"<CR>
-map <F2> :! mng runserver<CR>
+" map <F12> :PlugInstall <CR>
+" map <F1> :! firefox "%"<CR>
+" map <F2> :! mng runserver<CR>
 map fl :setlocal spell! spelllang=en_us<CR>
 map fL :setlocal spell! spelllang=pt<CR>
 nnoremap fw z=
 xnoremap fw z=
+"json-pretty-print with jq https://archlinux.org/packages/community/x86_64/jq/
+xnoremap fj %!jq<CR>
 
 " ---/Examples (M => alt)
 " nnoremap <M-Right> :bn<cr>
