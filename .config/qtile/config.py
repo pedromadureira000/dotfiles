@@ -125,7 +125,7 @@ keys = [
     #  Key([mod], "t", lazy.spawn(terminal + " -e nvim /home/phsw/Documents/ideals/todo")),  <--- old vim command
     Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
     Key([mod], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/draft.md"))),
-    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/10-22.md"))),
+    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/11.md"))),
     # configs
     Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app("sudo nvim /home/phsw/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/qtile/config.py"))),
