@@ -1,7 +1,0 @@
-{
-  "suggest.enablePreview": true,
-  "vetur.trace.server": "verbose",
-  "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
-	"prettier.printWidth": 130
-}

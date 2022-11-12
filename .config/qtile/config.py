@@ -95,21 +95,9 @@ keys = [
     #------/ Key apps
     Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
     Key([mod, "control"], "a", lazy.spawn(terminal + " -e alsamixer")),
-    Key([mod], "b", lazy.spawn("brave")),
-    #  Key([mod], "e", lazy.spawn(fix_cli_app("neomutt"))),
+    Key([mod], "b", lazy.spawn("brave-browser-nightly")),
     Key([mod], "e", lazy.spawn("thunderbird")),
-    Key([mod], "m", lazy.spawn(terminal + " -e mocp")),
 
-    #-----/ Scripts
-    #  Key([mod, "control"], "d", lazy.run_extension(extension.DmenuRun(
-            #  dmenu_prompt="$",
-            #  dmenu_bottom=False,
-            #  command='echo -e "first second third"',
-            #  dmenu_command="dmenu"
-            #  dmenu_lines=42
-        #  ))),
-    Key([mod, "control"], "d", lazy.spawn("discord")),
-    Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -h 25 -fn 'sans-10'")),
     Key([mod, "control"], "9", lazy.spawn("sudo killall wpa_supplicant")),
     Key([mod, "control"], "8", lazy.spawn("sudo systemctl start wpa_supplicant@wlp0s20f3.service")),
@@ -184,7 +172,6 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        #  bottom=bar.Bar(
         top=bar.Bar(
             [
                 widget.Sep(
@@ -224,11 +211,6 @@ screens = [
                        background = '#000000'
                        ),
 
-                widget.Image(
-                   filename = "~/.config/qtile/icons/music.png",
-                   mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + " -e mocp")}
-                ), 
-
                 widget.TextBox(text = '   |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
 
                 widget.Image(
@@ -236,24 +218,12 @@ screens = [
                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("alacritty -e alsamixer")}
                 ),
 
-                widget.TextBox(text = '   | ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
-
                 widget.Sep(
                        linewidth = 0,
                        padding = 8,
                        foreground = '#ffffff',
                        background = '#000000'
                        ),
-
-                widget.TextBox(
-                       text = '⚡  ',
-                       #  text = '⌛',
-                       #  background = "#282c34",
-                       foreground = '#ffffff',
-                       padding = 0,
-                       fontsize = 22
-                       ),
-                widget.Battery(format='{percent:2.0%}', foreground='#ffffff', low_percentage=0.15),
 
                 widget.TextBox(text = '  |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
 

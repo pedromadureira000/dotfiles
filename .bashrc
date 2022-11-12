@@ -31,7 +31,6 @@ eval "$(pyenv virtualenv-init -)"
 # Aliases
 alias mng='python $VIRTUAL_ENV/../manage.py'
 alias vim='nvim'
-alias ranger='ranger-fix'
 alias unimatrix='unimatrix-fix'
 alias la='ls -A'
 alias du='du -h --max-depth=1'
@@ -51,7 +50,7 @@ alias journal='journalctl -e'
 export PATH=$PATH:$HOME/.scripts
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=brave
+export BROWSER=brave-browser-nightly
 export TERM=alacritty
 
 
