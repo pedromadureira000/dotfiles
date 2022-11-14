@@ -96,7 +96,6 @@ keys = [
     Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
     Key([mod, "control"], "a", lazy.spawn(terminal + " -e alsamixer")),
     Key([mod], "b", lazy.spawn("brave")),
-    #  Key([mod], "e", lazy.spawn(fix_cli_app("neomutt"))),
     Key([mod], "e", lazy.spawn("thunderbird")),
     Key([mod], "m", lazy.spawn(terminal + " -e mocp")),
 
