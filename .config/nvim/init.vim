@@ -43,6 +43,7 @@ let mapleader="\<space>"
 set number
 set inccommand=split
 set clipboard=unnamedplus
+set nofixendofline
 
 " TextEdit might fail if hidden is not set.
 set hidden
