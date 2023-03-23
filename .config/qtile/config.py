@@ -26,11 +26,12 @@
 
 from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget, extension
+from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import qtile
+from datetime import datetime
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -100,13 +101,6 @@ keys = [
     Key([mod], "m", lazy.spawn(terminal + " -e mocp")),
 
     #-----/ Scripts
-    #  Key([mod, "control"], "d", lazy.run_extension(extension.DmenuRun(
-            #  dmenu_prompt="$",
-            #  dmenu_bottom=False,
-            #  command='echo -e "first second third"',
-            #  dmenu_command="dmenu"
-            #  dmenu_lines=42
-        #  ))),
     Key([mod, "control"], "d", lazy.spawn("discord")),
     Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -h 25 -fn 'sans-10'")),
@@ -115,16 +109,16 @@ keys = [
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
     Key([mod, "lock"], "Escape", lazy.spawn("reboot")),
     Key([mod, "control"], "Escape", lazy.spawn("xlock -delay 10000 -mode random")),
-    Key([mod], "1", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.8")),
-    Key([mod], "2", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.7")),
-    Key([mod], "3", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.6")),
-    Key([mod], "4", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.5")),
-    Key([mod], "5", lazy.spawn("sudo xrandr --output eDP1  --brightness 0.4")),
+    Key([mod], "1", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.8")),
+    Key([mod], "2", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.7")),
+    Key([mod], "3", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.6")),
+    Key([mod], "4", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.5")),
+    Key([mod], "5", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.4")),
     # Documents
-    #  Key([mod], "t", lazy.spawn(terminal + " -e nvim /home/phsw/Documents/ideals/todo")),  <--- old vim command
     Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
     Key([mod], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/draft.md"))),
-    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/23/01.md"))),
+    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/" + 
+                                           str(datetime.today().strftime('/%d/%m')) + ".md"))),
     # configs
     Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app("sudo nvim /home/phsw/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/qtile/config.py"))),

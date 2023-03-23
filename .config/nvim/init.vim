@@ -35,6 +35,7 @@ Plug 'jiangmiao/auto-pairs'
 "----------/git
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+Plug 'github/copilot.vim'
 "Plug 'tpope/vim-fugitive'
 
 call plug#end()
@@ -138,7 +139,9 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " ---------------------------/Hexodinase (colors)
 let g:Hexokinase_ftAutoload = ['css', 'less']
 
-" ---------------------------/Markdown
+" ---------------------------/Github Copilot
+let b:copilot_enabled = 1
+autocmd FileType markdown let g:copilot_enabled = 0
 
 
 "----------------------/Remaps/----------------------------
