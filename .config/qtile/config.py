@@ -118,7 +118,7 @@ keys = [
     Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
     Key([mod], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/draft.md"))),
     Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/" + 
-                                           str(datetime.today().strftime('/%d/%m')) + ".md"))),
+                                           str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
     Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app("sudo nvim /home/phsw/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/qtile/config.py"))),
