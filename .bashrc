@@ -54,7 +54,7 @@ alias journal='journalctl -e'
 export PATH=$PATH:$HOME/.scripts
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=brave
+export BROWSER=brave-nightly
 export TERM=alacritty
 
 
