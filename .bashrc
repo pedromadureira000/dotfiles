@@ -49,6 +49,7 @@ alias gd='git diff'
 alias gl='git log --graph --abbrev-commit'
 alias gb='git branch'
 alias journal='journalctl -e'
+alias used_space='sudo du -h --max-depth=1 | sort -h'
 
 # set default programs
 export PATH=$PATH:$HOME/.scripts
