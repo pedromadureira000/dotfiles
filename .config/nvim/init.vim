@@ -35,7 +35,7 @@ Plug 'jiangmiao/auto-pairs'
 "----------/git
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 "Plug 'tpope/vim-fugitive'
 
 call plug#end()

@@ -97,6 +97,7 @@ keys = [
     Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
     Key([mod, "control"], "a", lazy.spawn(terminal + " -e alsamixer")),
     Key([mod], "b", lazy.spawn("brave-nightly")),
+    Key([mod], "g", lazy.spawn("google-chrome-stable https://translate.google.com/?sl=en&tl=pt&op=translate")),
     Key([mod], "e", lazy.spawn("thunderbird")),
     Key([mod], "m", lazy.spawn(terminal + " -e mocp")),
 
