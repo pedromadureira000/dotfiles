@@ -110,7 +110,8 @@ filetype plugin on
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCustomDelimiters = { 'vue': { 'left': '/**','right': '*/', 'leftAlt': '<!--', 'rightAlt': '-->' },
-			\'': { 'left': '---/','right': '', 'leftAlt': '========================/', 'rightAlt': '/======================' } 
+			\'': { 'left': '---/','right': '', 'leftAlt': '========================/', 'rightAlt': '/======================' },
+      \'dart': { 'left': '//','right': '', 'leftAlt': '//', 'rightAlt': '' }
 	\}
 
 "OBS: i have commented all CreateMaps commands in /home/phsw/.config/nvim/plugged/nerdcommenter/plugin/nerdcommenter.vim from line 81 to 100, with exeption of:  

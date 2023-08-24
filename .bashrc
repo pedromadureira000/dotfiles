@@ -59,6 +59,8 @@ export VISUAL=nvim
 export BROWSER=brave-nightly
 export TERM=alacritty
 
+# For check 'flutter doctor' boxe
+export CHROME_EXECUTABLE=google-chrome-stable
 
 # fzf completion and keybindings
 source /usr/share/fzf/completion.bash
