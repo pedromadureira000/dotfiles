@@ -2,6 +2,11 @@ require("me.remap")
 require("me.plugins")
 require("me.sets")
 require("me.fzf")
+--require("me.my_color_scheme")
+
+---Color scheme
+vim.g.material_theme_style = 'my_own_theme'
+vim.cmd [[colorscheme my_color_scheme]]
 
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -41,3 +46,6 @@ autocmd("BufEnter", {
         })
     end,
 })
+
+-- Colorscheme
+--vim.cmd('source colors/my_color_scheme.vim')
