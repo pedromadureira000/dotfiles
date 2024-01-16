@@ -61,6 +61,7 @@ export TERM=alacritty
 
 # For check 'flutter doctor' boxe
 export CHROME_EXECUTABLE=google-chrome-stable
+# export CHROME_EXECUTABLE=brave-nightly
 
 # fzf completion and keybindings
 source /usr/share/fzf/completion.bash
