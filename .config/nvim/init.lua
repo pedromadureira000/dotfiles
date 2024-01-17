@@ -2,6 +2,7 @@ require("me.remap")
 require("me.plugins")
 require("me.sets")
 require("me.fzf")
+require("me.completions")
 --require("me.my_color_scheme")
 
 ---Color scheme

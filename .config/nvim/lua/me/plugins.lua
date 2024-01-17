@@ -40,10 +40,9 @@ local plugins = {
   {'hrsh7th/cmp-nvim-lsp'},
   {'hrsh7th/nvim-cmp'},
   'jiangmiao/auto-pairs',
-  -- Snippets engine
-  {'L3MON4D3/LuaSnip'},
-	-- snippets
-	--"rafamadriz/friendly-snippets",
+  -- Snippets
+  {'L3MON4D3/LuaSnip', dependencies = {"rafamadriz/friendly-snippets"}},
+  "saadparwaiz1/cmp_luasnip",
   -- dart
     -- Language support, mainly for indentation because it's more stable than treesitter
   "dart-lang/dart-vim-plugin",

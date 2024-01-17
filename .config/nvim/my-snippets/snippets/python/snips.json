@@ -1,0 +1,7 @@
+{
+    "print": {
+        "prefix": "print",
+        "body": "print('========================> snippet: ',${0:snippet} )",
+        "description": "python print"
+    }
+}

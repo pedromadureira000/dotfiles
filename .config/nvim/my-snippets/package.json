@@ -1,0 +1,29 @@
+{
+    "name": "my-snippets",
+    "engines": {
+        "vscode": "^1.11.0"
+    },
+    "contributes": {
+        "snippets": [
+            {
+                "language": [
+                    "plaintext",
+                    "markdown",
+                    "tex",
+                    "html",
+                    "global",
+                    "all"
+                ],
+                "path": "./snippets/global.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/python/snips.json"
+            },
+            {
+                "language": ["javascript", "vue", "typescript"],
+                "path": "./snippets/javascript/snips.json"
+            }
+        ]
+    }
+}

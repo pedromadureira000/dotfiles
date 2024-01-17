@@ -1,0 +1,13 @@
+{
+    "slashes 1": {
+        "prefix": "----",
+        "body": "---------------------------/${1:name}",
+        "description": "many slashes"
+    },
+    "slashes 2": {
+        "prefix": "----",
+        "body": "------------------------/${1:name}/---------------------$0",
+        "description": "many slashes 2"
+    }
+}
+
