@@ -21,28 +21,34 @@ local plugins = {
     'nvim-telescope/telescope.nvim', tag = '0.1.5',
     dependencies = { {'nvim-lua/plenary.nvim'} }
   },
+  'preservim/nerdtree',
+  'airblade/vim-rooter',  --Changes Vim working directory to project root. (necessary for nerdtree to work)
   --git
   'airblade/vim-gitgutter',
   -- UI
   {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  'vim-airline/vim-airline',
+  'vim-airline/vim-airline-themes',
+     -- vim airline theme
   -- LSP
   {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
   {'neovim/nvim-lspconfig'},
 	-- Simpler installation of LSP servers
   {'williamboman/mason.nvim'},
   {'williamboman/mason-lspconfig.nvim'},
-    -- Autocompletion
+  -- Autocompletion
   {'hrsh7th/cmp-nvim-lsp'},
   {'hrsh7th/nvim-cmp'},
-	-- Snippets engine
+  'jiangmiao/auto-pairs',
+  -- Snippets engine
   {'L3MON4D3/LuaSnip'},
 	-- snippets
 	--"rafamadriz/friendly-snippets",
   -- dart
     -- Language support, mainly for indentation because it's more stable than treesitter
   "dart-lang/dart-vim-plugin",
-    -- support for dart hot reload on save
-  "RobertBrunhage/dart-tools.nvim",
+  -- commentary
+  'pedromadureira000/nerdcommenter_with_lazy_fix'
 }
 
 OPTS = {}

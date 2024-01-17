@@ -56,9 +56,9 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 -- trying to make 'gi' work again
 vim.api.nvim_set_keymap('n', 'gi', 'gi', { noremap = true })
-
+-- open NERDTree
+vim.api.nvim_set_keymap('n', '<leader>o', ':NERDTreeToggle<CR>', { noremap = true })
 -------------- example of commands
---vim.api.nvim_set_keymap('n', '<leader>o', ':NERDTreeToggle<CR>', { noremap = true })
 
 ----- run command on file
 --vim.api.nvim_set_keymap('n', '<leader>ec', ':vsplit ~/.config/nvim/init.vim<CR>', { noremap = true })

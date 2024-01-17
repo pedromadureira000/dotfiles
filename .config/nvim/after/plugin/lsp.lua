@@ -57,6 +57,3 @@ lsp_config["dartls"].setup({
 		},
 	},
 })
-
--- Hot reload :)
-require("dart-tools")

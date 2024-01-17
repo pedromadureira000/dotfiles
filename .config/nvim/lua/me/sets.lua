@@ -40,9 +40,29 @@ vim.api.nvim_exec([[
   autocmd BufWinEnter *.* silent! loadview
 ]], false)
 
+
+--------------------- plugins
+--- NERDTree
+vim.g.NERDTreeIgnore = {'^node_modules$'}
+
 -- Github Copilot
 vim.b.copilot_enabled = 0
 vim.api.nvim_exec([[
   autocmd FileType markdown let g:copilot_enabled = 0
 ]], false)
+-- NERDTree settings
+    -- Enable filetype plugins
+--vim.cmd('filetype plugin on')
 
+vim.g.NERDSpaceDelims = 1
+vim.g.NERDDefaultAlign = 'left'
+vim.g.NERDCustomDelimiters = {
+  vue = { left = '/**', right = '*/', leftAlt = '<!--', rightAlt = '-->' },
+  ["'"] = { left = '---/', right = '', leftAlt = '========================/', rightAlt = '/=======================' },
+  dart = { left = '//', right = '', leftAlt = '//', rightAlt = '' }
+}
+-- airline
+  -- Set Airline theme to 'behelit'
+vim.g.airline_theme = 'behelit'
+  -- Disable Airline whitespace extension
+vim.g['airline#extensions#whitespace#enabled'] = 0

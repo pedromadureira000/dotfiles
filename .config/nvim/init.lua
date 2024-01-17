@@ -46,6 +46,3 @@ autocmd("BufEnter", {
         })
     end,
 })
-
--- Colorscheme
---vim.cmd('source colors/my_color_scheme.vim')
