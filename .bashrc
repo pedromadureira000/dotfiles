@@ -50,18 +50,21 @@ alias gl='git log --graph --abbrev-commit'
 alias gb='git branch'
 alias journal='journalctl -e'
 alias used_space='sudo du -h --max-depth=1 | sort -h'
-alias braven='brave-nightly'
+alias free_space='df -a -h /'
 
 # set default programs
 export PATH=$PATH:$HOME/.scripts
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=brave-nightly
+export BROWSER=brave
 export TERM=alacritty
 
 # For check 'flutter doctor' boxe
-export CHROME_EXECUTABLE=google-chrome-stable
-# export CHROME_EXECUTABLE=brave-nightly
+#export CHROME_EXECUTABLE=google-chrome-stable
+export CHROME_EXECUTABLE=brave
+export ANDROID_HOME=$HOME/android-sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 
 # fzf completion and keybindings
 source /usr/share/fzf/completion.bash

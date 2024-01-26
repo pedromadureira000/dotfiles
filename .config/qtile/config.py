@@ -23,6 +23,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import os
 
 from typing import List  # noqa: F401
 
@@ -35,6 +36,7 @@ from datetime import datetime
 
 mod = "mod4"
 terminal = guess_terminal()
+username = os.getlogin()
 
 def fix_cli_app(app):
     '''Quick fix of github.com/qtile/qtile/issues/2167 bug'''
@@ -96,15 +98,12 @@ keys = [
     #------/ Key apps
     Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
     Key([mod, "control"], "a", lazy.spawn(terminal + " -e alsamixer")),
-    Key([mod], "b", lazy.spawn("brave-nightly")),
-    Key([mod], "g", lazy.spawn("google-chrome-stable https://translate.google.com/?sl=en&tl=pt&op=translate")),
-    Key([mod], "e", lazy.spawn("thunderbird")),
-    Key([mod], "m", lazy.spawn(terminal + " -e mocp")),
+    Key([mod], "b", lazy.spawn("brave")),
 
     #-----/ Scripts
     Key([mod, "control"], "d", lazy.spawn("discord")),
     Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
-    Key([mod, "control"], "p", lazy.spawn("passmenu -h 25 -fn 'sans-10'")),
+    Key([mod, "control"], "p", lazy.spawn("passmenu -l 5 -fn 'sans-10'")),
     Key([mod, "control"], "9", lazy.spawn("sudo killall wpa_supplicant")),
     Key([mod, "control"], "8", lazy.spawn("sudo systemctl start wpa_supplicant@wlp0s20f3.service")),
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
@@ -116,15 +115,15 @@ keys = [
     Key([mod], "4", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.6")),
     Key([mod], "5", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.5")),
     # Documents
-    Key([mod], "t", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/Todo.md"))),
-    Key([mod], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/draft.md"))),
-    Key([mod], "w", lazy.spawn(fix_cli_app("nvim /home/phsw/Documents/4-Personal/diary/" + 
+    Key([mod], "t", lazy.spawn(fix_cli_app(f"nvim /home/{username}/Documents/Todo.md"))),
+    Key([mod], "n", lazy.spawn(fix_cli_app(f"nvim /home/{username}/Documents/draft.md"))),
+    Key([mod], "w", lazy.spawn(fix_cli_app(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
-    Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app("sudo nvim /home/phsw/.local/share/qtile/qtile.log"))),
-    Key([mod, "control"], "0", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/qtile/config.py"))),
-    Key([mod, "control"], "n", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/nvim/init.vim"))),
-    Key([mod, "control"], "o", lazy.spawn(fix_cli_app("nvim /home/phsw/.config/ranger/rc.conf"))),
+    Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
+    Key([mod, "control"], "0", lazy.spawn(fix_cli_app(f"nvim /home/{username}/.config/qtile/config.py"))),
+    Key([mod, "control"], "n", lazy.spawn(fix_cli_app(f"nvim /home/{username}/.config/nvim/init.vim"))),
+    Key([mod, "control"], "o", lazy.spawn(fix_cli_app(f"nvim /home/{username}/.config/ranger/rc.conf"))),
 ]
 
 groups = [Group(i) for i in "asdfuiop"]
