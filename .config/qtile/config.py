@@ -38,10 +38,8 @@ mod = "mod4"
 terminal = guess_terminal()
 username = os.getlogin()
 
-def fix_cli_app(app):
-    '''Quick fix of github.com/qtile/qtile/issues/2167 bug'''
-    fix_environment = 'export -n LINES; export -n COLUMNS; sleep 0.01 &&'
-    return f'alacritty -t "{app}" -e sh -c "{fix_environment} {app}"'
+def chosen_terminal(app):
+    return f'kitty {app}'
 
 keys = [
     # Switch between windows
@@ -115,15 +113,15 @@ keys = [
     Key([mod], "4", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.6")),
     Key([mod], "5", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.5")),
     # Documents
-    Key([mod], "t", lazy.spawn(fix_cli_app(f"nvim /home/{username}/Documents/Todo.md"))),
-    Key([mod], "n", lazy.spawn(fix_cli_app(f"nvim /home/{username}/Documents/draft.md"))),
-    Key([mod], "w", lazy.spawn(fix_cli_app(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
+    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/Todo.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/draft.md"))),
+    Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
-    Key([mod, "control","mod1"], "0", lazy.spawn(fix_cli_app(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
-    Key([mod, "control"], "0", lazy.spawn(fix_cli_app(f"nvim /home/{username}/.config/qtile/config.py"))),
-    Key([mod, "control"], "n", lazy.spawn(fix_cli_app(f"nvim /home/{username}/.config/nvim/init.vim"))),
-    Key([mod, "control"], "o", lazy.spawn(fix_cli_app(f"nvim /home/{username}/.config/ranger/rc.conf"))),
+    Key([mod, "control","mod1"], "0", lazy.spawn(chosen_terminal(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
+    Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
+    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/nvim/init.lua"))),
+    Key([mod, "control"], "o", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/ranger/rc.conf"))),
 ]
 
 groups = [Group(i) for i in "asdfuiop"]

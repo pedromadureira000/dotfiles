@@ -40,7 +40,8 @@ vim.api.nvim_exec([[
   autocmd BufWinEnter *.* silent! loadview
 ]], false)
 
-
+-- other configs
+vim.cmd([[set cmdheight=1]])
 --------------------- plugins
 --- NERDTree
 vim.g.NERDTreeIgnore = {'^node_modules$'}

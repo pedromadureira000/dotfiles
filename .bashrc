@@ -48,7 +48,7 @@ alias gd='git diff'
 # alias gl='git log --graph --abbrev-commit --all'  XXX This will get commits for other branches
 alias gl='git log --graph --abbrev-commit'
 alias gb='git branch'
-alias journal='journalctl -e'
+alias journal='sudo journalctl -e'
 alias used_space='sudo du -h --max-depth=1 | sort -h'
 alias free_space='df -a -h /'
 
