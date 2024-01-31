@@ -12,7 +12,7 @@ vim.opt.termguicolors = true -- good colors
 vim.opt.scrolloff = 8 -- minimum number of screen lines to keep above and below the cursor when scrolling vertically
 
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = '80'
+-- vim.opt.colorcolumn = '80'  # XXX not usefull now
 
 
 vim.o.number = true

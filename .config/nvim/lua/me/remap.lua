@@ -48,7 +48,7 @@ vim.api.nvim_set_keymap('n', '<leader>m', 'za', { noremap = true })
 
 -- spell checking
 vim.api.nvim_set_keymap('n', 'fl', ':setlocal spell! spelllang=en_us<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', 'fL', ':setlocal spell! spelllang=pt<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'fL', ':setlocal spell! spelllang=pt_br<CR>', { noremap = true })
 vim.api.nvim_set_keymap('x', 'fw', 'z=', { noremap = true })
 vim.api.nvim_set_keymap('n', 'fw', 'z=', { noremap = true })
 -- down and up but less disorienting
