@@ -29,7 +29,7 @@ local plugins = {
   {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
   'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes',
-     -- vim airline theme
+  'Yggdroot/indentLine',
   -- LSP
   {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
   {'neovim/nvim-lspconfig'},

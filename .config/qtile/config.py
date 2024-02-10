@@ -95,7 +95,7 @@ keys = [
 
     #------/ Key apps
     Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
-    Key([mod, "control"], "a", lazy.spawn(terminal + " -e alsamixer")),
+    Key([mod, "control"], "a", lazy.spawn(terminal + " -e pavucontrol")),
     Key([mod], "b", lazy.spawn("brave")),
 
     #-----/ Scripts
@@ -224,7 +224,7 @@ screens = [
 
                 widget.Image(
                    filename = "~/.config/qtile/icons/sound_icon.png",
-                   mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("alacritty -e alsamixer")}
+                   mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("alacritty -e pavucontrol")}
                 ),
 
                 widget.TextBox(text = '   | ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------

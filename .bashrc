@@ -65,6 +65,8 @@ export CHROME_EXECUTABLE=brave
 export ANDROID_HOME=$HOME/android-sdk
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+# add flutter commands on path
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # fzf completion and keybindings
 source /usr/share/fzf/completion.bash
