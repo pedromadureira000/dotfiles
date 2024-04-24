@@ -17,8 +17,8 @@ Plug 'posva/vim-vue'
  
 "----------/search
 Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
 
 "----------/code completion
@@ -207,5 +207,5 @@ xnoremap fj %!jq<CR>
 " cnoremap <Esc>f <S-Right>
 
 "---------------------/Source/--------------------
-source ~/.config/nvim/fzf.nvimrc
+"source ~/.config/nvim/fzf.nvimrc
 source ~/.config/nvim/coc.nvimrc

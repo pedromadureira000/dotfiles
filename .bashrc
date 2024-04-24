@@ -20,14 +20,6 @@ export PS1='\[\e[0;36m\][\u@\h \w]\$ \[\e[0m\]'
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
-
-
-# criar .venv no diretorio do projeto
-export PIPENV_VENV_IN_PROJECT=1
-
-# pipenv read pyenv python version
-export PIPENV_PYTHON="/home/phsw/.pyenv/shims/python"
-
 eval "$(pyenv virtualenv-init -)"
 
 # Aliases
@@ -51,6 +43,7 @@ alias gb='git branch'
 alias journal='sudo journalctl -e'
 alias used_space='sudo du -h --max-depth=1 | sort -h'
 alias free_space='df -a -h /'
+alias cl='clear'
 
 # set default programs
 export PATH=$PATH:$HOME/.scripts

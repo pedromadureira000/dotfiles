@@ -121,7 +121,7 @@ keys = [
     Key([mod, "control","mod1"], "0", lazy.spawn(chosen_terminal(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/nvim/init.lua"))),
-    Key([mod, "control"], "o", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/ranger/rc.conf"))),
+    Key([mod, "control"], "o", lazy.spawn(chosen_terminal(f"/home/{username}/Documents/Obsidian-1.5.8.AppImage"))),
 ]
 
 groups = [Group(i) for i in "asdfuiop"]
