@@ -24,7 +24,7 @@ eval "$(pyenv virtualenv-init -)"
 
 # Aliases
 alias mng='python $VIRTUAL_ENV/../manage.py'
-alias vim='nvim'
+#alias vim='nvim'
 alias ranger='ranger-fix'
 alias unimatrix='unimatrix-fix'
 alias la='ls -A'
@@ -69,3 +69,5 @@ if [[ "$(tty)" = "/dev/tty1" ]]; then
 	startx
 fi
 
+
+export PATH="$PATH":"$HOME/apache-maven-3.9.7/bin"
