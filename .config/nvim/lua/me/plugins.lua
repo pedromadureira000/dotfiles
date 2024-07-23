@@ -30,6 +30,7 @@ local plugins = {
   'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes',
   'Yggdroot/indentLine',
+  'preservim/vim-markdown',
   -- LSP
   {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
   {'neovim/nvim-lspconfig'},

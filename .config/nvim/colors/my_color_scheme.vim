@@ -367,7 +367,7 @@ call s:SetHighlight('htmlSpecialTagName', s:yellow, '', '')
 call s:SetHighlight('htmlArg', s:purple, '', 'italic')
 call s:SetHighlight('htmlTitle', s:fg, '', '')
 call s:SetHighlight('htmlLink', s:fg, '', '')
-"" Consistency with plasticboy/vim-markdown
+" Consistency with plasticboy/vim-markdown
 call s:SetHighlight('htmlBold', s:pink, '', 'bold')
 call s:SetHighlight('htmlH1', s:yellow, '', '')
 call s:SetHighlight('htmlH2', s:yellow, '', '')

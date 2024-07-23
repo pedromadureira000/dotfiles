@@ -13,15 +13,18 @@ require("nvim-treesitter.configs").setup({
 		"yaml",
 		"bash",
     "python",
+        -- "markdown",
+        -- "markdown_inline",
 	},
 	highlight = {
 		enable = true, -- false will disable the whole extension
+		-- disable = { "markdown", "markdown_inline"},
 	},
 	indent = {
 		enable = true,
 		-- I have a couple of open issues for it though:
 		-- https://github.com/nvim-treesitter/nvim-treesitter/issues?q=RobertBrunhage+is%3Aopen
-		disable = { "dart" },
+        disable = { "dart"},
 	},
 })
 

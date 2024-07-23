@@ -20,5 +20,6 @@
   "vim-airline": { "branch": "master", "commit": "02894b6ef4752afd8579fc837aec5fb4f62409f7" },
   "vim-airline-themes": { "branch": "master", "commit": "a9aa25ce323b2dd04a52706f4d1b044f4feb7617" },
   "vim-gitgutter": { "branch": "main", "commit": "e801371917e52805a4ceb1e93f55ed1fba712f82" },
+  "vim-markdown": { "branch": "master", "commit": "a657e697376909c41475a686eeef7fc7a4972d94" },
   "vim-rooter": { "branch": "master", "commit": "45e53f01e4e1c4a3ee20814de232162713aff578" }
 }
