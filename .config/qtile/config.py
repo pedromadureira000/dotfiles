@@ -43,9 +43,12 @@ def chosen_terminal(app):
 
 
 def get_next_prompt_number():
+    # for somereason it only go to next file if I refresh window
     directory = '/home/ph/Projects/zzzz-Prompts'
     existing_files = os.listdir(directory)
+    print('========================> existing_files: ',existing_files )
     prompt_files = [f for f in existing_files if f.startswith('prompt') and f.endswith('.md')]
+    print('========================> prompt_files: ',prompt_files )
     if not prompt_files:
         return 1
     numbers = [int(f.split('prompt')[1].split('.')[0]) for f in prompt_files]
@@ -126,7 +129,8 @@ keys = [
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/obsidian_vault/00-Projects/3-Me/1-Productivity/draft.md"))),
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt{get_next_prompt_number()}.md"))),
+    #  Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt{get_next_prompt_number()}.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt.md"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs

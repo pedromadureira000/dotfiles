@@ -59,18 +59,26 @@ local plugins = {
         -- add any opts here
         provider = "openai",
         openai = {
+            use_xml_format=true,
             model="gpt-4o-mini",
             temperature=0.2,
             top_p=0.1,
+            max_tokens = 4000,
             -- timeout  in miliseconds
-            -- max_tokens = 8192,
-
+        },
+        behaviour = {
+            auto_suggestions = false, -- Experimental stage
+            auto_set_highlight_group = true,
+            auto_set_keymaps = true,
+            auto_apply_diff_after_generation = true,
+            support_paste_from_clipboard = false,
         },
         windows = {
             ---@type "right" | "left" | "top" | "bottom"
             position = "top", -- the position of the sidebar
             wrap = true, -- similar to vim.o.wrap
-            width = 50, -- default % based on available width
+            width = 100, -- default % based on available width
+            hight=200,
             sidebar_header = {
               align = "center", -- left, center, right for title
               rounded = true,
