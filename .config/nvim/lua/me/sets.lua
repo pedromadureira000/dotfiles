@@ -81,3 +81,7 @@ vim.g.indentLine_fileTypeExclude = {'json', 'markdown', 'md'}
     -- Set the box drawing character for indentLine
 local box_drawings_light_vertical = '│'
 vim.g.indentLine_char = box_drawings_light_vertical
+
+
+-- avante recommended
+vim.opt.laststatus = 3
