@@ -41,6 +41,17 @@ username = os.getlogin()
 def chosen_terminal(app):
     return f'kitty {app}'
 
+
+def get_next_prompt_number():
+    directory = '/home/ph/Projects/zzzz-Prompts'
+    existing_files = os.listdir(directory)
+    prompt_files = [f for f in existing_files if f.startswith('prompt') and f.endswith('.md')]
+    if not prompt_files:
+        return 1
+    numbers = [int(f.split('prompt')[1].split('.')[0]) for f in prompt_files]
+    return max(numbers) + 1
+
+
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -115,6 +126,7 @@ keys = [
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/obsidian_vault/00-Projects/3-Me/1-Productivity/draft.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt{get_next_prompt_number()}.md"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs

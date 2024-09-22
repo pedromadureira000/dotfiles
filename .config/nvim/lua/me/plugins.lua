@@ -58,13 +58,28 @@ local plugins = {
       opts = {
         -- add any opts here
         provider = "openai",
-        -- openai = {
-            -- ....
-        -- },
+        openai = {
+            model="gpt-4o-mini",
+            temperature=0.2,
+            top_p=0.1,
+            -- timeout  in miliseconds
+            -- max_tokens = 8192,
+
+        },
+        windows = {
+            ---@type "right" | "left" | "top" | "bottom"
+            position = "top", -- the position of the sidebar
+            wrap = true, -- similar to vim.o.wrap
+            width = 50, -- default % based on available width
+            sidebar_header = {
+              align = "center", -- left, center, right for title
+              rounded = true,
+            },
+        },
         mappings = {
             -- ask = "<leader>ua", -- ask
             -- edit = "<leader>ue", -- edit
-            -- refresh = "<leader>ur", -- refresh
+            -- refresh = "<leader>hr", -- refresh
             --- @class AvanteConflictMappings
             diff = {
               ours = "co",

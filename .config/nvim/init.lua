@@ -3,20 +3,10 @@ require("me.plugins")
 require("me.sets")
 require("me.fzf")
 require("me.completions")
---require("me.my_color_scheme")
 
 ---Color scheme
 vim.g.material_theme_style = 'my_own_theme'
 vim.cmd [[colorscheme my_color_scheme]]
-
-vim.cmd [[
-  highlight markdownH1 guifg=#ff5555 gui=bold
-  highlight markdownH2 guifg=#50fa7b gui=bold
-  highlight markdownH3 guifg=#8be9fd gui=bold
-  highlight markdownH4 guifg=#bd93f9 gui=bold
-  highlight markdownH5 guifg=#ff79c6 gui=bold
-  highlight markdownH6 guifg=#f1fa8c gui=bold
-]]
 
 
 local autocmd = vim.api.nvim_create_autocmd
