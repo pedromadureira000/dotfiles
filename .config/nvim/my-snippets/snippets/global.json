@@ -1,13 +1,8 @@
 {
-    "slashes 1": {
-        "prefix": "----",
-        "body": "---------------------------/${1:name}",
+    "xml": {
+        "prefix": "xml",
+        "body": "<instruction>\n${1:instruction}\n</instruction>\n<code>\n${2:code}\n</code>\n<question>\n${3:question}\n</question>",
         "description": "many slashes"
-    },
-    "slashes 2": {
-        "prefix": "----",
-        "body": "------------------------/${1:name}/---------------------$0",
-        "description": "many slashes 2"
     }
 }
 

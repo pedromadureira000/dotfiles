@@ -46,3 +46,23 @@ function()
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
     end
 end, {silent = true})
+
+
+-- Avante
+-- local avante = require('avante')
+-- print(avante)
+
+-- vim.api.nvim_create_autocmd("User", {
+    -- pattern = "ToggleMyPrompt";
+    -- once = true,
+    -- callback = function() require("avante.config").override({
+        -- system_prompt = "You are an great programming expert!",
+    -- }) end,
+-- })
+
+-- vim.keymap.set(
+    -- "n", "<leader>ay", 
+    -- function() vim.api.nvim_exec_autocmds("User", { pattern = "ToggleMyPrompt" }) 
+    -- end, { desc = "avante: toggle my prompt" }
+-- )
+
