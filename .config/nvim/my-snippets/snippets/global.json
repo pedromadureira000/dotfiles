@@ -1,8 +1,23 @@
 {
-    "xml": {
-        "prefix": "xml",
+    "xml-simple": {
+        "prefix": "xml-simple",
         "body": "<instruction>\n${1:instruction}\n</instruction>\n<code>\n${2:code}\n</code>\n<question>\n${3:question}\n</question>",
-        "description": "many slashes"
+        "description": "prompt"
+    },
+    "xml-django": {
+        "prefix": "xml-django",
+        "body": "<instruction>\nYour task is to provide the required code according to the user's request. Follow these instructions precisely:\n1. Return ONLY the asked code.\n2. Do not include any explanations, comments, or line numbers in your response.\n3. Follow the SAME indentation in the returned code as in the code sent by the user.\n</instruction>\n<code>\nThe relevant django views and models:\n```python\n```\nThe structure of django template I use:\n```html\n{% extends 'base.html' %}\n{% load static %}\n\n{% block title %}\n{% endblock %}\n\n{% block custom_css %}\n{% endblock %}\n\n{% block content %}\n{% endblock %}\n```\n</code>\n<question>\n</question>",
+        "description": "prompt"
+    },
+    "prompt": {
+        "prefix": "prompt",
+        "body": "a",
+        "description": "js print"
+    },
+    "console.log": {
+        "prefix": "console",
+        "body": "console.log('>>>>>>>snippet: ', ${1:snippet})$0",
+        "description": "js print"
     }
 }
 
