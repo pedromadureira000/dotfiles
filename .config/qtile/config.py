@@ -126,9 +126,13 @@ keys = [
     Key([mod], "3", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.7")),
     Key([mod], "4", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.6")),
     Key([mod], "5", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.5")),
+    # second monitor 
+    Key([mod, "control"], "1", lazy.to_screen(0)), # go to main monitor
+    Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
+
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/Todo.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/obsidian_vault/00-Projects/3-Me/1-Productivity/draft.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/obsidian_vault/01-Projects/3-Me/1-Productivity/draft.md"))),
     #  Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt{get_next_prompt_number()}.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt.md"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 

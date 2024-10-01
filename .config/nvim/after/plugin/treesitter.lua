@@ -12,7 +12,7 @@ require("nvim-treesitter.configs").setup({
 		"scss",
 		"yaml",
 		"bash",
-    "python",
+        "python",
         -- "markdown",
         -- "markdown_inline",
 	},

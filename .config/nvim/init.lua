@@ -5,8 +5,10 @@ require("me.fzf")
 require("me.completions")
 
 ---Color scheme
-vim.g.material_theme_style = 'my_own_theme'
-vim.cmd [[colorscheme my_color_scheme]]
+-- vim.g.material_theme_style = 'my_own_theme'
+-- vim.cmd [[colorscheme my_color_scheme]]
+vim.o.background = "dark"
+vim.cmd[[colorscheme tokyonight-night]]
 
 
 local autocmd = vim.api.nvim_create_autocmd

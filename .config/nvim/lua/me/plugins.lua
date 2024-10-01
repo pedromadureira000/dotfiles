@@ -26,6 +26,12 @@ local plugins = {
   --git
   'airblade/vim-gitgutter',
   -- UI
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
   'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes',
@@ -57,15 +63,17 @@ local plugins = {
       version = false, -- set this if you want to always pull the latest change
       opts = {
         -- add any opts here
+        -- provider = "claude",
         provider = "openai",
         openai = {
             use_xml_format=true,
+            -- model="claude-3-5-sonnet-20240620",
             model="gpt-4o",
             -- model="chatgpt-4o-latest",
             -- model="gpt-4o-mini",
             temperature=0.2,
             top_p=0.1,
-            max_tokens = 4000,
+            max_tokens = 3000,
             -- timeout  in miliseconds
         },
         behaviour = {
@@ -80,7 +88,7 @@ local plugins = {
             position = "top", -- the position of the sidebar
             wrap = true, -- similar to vim.o.wrap
             width = 80, -- default % based on available width
-            hight=400,
+            hight=700,
             sidebar_header = {
               align = "center", -- left, center, right for title
               rounded = true,
@@ -148,13 +156,13 @@ local plugins = {
           -- },
         -- },
         -- Make sure to set this up properly if you have lazy=true
-        -- {
-          -- 'MeanderingProgrammer/render-markdown.nvim',
-          -- opts = {
-            -- file_types = { "markdown", "Avante" },
-          -- },
-          -- ft = { "markdown", "Avante" },
-        -- },
+        {
+          'MeanderingProgrammer/render-markdown.nvim',
+          opts = {
+            file_types = { "markdown", "Avante" },
+          },
+          ft = { "markdown", "Avante" },
+        },
       },
     }
 }
