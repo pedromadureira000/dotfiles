@@ -28,6 +28,8 @@
 !.xinitrc
 !.Xmodmap
 
+.config/nvim/lazy-lock.json
+
 # ...even if they are in subdirectories
 
 # if the files to be tracked are in subdirectories

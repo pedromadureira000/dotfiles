@@ -34,6 +34,11 @@ from libqtile.utils import guess_terminal
 from libqtile import qtile
 from datetime import datetime
 
+
+screen_name = os.environ.get('SCREEN_NAME')
+screen_size = os.environ.get('SCREEN_SIZE')
+
+
 mod = "mod4"
 terminal = guess_terminal()
 username = os.getlogin()
@@ -119,13 +124,13 @@ keys = [
     Key([mod, "control"], "9", lazy.spawn("sudo killall wpa_supplicant")),
     Key([mod, "control"], "8", lazy.spawn("sudo systemctl start wpa_supplicant@wlp0s20f3.service")),
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
-    Key([mod, "lock"], "Escape", lazy.spawn("reboot")),
+    Key([mod, "lock"], "Escape", lazy.spawn("sudo reboot")),
     Key([mod, "control"], "Escape", lazy.spawn("xlock -delay 10000 -mode random")),
-    Key([mod], "1", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 1")),
-    Key([mod], "2", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.8")),
-    Key([mod], "3", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.7")),
-    Key([mod], "4", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.6")),
-    Key([mod], "5", lazy.spawn("xrandr --output eDP1 --mode 1366x768 --rate 48.05 --brightness 0.5")),
+    Key([mod], "1", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 1")),
+    Key([mod], "2", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.8")),
+    Key([mod], "3", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.7")),
+    Key([mod], "4", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.6")),
+    Key([mod], "5", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.5")),
     # second monitor 
     Key([mod, "control"], "1", lazy.to_screen(0)), # go to main monitor
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
