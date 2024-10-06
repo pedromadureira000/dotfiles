@@ -1,0 +1,47 @@
+import = ["/path/to/alacritty.yml"]
+
+[colors.bright]
+black = "#585858"
+blue = "#7cafc2"
+cyan = "#86c1b9"
+green = "#a1b56c"
+magenta = "#ba8baf"
+red = "#ab4642"
+white = "#f8f8f8"
+yellow = "#f7ca88"
+
+[colors.cursor]
+cursor = "#d8d8d8"
+text = "#d8d8d8"
+
+[colors.normal]
+black = "#181818"
+blue = "#7cafc2"
+cyan = "#86c1b9"
+green = "#a1b56c"
+magenta = "#ba8baf"
+red = "#ab4642"
+white = "#d8d8d8"
+yellow = "#f7ca88"
+
+[colors.primary]
+background = "#000000"
+foreground = "#d8d8d8"
+
+[env]
+TERM = "alacritty"
+
+#[window]
+#size = 12.0
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 13
+y = 5
+
+[window.position]
+x = 0
+y = 0
