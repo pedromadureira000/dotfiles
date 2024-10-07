@@ -136,7 +136,7 @@ keys = [
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
 
     # Documents
-    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/Todo.md"))),
+    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/99-TODO/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/6-Self/draft-personal.md"))),
     #  Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt{get_next_prompt_number()}.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt.md"))),
