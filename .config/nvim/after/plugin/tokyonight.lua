@@ -14,7 +14,7 @@ require("tokyonight").setup({
     on_highlights = function(hl, c)
         -- H1 - Red
         hl["RenderMarkdownH1Bg"] = {bg = "#45030e", bold = true }
-        hl["@markup.heading.1.markdown"] = {fg = "#a11830", bold = true }
+        hl["@markup.heading.1.markdown"] = {fg = "#FF0000", bold = true }
         -- H2 - Yellow
         hl["RenderMarkdownH2Bg"] = {bg = "#454403", bold = true}
         hl["@markup.heading.2.markdown"] = {fg = "#FFD700", bold = true}
