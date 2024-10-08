@@ -46,20 +46,6 @@ username = os.getlogin()
 def chosen_terminal(app):
     return f'kitty {app}'
 
-
-def get_next_prompt_number():
-    # for somereason it only go to next file if I refresh window
-    directory = '/home/ph/Projects/zzzz-Prompts'
-    existing_files = os.listdir(directory)
-    print('========================> existing_files: ',existing_files )
-    prompt_files = [f for f in existing_files if f.startswith('prompt') and f.endswith('.md')]
-    print('========================> prompt_files: ',prompt_files )
-    if not prompt_files:
-        return 1
-    numbers = [int(f.split('prompt')[1].split('.')[0]) for f in prompt_files]
-    return max(numbers) + 1
-
-
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -138,7 +124,6 @@ keys = [
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/99-TODO/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/6-Self/draft-personal.md"))),
-    #  Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt{get_next_prompt_number()}.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt.md"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
@@ -224,27 +209,6 @@ screens = [
                 #  widget.Systray(),
 
                 widget.Prompt(),
-
-                widget.Maildir(maildir_path="~/.local/share/mail/contato@phsolucoesweb.com.br", 
-                    sub_folders=[{'label': 'Inbox', 'path': 'INBOX'}],
-                    #  sub_folders=[{'label': 'Home mail', 'path': 'INBOX'}, {'label': 'Home junk', 'path': 'spam'}],
-                    hide_when_empty=True,
-                    update_interval=30
-                ),
-
-                widget.Sep(
-                       linewidth = 0,
-                       padding = 9,
-                       foreground = '#ffffff',
-                       background = '#000000'
-                       ),
-
-                widget.Image(
-                   filename = "~/.config/qtile/icons/music.png",
-                   mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + " -e mocp")}
-                ), 
-
-                widget.TextBox(text = '   |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
 
                 widget.Image(
                    filename = "~/.config/qtile/icons/sound_icon.png",
