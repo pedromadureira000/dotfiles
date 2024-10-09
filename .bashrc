@@ -46,9 +46,10 @@ alias free_space='df -a -h /'
 alias cl='clear'
 alias diff='git diff HEAD~1 HEAD'
 
-
-# alias prompt='cat ~/Projects/zzzz-Prompts/prompt.md | llm -s "You are a code assistant. You must avoid being overly verbose and include commentaries on your answers unless necessary." '
-# alias lm='llm -m gpt-4o-mini '
+alias breaklines='(echo -e "\n\n\n" && printf "%0.s-" {1..50} && echo -e "\n\n\n")'
+alias llmr='(breaklines && cat ~/Projects/zzzz-Prompts/prompt.md | llm -m code -o temperature 0.1 -o max_tokens 4096 -t code_assistant --no-stream) >> ~/Projects/zzzz-Prompts/prompt-log.md'
+alias llmr2='(breaklines && cat ~/Projects/zzzz-Prompts/prompt2.md | llm -m code -o temperature 0.1 -o max_tokens 4096 -t code_assistant --no-stream) >> ~/Projects/zzzz-Prompts/prompt2-log.md'
+alias llml='llm logs -n 1 --json'
 
 LLM_OPENAI_SHOW_RESPONSES=1
 
