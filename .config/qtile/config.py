@@ -127,6 +127,7 @@ keys = [
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/00-TODO/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/6-Self/draft-personal.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt-log.md"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
