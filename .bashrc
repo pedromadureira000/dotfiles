@@ -44,6 +44,13 @@ alias journal='sudo journalctl -e'
 alias used_space='sudo du -h --max-depth=1 | sort -h'
 alias free_space='df -a -h /'
 alias cl='clear'
+alias diff='git diff HEAD~1 HEAD'
+
+
+# alias prompt='cat ~/Projects/zzzz-Prompts/prompt.md | llm -s "You are a code assistant. You must avoid being overly verbose and include commentaries on your answers unless necessary." '
+# alias lm='llm -m gpt-4o-mini '
+
+LLM_OPENAI_SHOW_RESPONSES=1
 
 # set default programs
 export PATH=$PATH:$HOME/.scripts
@@ -71,3 +78,6 @@ fi
 
 
 export PATH="$PATH":"$HOME/apache-maven-3.9.7/bin"
+
+# Created by `pipx` on 2024-10-09 13:25:57
+export PATH="$PATH:/home/ph/.local/bin"

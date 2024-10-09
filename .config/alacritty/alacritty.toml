@@ -45,3 +45,7 @@ y = 5
 [window.position]
 x = 0
 y = 0
+
+# Font configuration
+[font]
+size = 20.0

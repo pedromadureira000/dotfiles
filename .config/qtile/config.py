@@ -44,7 +44,8 @@ terminal = guess_terminal()
 username = os.getlogin()
 
 def chosen_terminal(app):
-    return f'kitty {app}'
+    #  return f'kitty {app}'
+    return f'alacritty --option font.size=20 --command {app}'
 
 keys = [
     # Switch between windows
@@ -99,7 +100,8 @@ keys = [
     Key([mod], "Print", lazy.spawn("scrot -s  'ArchLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures'")),
 
     #------/ Key apps
-    Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
+    #  Key([mod, "control"], "f", lazy.spawn("ranger-fix")),
+    Key([mod, "control"], "f", lazy.spawn(chosen_terminal("ranger"))),
     Key([mod, "control"], "a", lazy.spawn(terminal + " -e pavucontrol")),
     Key([mod], "b", lazy.spawn("brave")),
 
