@@ -104,6 +104,7 @@ keys = [
     Key([mod, "control"], "f", lazy.spawn(chosen_terminal("ranger"))),
     Key([mod, "control"], "a", lazy.spawn(terminal + " -e pavucontrol")),
     Key([mod], "b", lazy.spawn("brave")),
+    Key([mod, "control"], "b", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.bashrc"))),
 
     #-----/ Scripts
     Key([mod, "control"], "d", lazy.spawn("discord")),
@@ -126,8 +127,10 @@ keys = [
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/00-TODO/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/6-Self/draft-personal.md"))),
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/prompt-log.md"))),
+    #  Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/1-prompt.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/prompt-code.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"ranger /home/{username}/Documents/sync_vault/z-Prompts/"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/log/prompt-code-log.md"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs

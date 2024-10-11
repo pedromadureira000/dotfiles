@@ -18,6 +18,11 @@
         "prefix": "console",
         "body": "console.log('>>>>>>>snippet: ', ${1:snippet})$0",
         "description": "js print"
+    },
+    "bq": {
+        "prefix": "bq",
+        "body": "```$0```",
+        "description": "js print"
     }
 }
 
