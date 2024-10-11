@@ -47,6 +47,10 @@ def chosen_terminal(app):
     #  return f'kitty {app}'
     return f'alacritty --option font.size=20 --command {app}'
 
+def open_terminal_with_command(command):
+    escaped_command = command.replace('"', '\\"')
+    return f'alacritty --option font.size=20 -e bash -c "echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
+
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -127,10 +131,10 @@ keys = [
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/00-TODO/Todo.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/6-Self/draft-personal.md"))),
-    #  Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/ph/Projects/zzzz-Prompts/1-prompt.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"ranger /home/{username}/Documents/sync_vault/z-Prompts/"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/log/prompt-code-log.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/log/prompt-code-response.md"))),
+    Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model code --template code_assistant"))),
+    Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
     Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
                                            str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
