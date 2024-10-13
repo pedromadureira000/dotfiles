@@ -130,7 +130,7 @@ keys = [
 
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/00.TODO/Todo.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/3.Me/draft-personal.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.draft-personal.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/log/prompt-code-response.md"))),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model code --template code_assistant"))),
