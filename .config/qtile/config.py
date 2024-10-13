@@ -129,18 +129,18 @@ keys = [
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
 
     # Documents
-    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/00-TODO/Todo.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/6-Self/draft-personal.md"))),
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z-Prompts/log/prompt-code-response.md"))),
+    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/00.TODO/Todo.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/3.Me/draft-personal.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/prompt-code.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/log/prompt-code-response.md"))),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model code --template code_assistant"))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
-    Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
-                                           str(datetime.today().strftime('%y/%m')) + ".md"))),
+    #  Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
+                                           #  str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
     Key([mod, "control","mod1"], "0", lazy.spawn(chosen_terminal(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
-    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0-work-memory/work-memory.md"))),
+    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/work-memory.md"))),
     Key([mod, "control"], "s", lazy.spawn(f"xrandr --output HDMI-1 --mode 1920x1080 --same-as eDP-1")),
 ]
 
