@@ -124,6 +124,7 @@ keys = [
     Key([mod], "3", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.7")),
     Key([mod], "4", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.6")),
     Key([mod], "5", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.5")),
+    Key([mod, "control"], "s", lazy.spawn(f"xrandr --output HDMI-1 --mode 1920x1080 --same-as eDP-1")),
     # second monitor 
     Key([mod, "control"], "1", lazy.to_screen(0)), # go to main monitor
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
@@ -141,7 +142,6 @@ keys = [
     Key([mod, "control","mod1"], "0", lazy.spawn(chosen_terminal(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/3.work-memory.md"))),
-    Key([mod, "control"], "s", lazy.spawn(f"xrandr --output HDMI-1 --mode 1920x1080 --same-as eDP-1")),
 ]
 
 groups = [Group(i) for i in "asdfuiop"]
@@ -193,78 +193,86 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
+screen_widgets = [
+    widget.Sep(
+        linewidth = 0,
+        padding = 8,
+        foreground = '#ffffff',
+        background = '#000000'
+    ),
+
+    widget.Image(
+        filename = "~/.config/qtile/icons/python-icon.png",
+        mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("unimatrix-fix")},
+    ),
+    widget.GroupBox(),
+    widget.WindowName(),
+    widget.Chord(
+        chords_colors={
+            'launch': ("#ff0000", "#ffffff"),
+        },
+        name_transform=lambda name: name.upper(),
+    ),
+    #  widget.Systray(),
+
+    widget.Prompt(),
+
+    widget.Image(
+       filename = "~/.config/qtile/icons/sound_icon.png",
+       mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("alacritty -e pavucontrol")}
+    ),
+
+    widget.TextBox(text = '   | ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
+
+    widget.Sep(
+           linewidth = 0,
+           padding = 8,
+           foreground = '#ffffff',
+           background = '#000000'
+           ),
+
+    widget.TextBox(
+           text = '⚡  ',
+           #  text = '⌛',
+           #  background = "#282c34",
+           foreground = '#ffffff',
+           padding = 0,
+           fontsize = 22
+           ),
+    widget.Battery(format='{percent:2.0%}', foreground='#ffffff', low_percentage=0.15),
+
+    widget.TextBox(text = '  |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
+
+    widget.Image(
+           filename = "~/.config/qtile/icons/calendar.png",
+           ),
+    widget.Clock(format='%A, %B %d  ', foreground='#ffffff'),
+
+    widget.TextBox(text = '  |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
+
+    widget.TextBox(
+           text = '⌚ ',
+           #  text = '⌛',
+           #  background = "#282c34",
+           foreground = '#ffffff',
+           padding = 0,
+           fontsize = 22
+           ),
+    widget.Clock(format='%I:%M    ', foreground='#ffffff'),
+]
+
 screens = [
     Screen(
         #  bottom=bar.Bar(
         top=bar.Bar(
-            [
-                widget.Sep(
-                       linewidth = 0,
-                       padding = 8,
-                       foreground = '#ffffff',
-                       background = '#000000'
-                       ),
-
-                widget.Image(
-                    filename = "~/.config/qtile/icons/python-icon.png",
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("unimatrix-fix")},
-                ),
-                widget.GroupBox(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        'launch': ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                #  widget.Systray(),
-
-                widget.Prompt(),
-
-                widget.Image(
-                   filename = "~/.config/qtile/icons/sound_icon.png",
-                   mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("alacritty -e pavucontrol")}
-                ),
-
-                widget.TextBox(text = '   | ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
-
-                widget.Sep(
-                       linewidth = 0,
-                       padding = 8,
-                       foreground = '#ffffff',
-                       background = '#000000'
-                       ),
-
-                widget.TextBox(
-                       text = '⚡  ',
-                       #  text = '⌛',
-                       #  background = "#282c34",
-                       foreground = '#ffffff',
-                       padding = 0,
-                       fontsize = 22
-                       ),
-                widget.Battery(format='{percent:2.0%}', foreground='#ffffff', low_percentage=0.15),
-
-                widget.TextBox(text = '  |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
-
-                widget.Image(
-                       filename = "~/.config/qtile/icons/calendar.png",
-                       ),
-                widget.Clock(format='%A, %B %d  ', foreground='#ffffff'),
-
-                widget.TextBox(text = '  |  ', foreground = '#ffffff', padding = 0, fontsize = 26),  # <---------------
-
-                widget.TextBox(
-                       text = '⌚ ',
-                       #  text = '⌛',
-                       #  background = "#282c34",
-                       foreground = '#ffffff',
-                       padding = 0,
-                       fontsize = 22
-                       ),
-                widget.Clock(format='%I:%M    ', foreground='#ffffff'),
-            ],
+            screen_widgets,
             24,
+        ),
+    ),
+    Screen(
+        top=bar.Bar(
+            screen_widgets,
+            24,  # height of the bar
         ),
     ),
 ]
