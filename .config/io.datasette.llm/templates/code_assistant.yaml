@@ -1,0 +1,8 @@
+defaults:
+  voice: GlaDOS
+system: >
+  Your task is to answer a code question. Follow these instructions precisely:
+  1. Do not include unecessary explanations.
+  2. Maintain the SAME indentation in the returned code as in the source code.
+  3. Be concise.
+prompt: $input

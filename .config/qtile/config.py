@@ -49,7 +49,9 @@ def chosen_terminal(app):
 
 def open_terminal_with_command(command):
     escaped_command = command.replace('"', '\\"')
-    return f'alacritty --option font.size=20 -e bash -c "echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
+    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/ph/.local/bin\\"; echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
+    #  return f'alacritty --option font.size=20 -e bash -c "source ~/.bashrc; echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
+    #  return f'alacritty --option font.size=20 -e bash -c "echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
 
 keys = [
     # Switch between windows
@@ -131,9 +133,10 @@ keys = [
 
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/2.cache-memory.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.draft-personal.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.work-memory2.md"))),
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/log/prompt-code-response.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/1.prompt.md"))),
+    #  Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/log/prompt-code-response.md"))),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model code --template code_assistant"))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
     #  Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 

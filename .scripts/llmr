@@ -2,7 +2,7 @@
 FOLDER_PATH=~/Documents/sync_vault/z.Prompts
 BREAKLINES=$(printf "%0.s-" {1..50})
 
-prompt_file="prompt.md"
+prompt_file="1.prompt.md"
 response_file="prompt-response.md"
 log_file="prompt-log.md"
 model="gpt"
@@ -103,15 +103,15 @@ else
 fi
 
 llm_request_log="
-**llm id**: $id
+# llm id: $id
 **Model**: $model
 **Response id**: $response_id
 $openai_info
 $claude_info
-**Input Text**:
+## Input Text:
 $input_text
 
-**Output Text**:
+## Output Text:
 $llm_response
 "
 echo "$llm_request_log" > "$FOLDER_PATH/log/$response_file"
