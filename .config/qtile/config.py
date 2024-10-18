@@ -53,6 +53,10 @@ def open_terminal_with_command(command):
     #  return f'alacritty --option font.size=20 -e bash -c "source ~/.bashrc; echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
     #  return f'alacritty --option font.size=20 -e bash -c "echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
 
+def open_terminal_with_command_in_writing_mode(command):
+    escaped_command = command.replace('"', '\\"')
+    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/ph/.local/bin\\"; echo -n \\"{escaped_command}\\"; read -e -p \' \' user_input; {escaped_command}$user_input; exec bash"'
+
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -116,8 +120,6 @@ keys = [
     Key([mod, "control"], "d", lazy.spawn("discord")),
     Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -l 5 -fn 'sans-10'")),
-    Key([mod, "control"], "9", lazy.spawn("sudo killall wpa_supplicant")),
-    Key([mod, "control"], "8", lazy.spawn("sudo systemctl start wpa_supplicant@wlp0s20f3.service")),
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
     Key([mod, "lock"], "Escape", lazy.spawn("sudo reboot")),
     Key([mod, "control"], "Escape", lazy.spawn("xlock -delay 10000 -mode random")),
@@ -127,6 +129,7 @@ keys = [
     Key([mod], "4", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.6")),
     Key([mod], "5", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.5")),
     Key([mod, "control"], "s", lazy.spawn(f"xrandr --output HDMI-1 --mode 1920x1080 --same-as eDP-1")),
+
     # second monitor 
     Key([mod, "control"], "1", lazy.to_screen(0)), # go to main monitor
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
@@ -134,17 +137,20 @@ keys = [
     # Documents
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/2.cache-memory.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.work-memory2.md"))),
+    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/3.work-memory.md"))),
+    # llm
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/1.prompt.md"))),
-    #  Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/log/prompt-code-response.md"))),
+    Key(["mod1"], "m", lazy.spawn(open_terminal_with_command_in_writing_mode(f"llm -m gpt -o temperature 0.1 -o max_tokens 4096 -t default "))),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model code --template code_assistant"))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
-    #  Key([mod], "w", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/4-Personal/diary/" + 
-                                           #  str(datetime.today().strftime('%y/%m')) + ".md"))),
     # configs
-    Key([mod, "control","mod1"], "0", lazy.spawn(chosen_terminal(f"sudo nvim /home/{username}/.local/share/qtile/qtile.log"))),
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
-    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/3.work-memory.md"))),
+    # --- / Available
+    #  Key([mod, "control"], "9", lazy.spawn("")),
+    #  Key([mod], "w", lazy.spawn()),
+    #  Key([mod, "control"], "0", lazy.spawn(chosen_terminal())),
+    #  Key([mod, "control"], "8", lazy.spawn("")),
 ]
 
 groups = [Group(i) for i in "asdfuiop"]

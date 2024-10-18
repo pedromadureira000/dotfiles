@@ -19,10 +19,10 @@
         "body": "console.log('>>>>>>>snippet: ', ${1:snippet})$0",
         "description": "js print"
     },
-    "bq": {
-        "prefix": "bq",
+    "3-back-quotes": {
+        "prefix": "f",
         "body": "```$0```",
-        "description": "js print"
+        "description": "3-back-quotes"
     }
 }
 
