@@ -21,7 +21,7 @@
     },
     "3-back-quotes": {
         "prefix": "f",
-        "body": "```$0```",
+        "body": "```\n$0\n```",
         "description": "3-back-quotes"
     }
 }

@@ -135,9 +135,9 @@ keys = [
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
 
     # Documents
-    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/2.cache-memory.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.work-memory2.md"))),
-    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/3.work-memory.md"))),
+    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.cache-memory.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/1.work-memory.md"))),
+    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0.work-memory/2.work-memory.md"))),
     # llm
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.Prompts/1.prompt.md"))),
