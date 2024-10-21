@@ -1,5 +1,5 @@
 #!/bin/bash
-FOLDER_PATH=~/Documents/sync_vault/z.Prompts
+FOLDER_PATH=~/Documents/sync_vault/zzz.configs/llm
 BREAKLINES=$(printf "%0.s-" {1..50})
 
 prompt_file="1.prompt.md"
