@@ -53,6 +53,7 @@ alias diff='git diff HEAD~1 HEAD'
 alias make_script='chmod +x'
 alias llmlj='llm logs -n 1 --json'
 alias llml='llm logs -n 1'
+alias ip_show='iwctl station wlan0 show'
 
 LLM_OPENAI_SHOW_RESPONSES=1
 
