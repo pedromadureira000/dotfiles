@@ -62,7 +62,7 @@ fi
 
 
 input_text=$(cat "$FOLDER_PATH/$prompt_file")
-llm_response=$(echo "$input_text" | llm -m $model -o temperature 0.1 -o max_tokens 4096 -t $template --no-stream)
+llm_response=$(echo "$input_text" | llm -m $model -o temperature 0.1 -o max_tokens 6096 -t $template --no-stream)
 
 echo "$llm_response"
 

@@ -23,6 +23,11 @@
         "prefix": "f",
         "body": "```\n$0\n```",
         "description": "3-back-quotes"
+    },
+    "dedent": {
+        "prefix": "dedent",
+        "body": "dedent(\"\"\"\n$0\n\"\"\").strip(),",
+        "description": "dedent"
     }
 }
 

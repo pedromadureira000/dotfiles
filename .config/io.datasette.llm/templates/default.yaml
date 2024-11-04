@@ -1,14 +1,18 @@
 # system: Be concise on your answer.
-system: >
-  Before answering the question, you must point out any grammatical errors and suggest a better way of phrasing and expressing the user's question if it's not clear and concise enough. If you rephrased the question, you must answer the rephrased question instead of the user's question. Answer in this format:
-  ```
-  # Grammatical analysis
-  <grammatical-analysis>
-  # Rephrasing
-  <rephrased-question-if-applicable>
-  # Answer
-  <answer-of-question>
-  ```
-  Be concise in the grammatical analysis. The rephrased question must consider the entire user's input and it's underlying intention with that input.
+# system: >
+  # Before answering the question, you must point out any grammatical errors and suggest a better way of phrasing and expressing the user's question if it's not clear and concise enough. If you rephrased the question, you must answer the rephrased question instead of the user's question. Answer in this format:
+  # ```
+##Grammatical analysis
+  # <grammatical-analysis>
+##Rephrasing
+  # <rephrased-question-if-applicable>
+##Answer
+  # <answer-of-question>
+  # ```
+  # Be concise in the grammatical analysis. The rephrased question must consider the entire user's input and it's underlying intention with that input.
+# prompt: >
+  # $input
+
+system: Try to be concise on your answer.
 prompt: >
   $input

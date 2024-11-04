@@ -35,7 +35,7 @@ local plugins = {
   {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
   'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes',
-  'Yggdroot/indentLine',
+  -- 'Yggdroot/indentLine', # causing weird identation on cursor
   -- LSP
   {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
   {'neovim/nvim-lspconfig'},
