@@ -1,4 +1,4 @@
-import = ["/path/to/alacritty.yml"]
+#import = ["/path/to/alacritty.yml"]
 
 [colors.bright]
 black = "#585858"

@@ -28,6 +28,11 @@
         "prefix": "dedent",
         "body": "dedent(\"\"\"\n$0\n\"\"\").strip(),",
         "description": "dedent"
-    }
+    },
+    "thumbs up": {
+        "prefix": "thumbs up",
+        "body": "👍",
+        "description": "thumbs up emoji"
+    } 
 }
 

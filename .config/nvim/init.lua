@@ -48,3 +48,7 @@ autocmd("BufEnter", {
         })
     end,
 })
+
+
+-- Disable modeline
+vim.o.modeline = false
