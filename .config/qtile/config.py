@@ -135,12 +135,12 @@ keys = [
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
 
     # Documents
-    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.work-memory/1.cache-memory.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.work-memory/1.work-memory.md"))),
-    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/z.work-memory/2.work-memory.md"))),
+    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.cache-memory.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.work-memory.md"))),
+    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/2.work-memory.md"))),
     # llm
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/zzz.configs/llm/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/zzz.configs/llm/1.prompt.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
     Key(["mod1"], "m", lazy.spawn(open_terminal_with_command_in_writing_mode(f"llm -m gpt -o temperature 0.1 -o max_tokens 4096 -t default "))),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model code --template code_assistant"))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
