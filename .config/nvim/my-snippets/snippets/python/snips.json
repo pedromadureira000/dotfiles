@@ -5,7 +5,6 @@
             "print(",
             "    f\"▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️  \"",
             "    f\"snippet: {${1:snippet}$0}; \"",
-            "    f\"snippet: {snippet}; \"",
             ")"
         ],
         "description": "python print"
