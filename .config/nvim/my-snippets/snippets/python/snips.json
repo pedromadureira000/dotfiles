@@ -1,7 +1,13 @@
 {
     "print": {
         "prefix": "print",
-        "body": "print('========================> snippet: ',${0:snippet} )",
+        "body": [
+            "print(",
+            "    f\"▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️  \"",
+            "    f\"snippet: {${1:snippet}$0}; \"",
+            "    f\"snippet: {snippet}; \"",
+            ")"
+        ],
         "description": "python print"
     }
 }
