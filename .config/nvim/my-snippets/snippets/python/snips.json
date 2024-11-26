@@ -1,12 +1,17 @@
 {
-    "print": {
-        "prefix": "print",
+    "snippet_body_list_example": {
+        "prefix": "snippet_body_list_example",
         "body": [
             "print(",
             "    f\"▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️▶️  \"",
             "    f\"snippet: {${1:snippet}$0}; \"",
             ")"
         ],
+        "description": "snippet_body_list_example"
+    },
+    "print": {
+        "prefix": "print",
+        "body": "print(f\"▶️\"*16, f\"${2:snippet}: {${1:snippet}}$0; \")",
         "description": "python print"
     }
 }
