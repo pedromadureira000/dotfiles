@@ -86,3 +86,11 @@ export PATH="$PATH":"$HOME/apache-maven-3.9.7/bin"
 
 # Created by `pipx` on 2024-10-09 13:25:57
 export PATH="$PATH:/home/ph/.local/bin"
+
+# ruby
+export PATH="$HOME/.local/share/gem/ruby/3.3.0/bin:$PATH"
+
+# nvm (nodejs versions control)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
