@@ -43,8 +43,6 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':bprevious<ESC>', { noremap = true })
 -- close buffer
 vim.api.nvim_set_keymap('n', '<leader>x', ':bd<ESC>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>X', ':bd!<ESC>', { noremap = true })
--- fold and unfold command
-vim.api.nvim_set_keymap('n', '<leader>m', 'za', { noremap = true })
 
 -- spell checking
 vim.api.nvim_set_keymap('n', 'fl', ':setlocal spell! spelllang=en_us<CR>', { noremap = true })
@@ -58,6 +56,15 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.api.nvim_set_keymap('n', 'gi', 'gi', { noremap = true })
 -- open NERDTree
 vim.api.nvim_set_keymap('n', '<leader>o', ':NERDTreeToggle<CR>', { noremap = true })
+
+-- fold and unfold command
+vim.api.nvim_set_keymap('n', '<leader>m', 'za', { noremap = true })
+
+-- tabgar 
+vim.api.nvim_set_keymap('n', '<leader>j', ':TagbarOpenAutoClose<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-j>', ':TagbarJumpNext<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-k>', ':TagbarJumpPrev<CR>', { noremap = true })
+
 -------------- example of commands
 
 ----- run command on file
@@ -69,11 +76,6 @@ vim.api.nvim_set_keymap('n', '<leader>o', ':NERDTreeToggle<CR>', { noremap = tru
 
 
 ------------- testing
---vim.keymap.set("n", "<leader>h", ":wincmd h<CR>")
---vim.keymap.set("n", "<leader>j", ":wincmd j<CR>")
---vim.keymap.set("n", "<leader>k", ":wincmd k<CR>")
---vim.keymap.set("n", "<leader>l", ":wincmd l<CR>")
-
 --vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 --vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 

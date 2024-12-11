@@ -43,9 +43,11 @@ mod = "mod4"
 terminal = guess_terminal()
 username = os.getlogin()
 
-def chosen_terminal(app):
-    #  return f'kitty {app}'
-    return f'alacritty --option font.size=20 --command {app}'
+def chosen_terminal(app, terminal="kitty"):
+    if terminal == "kitty":
+        return f'kitty {app}'
+    else:
+        return f'alacritty --option font.size=20 --command {app}'
 
 def open_terminal_with_command(command):
     escaped_command = command.replace('"', '\\"')

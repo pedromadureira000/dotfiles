@@ -22,6 +22,7 @@ local plugins = {
     dependencies = { {'nvim-lua/plenary.nvim'} }
   },
   'preservim/nerdtree',
+  'preservim/tagbar',
   'airblade/vim-rooter',  --Changes Vim working directory to project root. (necessary for nerdtree to work)
   --git
   'airblade/vim-gitgutter',

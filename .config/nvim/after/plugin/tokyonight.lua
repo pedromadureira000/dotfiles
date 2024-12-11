@@ -13,13 +13,13 @@ require("tokyonight").setup({
     end,
     on_highlights = function(hl, c)
         -- H1 - Dark Red
-        hl["RenderMarkdownH1Bg"] = {bg = "#5a2626", bold = true }
+        hl["RenderMarkdownH1Bg"] = {bg = "#2b1212", bold = true }
         hl["@markup.heading.1.markdown"] = {fg = "#c71a1a", bold = true }
         -- H2 - Dark Yellow
-        hl["RenderMarkdownH2Bg"] = {bg = "#5c5c26", bold = true}
+        hl["RenderMarkdownH2Bg"] = {bg = "#333315", bold = true}
         hl["@markup.heading.2.markdown"] = {fg = "#c2bf00", bold = true}
         -- H3 - Dark Green
-        hl["RenderMarkdownH3Bg"] = {bg = "#265c39", bold = true}
+        hl["RenderMarkdownH3Bg"] = {bg = "#14301e", bold = true}
         hl["@markup.heading.3.markdown"] = {fg = "#00bd0a", bold = true}
         -- H4 - Dark Cyan
         hl["RenderMarkdownH4Bg"] = {bg = "#265c5c", bold = true}

@@ -68,20 +68,5 @@ vim.g.airline_theme = 'behelit'
   -- Disable Airline whitespace extension
 vim.g['airline#extensions#whitespace#enabled'] = 0
 
--- indentLine
-    -- Enable indentLine
-vim.g.indentLine_enabled = 1
-
-    -- Toggle indentLine with Ctrl-k i
-vim.api.nvim_set_keymap('n', '<C-k>i', ':IndentLinesToggle<CR>', { noremap = true, silent = true })
-
-    -- Exclude file types from indentLine
-vim.g.indentLine_fileTypeExclude = {'json', 'markdown', 'md'}
-
-    -- Set the box drawing character for indentLine
-local box_drawings_light_vertical = '│'
-vim.g.indentLine_char = box_drawings_light_vertical
-
-
 -- avante recommended
 vim.opt.laststatus = 3
