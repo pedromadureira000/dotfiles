@@ -62,6 +62,7 @@ vim.api.nvim_set_keymap('n', '<leader>m', 'za', { noremap = true })
 
 -- tabgar 
 vim.api.nvim_set_keymap('n', '<leader>j', ':TagbarOpenAutoClose<CR>', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<leader>k', ':TagbarClose<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-j>', ':TagbarJumpNext<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':TagbarJumpPrev<CR>', { noremap = true })
 
