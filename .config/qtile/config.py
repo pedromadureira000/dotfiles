@@ -120,7 +120,7 @@ keys = [
 
     #-----/ Scripts
     Key([mod, "control"], "d", lazy.spawn("discord")),
-    Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
+    #  Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -l 5 -fn 'sans-10'")),
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
     Key([mod, "lock"], "Escape", lazy.spawn("sudo reboot")),
@@ -137,6 +137,7 @@ keys = [
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
 
     # Documents
+    Key([mod, "control"], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0✅TODO.1.md"))),
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.cache-memory.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/2.work-memory.md"))),
