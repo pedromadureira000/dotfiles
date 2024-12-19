@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Creating backup on Documents/z.backup"
+zip -r /home/ph/Documents/z.backup/sync_vault.zip /home/ph/Documents/sync_vault
+# zip -r /home/ph/Documents/z.backup/sync_vault_$(date +%Y%m%d_%H%M%S).zip /home/ph/Documents/sync_vault
+
 echo "What do you want to do?"
 echo "1. Load changes from Google Drive"
 echo "2. Send changes to Google Drive"
