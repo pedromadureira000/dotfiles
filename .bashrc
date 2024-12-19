@@ -55,10 +55,6 @@ alias llmlj='llm logs -n 1 --json'
 alias llml='llm logs -n 1'
 alias ip_show='iwctl station wlan0 show'
 
-alias load_changes_google="rclone sync sync-vault:/sync_vault /home/ph/Documents/sync_vault --progress --stats-one-line -v --create-empty-src-dirs"
-alias send_changes_google="rclone sync /home/ph/Documents/sync_vault sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs"
-# alias send_changes_google_with_log_file="rclone sync /home/ph/Documents/sync_vault sync-vault:/sync_vault --progress --stats-one-line --log-file=/home/ph/Documents/rclone-log.txt --log-level INFO"
-
 LLM_OPENAI_SHOW_RESPONSES=1
 
 # set default programs
