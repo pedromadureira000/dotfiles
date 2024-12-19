@@ -14,7 +14,7 @@ case $choice in
         echo "You are about to LOAD changes FROM Google Drive"
         read -p "Type 'yes' to confirm: " confirmation
         if [ "$confirmation" = "yes" ]; then
-            rclone sync sync-vault:/sync_vault /home/ph/Documents/sync_vault --progress --stats-one-line -v --create-empty-src-dirs
+            rclone sync sync-vault:/sync_vault /home/ph/Documents/sync_vault --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16
         else
             echo "Operation cancelled"
         fi
@@ -23,7 +23,7 @@ case $choice in
         echo "You are about to SEND changes TO Google Drive"
         read -p "Type 'yes' to confirm: " confirmation
         if [ "$confirmation" = "yes" ]; then
-            rclone sync /home/ph/Documents/sync_vault sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs
+            rclone sync /home/ph/Documents/sync_vault sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16
         else
             echo "Operation cancelled"
         fi
