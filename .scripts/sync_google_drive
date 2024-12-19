@@ -5,12 +5,12 @@ zip -r /home/ph/Documents/z.backup/sync_vault.zip /home/ph/Documents/sync_vault
 # zip -r /home/ph/Documents/z.backup/sync_vault_$(date +%Y%m%d_%H%M%S).zip /home/ph/Documents/sync_vault
 
 echo "What do you want to do?"
-echo "1. Load changes from Google Drive"
-echo "2. Send changes to Google Drive"
-read -p "Enter your choice (1 or 2): " choice
+echo "Load changes from Google Drive"
+echo "Send changes to Google Drive"
+read -p "Enter your choice ('load' or 'send'): " choice
 
 case $choice in
-    1)
+    "load")
         echo "You are about to LOAD changes FROM Google Drive"
         read -p "Type 'yes' to confirm: " confirmation
         if [ "$confirmation" = "yes" ]; then
@@ -19,7 +19,7 @@ case $choice in
             echo "Operation cancelled"
         fi
         ;;
-    2)
+    "send")
         echo "You are about to SEND changes TO Google Drive"
         read -p "Type 'yes' to confirm: " confirmation
         if [ "$confirmation" = "yes" ]; then
@@ -29,6 +29,6 @@ case $choice in
         fi
         ;;
     *)
-        echo "Invalid choice. Please select 1 or 2."
+        echo "Invalid choice. Please select 'load' or 'send'."
         ;;
 esac
