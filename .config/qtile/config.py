@@ -119,6 +119,7 @@ keys = [
     Key([mod, "control"], "b", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.bashrc"))),
 
     #-----/ Scripts
+    Key([mod], "space", lazy.spawn("toggle_keyboard_layout.sh")),
     Key([mod, "control"], "d", lazy.spawn("discord")),
     #  Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -l 5 -fn 'sans-10'")),
