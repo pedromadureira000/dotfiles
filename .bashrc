@@ -57,6 +57,9 @@ alias ip_show='iwctl station wlan0 show'
 
 LLM_OPENAI_SHOW_RESPONSES=1
 
+alias mount_sync_vault_daemon="rclone mount --daemon --vfs-cache-mode full sync-vault:/sync_vault /home/ph/Documents/sync_vault_mount"
+alias mount_sync_vault="rclone mount --vfs-cache-mode full sync-vault:/sync_vault /home/ph/Documents/sync_vault_mount"
+
 # set default programs
 export PATH=$PATH:$HOME/.scripts
 export EDITOR=nvim
