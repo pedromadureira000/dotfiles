@@ -117,3 +117,12 @@ class fzf_locate(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
+
+
+class rclone_sync(Command):
+    def execute(self):
+        if self.fm.thisfile:
+            selected_file = self.fm.thisfile.path
+            self.fm.run(f'rclone copy "{selected_file}" sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16')
+        else:
+            self.fm.notify("No file selected!")

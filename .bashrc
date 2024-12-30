@@ -60,6 +60,9 @@ LLM_OPENAI_SHOW_RESPONSES=1
 alias mount_sync_vault_daemon="rclone mount --daemon --vfs-cache-mode full sync-vault:/sync_vault /home/ph/Documents/sync_vault_mount"
 alias mount_sync_vault="rclone mount --vfs-cache-mode full sync-vault:/sync_vault /home/ph/Documents/sync_vault_mount"
 
+alias check_difference_rclone2="rclone check sync-vault:/sync_vault /home/ph/Documents/sync_vault --checksum"
+alias check_difference_rclone="rclone check /home/ph/Documents/sync_vault sync-vault:/sync_vault --checksum"
+
 # set default programs
 export PATH=$PATH:$HOME/.scripts
 export EDITOR=nvim

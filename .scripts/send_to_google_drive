@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "You are about to SEND changes TO Google Drive"
+read -p "Type 'y' to confirm: " confirmation
+if [ "$confirmation" = "y" ]; then
+    rclone sync /home/ph/Documents/sync_vault sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16
+else
+    echo "Operation cancelled"
+fi
