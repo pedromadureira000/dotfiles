@@ -63,6 +63,9 @@ alias mount_sync_vault="rclone mount --vfs-cache-mode full sync-vault:/sync_vaul
 alias check_difference_rclone2="rclone check sync-vault:/sync_vault /home/ph/Documents/sync_vault --checksum"
 alias check_difference_rclone="rclone check /home/ph/Documents/sync_vault sync-vault:/sync_vault --checksum"
 
+alias turn_on_wifi="sudo mv /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk_' /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk' && sudo systemctl restart iwd"
+alias turn_off_wifi="sudo mv /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk' /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk_' && sudo systemctl restart iwd"
+
 # set default programs
 export PATH=$PATH:$HOME/.scripts
 export EDITOR=nvim
