@@ -123,7 +123,7 @@ class rclone_send_file(Command):
     def execute(self):
         if self.fm.thisfile:
             selected_file = self.fm.thisfile.path
-            print(f'{selected_file}')
+            print(f'selected_file: {selected_file}')
             # /home/ph/Documents/sync_vault
             #  self.fm.run(f'rclone copy "{selected_file}" sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16')
         #  rclone copy /home/ph/Documents/sync_vault/Personal🧑/1.Definition/1.Routine.md sync-vault:/sync_vault/Personal🧑/1.Definition/ --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16
