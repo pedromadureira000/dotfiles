@@ -33,6 +33,11 @@
         "prefix": "thumbs up",
         "body": "👍",
         "description": "thumbs up emoji"
-    } 
+    },
+    "Insert bold text": {
+        "prefix": ["bold", "b"],
+        "body": "**${0}**",
+        "description": "Insert bold text"
+    }
 }
 

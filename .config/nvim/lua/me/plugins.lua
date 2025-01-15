@@ -48,7 +48,8 @@ local plugins = {
   {'hrsh7th/nvim-cmp'},
   'jiangmiao/auto-pairs',
   -- Snippets
-  {'L3MON4D3/LuaSnip', dependencies = {"rafamadriz/friendly-snippets"}},
+  {'L3MON4D3/LuaSnip'},
+  -- {'L3MON4D3/LuaSnip', dependencies = {"rafamadriz/friendly-snippets"}}, # commented becouse of "rafamadriz/friendly-snippets" bold markdown problem
   "saadparwaiz1/cmp_luasnip",
   -- dart
     -- Language support, mainly for indentation because it's more stable than treesitter
