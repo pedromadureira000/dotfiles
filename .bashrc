@@ -57,6 +57,7 @@ alias ip_show='iwctl station wlan0 show'
 alias start_docker='sudo systemctl start docker'
 alias restart_dhcp='sudo systemctl restart dhcpcd'
 alias status_dhcp='sudo systemctl status dhcpcd'
+alias status_iwd='sudo systemctl status iwd'
 
 LLM_OPENAI_SHOW_RESPONSES=1
 

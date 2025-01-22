@@ -38,6 +38,21 @@
         "prefix": ["bold", "b"],
         "body": "**${0}**",
         "description": "Insert bold text"
+    },
+    "slashes 1": {
+        "prefix": "----",
+        "body": "---------------------------/${1:name}",
+        "description": "many slashes"
+    },
+    "slashes 2": {
+        "prefix": "----",
+        "body": "------------------------/${1:name}/---------------------$0",
+        "description": "many slashes 2"
+    },
+    "code-prompt-xml": {
+        "prefix": "code-prompt-xml",
+        "body": "<instruction>${0:instruction}</instruction><code>${1:code}</code><question>${2:question}</question>",
+        "description": "many slashes"
     }
 }
 
