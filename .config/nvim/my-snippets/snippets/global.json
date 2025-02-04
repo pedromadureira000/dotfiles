@@ -53,6 +53,16 @@
         "prefix": "code-prompt-xml",
         "body": "<instruction>${0:instruction}</instruction><code>${1:code}</code><question>${2:question}</question>",
         "description": "many slashes"
+    },
+    "logg": {
+        "prefix": "logg",
+        "body": "AppConfig.logger.d('record: ${record}');",
+        "description": "logg print"
+    },
+    "logg import": {
+        "prefix": "logg import",
+        "body": "import \"package:fight_gym/config/app_config.dart\";",
+        "description": "logg import"
     }
 }
 
