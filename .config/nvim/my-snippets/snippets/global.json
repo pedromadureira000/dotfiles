@@ -56,7 +56,7 @@
     },
     "logg": {
         "prefix": "logg",
-        "body": "AppConfig.logger.d('record: ${record}');",
+        "body": "AppConfig.logger.d('record: $record');",
         "description": "logg print"
     },
     "logg import": {
