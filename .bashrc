@@ -112,3 +112,4 @@ export NVM_DIR="$HOME/.nvm"
 #rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
