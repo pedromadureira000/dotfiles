@@ -70,6 +70,7 @@ alias check_difference_rclone="rclone check /home/ph/Documents/sync_vault sync-v
 
 alias turn_on_wifi="sudo mv /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk_' /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk' && sudo systemctl restart iwd"
 alias turn_off_wifi="sudo mv /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk' /var/lib/iwd/'TIM ULTRAFIBRA_9DE0_2G.psk_' && sudo systemctl restart iwd"
+alias check_wifi="nmcli device status"
 
 # set default programs
 export PATH=$PATH:$HOME/.scripts
