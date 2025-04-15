@@ -142,7 +142,7 @@ keys = [
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.cache-memory.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/2.work-memory.md"))),
-    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/3.python-work-memory.py"))),
+    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-response.md"))),
     # llm
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
