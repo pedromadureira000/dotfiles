@@ -50,6 +50,8 @@ llm_model_options = {
     "claude": "claude-3.7-sonnet",
 }
 
+claude_extended_thinking = False
+
 def chosen_terminal(app, terminal="kitty"):
     if terminal == "kitty":
         return f'kitty {app}'
@@ -154,7 +156,7 @@ keys = [
     # llm
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
-    Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['claude']}"))),
+    Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['claude'] + "-o thinking 1" if claude_extended_thinking else ""}"))),
     Key([mod], "7", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"))),
     #  Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr --model {llm_model_options['gemini']}"))),

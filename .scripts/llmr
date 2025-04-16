@@ -65,6 +65,8 @@ fi
 input_text=$(cat "$FOLDER_PATH/$prompt_file")
 if [[ "$model" == *"gemini"* ]]; then
     llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 --no-stream)
+elif [[ "$model" == *"gpt"* ]]; then
+    llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 --no-stream)
 else
     llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 --no-stream)
     # llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 -t "$template" --no-stream)
