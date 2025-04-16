@@ -51,6 +51,17 @@ llm_model_options = {
 }
 
 claude_extended_thinking = False
+thinking_budget = 1026  # 1024 is the default
+run_llm_with_claude_cmd = (
+    f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md "
+    f"--model {llm_model_options['claude']}"
+    f"{' --thinking' if claude_extended_thinking else ''}"
+    f"{f' -o thinking_budget {thinking_budget}' if claude_extended_thinking and thinking_budget else ''}"
+)
+
+run_llm_with_openai_cmd = f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"
+
+run_llm_with_gemini_cmd = f"llmr --model {llm_model_options['gemini']}"
 
 def chosen_terminal(app, terminal="kitty"):
     if terminal == "kitty":
@@ -156,10 +167,9 @@ keys = [
     # llm
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
-    Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['claude'] + "-o thinking 1" if claude_extended_thinking else ""}"))),
-    Key([mod], "7", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"))),
-    #  Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
-    Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr --model {llm_model_options['gemini']}"))),
+    Key([mod], "m", lazy.spawn(open_terminal_with_command(run_llm_with_claude_cmd))),
+    Key([mod], "7", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
+    Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
     # configs
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
     # --- / Available

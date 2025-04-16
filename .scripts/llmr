@@ -1,24 +1,24 @@
 #!/bin/bash
 FOLDER_PATH=~/Documents/sync_vault/.meta/configs/llm
 BREAKLINES=$(printf "%0.s-" {1..50})
-
 prompt_file="1.prompt.md"
 response_file="prompt-response.md"
 log_file="prompt-log.md"
 model="gpt"
 # template="default"
+llm_options=()
+thinking_mode=false
 
 # Function to display usage information
 usage() {
-    echo "Usage: $0 --prompt <prompt-file> --log <log-file> --model <model>"
-    # echo "Usage: $0 --prompt <prompt-file> --log <log-file> --model <model> --template <template>"
+    echo "Usage: $0 --prompt <prompt-file> --log <log-file> --model <model> [--thinking] [-o <option_name> <option_value> ...]"
     echo "  --prompt    : Path to the prompt file (required)"
     echo "  --log       : Path to the log file (required)"
     echo "  --model     : Model to use (required)"
-    # echo "  --template  : Template to use (required)"
+    echo "  --thinking  : Enable thinking mode (sets temperature to 1)"
+    echo "  -o          : Additional options to pass to llm command (format: -o option_name option_value)"
     exit 1
 }
-
 # Parse named parameters
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -38,42 +38,53 @@ while [[ $# -gt 0 ]]; do
             model="$2"
             shift 2
             ;;
-        # --template)
-            # template="$2"
-            # shift 2
-            # ;;
+        --thinking)
+            thinking_mode=true
+            shift
+            ;;
+        -o)
+            if [[ $# -lt 3 ]]; then
+                echo "Error: -o option requires a name and value"
+                usage
+            fi
+            llm_options+=("-o" "$2" "$3")
+            shift 3
+            ;;
         *)
             echo "Unknown parameter: $1"
             usage
             ;;
     esac
 done
-
 # Check if all required parameters are provided
-# if [[ -z "$prompt_file" || -z "$log_file" || -z "$model" || -z "$template" ]]; then
-    # echo "Error: All parameters are required."
-    # usage
-# fi
-
+if [[ -z "$prompt_file" || -z "$log_file" || -z "$model" ]]; then
+    echo "Error: All required parameters (prompt, log, model) must be provided."
+    usage
+fi
 # Check if prompt file exists
 if [[ ! -f "$FOLDER_PATH/$prompt_file" ]]; then
     echo "Error: Prompt file '$FOLDER_PATH/$prompt_file' does not exist."
     exit 1
 fi
-
-
 input_text=$(cat "$FOLDER_PATH/$prompt_file")
-if [[ "$model" == *"gemini"* ]]; then
-    llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 --no-stream)
-elif [[ "$model" == *"gpt"* ]]; then
-    llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 --no-stream)
+
+# Set temperature based on thinking mode
+if [ "$thinking_mode" = true ]; then
+    base_cmd="llm -m \"$model\"  -o thinking 1 -o temperature 1 --no-stream"
 else
-    llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 --no-stream)
-    # llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 -t "$template" --no-stream)
+    base_cmd="llm -m \"$model\" -o temperature 0.1 --no-stream"
 fi
 
+# Construct the command with additional options
+cmd="echo \"$input_text\" | $base_cmd"
+# Add any additional options
+for ((i=0; i<${#llm_options[@]}; i+=3)); do
+    cmd+=" ${llm_options[i]} ${llm_options[i+1]} ${llm_options[i+2]}"
+done
+# echo $cmd #.............. print
+# Execute the command
+llm_response=$(eval "$cmd")
 echo "$llm_response"
-
 logs=$(llm logs -n 1 --json)
 id=$(echo "$logs" | jq -r '.[0].id')
 model=$(echo "$logs" | jq -r '.[0].response_json.model')
@@ -86,9 +97,8 @@ total_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.total_tokens')
 reasoning_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.completion_tokens_details.reasoning_tokens')
 cached_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.prompt_tokens_details.cached_tokens')
 #claude
-input_tokens=$(echo "$logs" | jq -r '.[0].response_json.input_tokens')
-output_tokens=$(echo "$logs" | jq -r '.[0].response_json.output_tokens')
-
+input_tokens=$(echo "$logs" | jq -r '.[0].input_tokens')
+output_tokens=$(echo "$logs" | jq -r '.[0].output_tokens')
 if [[ $model == *"gpt"* ]]; then
   openai_info="**Object type**: $object_type
 **openai usage**:
@@ -100,7 +110,6 @@ if [[ $model == *"gpt"* ]]; then
 else
   openai_info=""
 fi
-
 if [[ $model == *"claude"* ]]; then
   claude_info="**claude usage**:
 - input_tokens: $input_tokens
@@ -109,7 +118,6 @@ if [[ $model == *"claude"* ]]; then
 else
   claude_info=""
 fi
-
 llm_request_log="
 # llm id: $id
 **Model**: $model
@@ -118,7 +126,6 @@ $openai_info
 $claude_info
 ## Input Text:
 $input_text
-
 ## Output Text:
 $llm_response
 "
