@@ -89,6 +89,7 @@ for ((i=0; i<${#llm_options[@]}; i++)); do
     args+=("${llm_options[i]}")
 done
 echo "${args[@]}"
+echo "$BREAKLINES"
 llm_response=$(echo "$input_text" | llm "${args[@]}")
 
 echo "$llm_response"
@@ -151,9 +152,9 @@ llm_request_log="
 $openai_info
 $claude_info
 $gemini_info
-## Input Text:
+# Input Text:
 $input_text
-## Output Text:
+# Output Text:
 $llm_response
 "
 echo "$llm_request_log" > "$FOLDER_PATH/log/$response_file"
