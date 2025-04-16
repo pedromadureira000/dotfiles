@@ -142,11 +142,12 @@ keys = [
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.cache-memory.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/2.work-memory.md"))),
-    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-response.md"))),
+    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-code-response.md"))),
+    Key([mod, "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-response.md"))),
     # llm
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
-    Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model claude-3.5-sonnet --template code_assistant"))),
+    Key([mod], "m", lazy.spawn(open_terminal_with_command(f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model claude-3.7-sonnet"))),
     #  Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr"))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(f"llmr --model gemini-2.5-pro-exp-03-25"))),
     # configs

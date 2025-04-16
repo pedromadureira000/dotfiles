@@ -6,15 +6,16 @@ prompt_file="1.prompt.md"
 response_file="prompt-response.md"
 log_file="prompt-log.md"
 model="gpt"
-template="default"
+# template="default"
 
 # Function to display usage information
 usage() {
-    echo "Usage: $0 --prompt <prompt-file> --log <log-file> --model <model> --template <template>"
+    echo "Usage: $0 --prompt <prompt-file> --log <log-file> --model <model>"
+    # echo "Usage: $0 --prompt <prompt-file> --log <log-file> --model <model> --template <template>"
     echo "  --prompt    : Path to the prompt file (required)"
     echo "  --log       : Path to the log file (required)"
     echo "  --model     : Model to use (required)"
-    echo "  --template  : Template to use (required)"
+    # echo "  --template  : Template to use (required)"
     exit 1
 }
 
@@ -37,10 +38,10 @@ while [[ $# -gt 0 ]]; do
             model="$2"
             shift 2
             ;;
-        --template)
-            template="$2"
-            shift 2
-            ;;
+        # --template)
+            # template="$2"
+            # shift 2
+            # ;;
         *)
             echo "Unknown parameter: $1"
             usage
@@ -65,7 +66,8 @@ input_text=$(cat "$FOLDER_PATH/$prompt_file")
 if [[ "$model" == *"gemini"* ]]; then
     llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 --no-stream)
 else
-    llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 -t "$template" --no-stream)
+    llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 --no-stream)
+    # llm_response=$(echo "$input_text" | llm -m "$model" -o temperature 0.1 -o max_tokens 8192 -t "$template" --no-stream)
 fi
 
 echo "$llm_response"
@@ -82,8 +84,8 @@ total_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.total_tokens')
 reasoning_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.completion_tokens_details.reasoning_tokens')
 cached_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.prompt_tokens_details.cached_tokens')
 #claude
-input_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.input_tokens')
-output_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.output_tokens')
+input_tokens=$(echo "$logs" | jq -r '.[0].response_json.input_tokens')
+output_tokens=$(echo "$logs" | jq -r '.[0].response_json.output_tokens')
 
 if [[ $model == *"gpt"* ]]; then
   openai_info="**Object type**: $object_type
