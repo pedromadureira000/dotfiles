@@ -5,7 +5,6 @@ prompt_file="1.prompt.md"
 response_file="prompt-response.md"
 log_file="prompt-log.md"
 model="gpt"
-# template="default"
 llm_options=()
 thinking_mode=false
 
@@ -19,6 +18,7 @@ usage() {
     echo "  -o          : Additional options to pass to llm command (format: -o option_name option_value)"
     exit 1
 }
+
 # Parse named parameters
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -56,74 +56,101 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
 # Check if all required parameters are provided
 if [[ -z "$prompt_file" || -z "$log_file" || -z "$model" ]]; then
     echo "Error: All required parameters (prompt, log, model) must be provided."
     usage
 fi
+
 # Check if prompt file exists
 if [[ ! -f "$FOLDER_PATH/$prompt_file" ]]; then
     echo "Error: Prompt file '$FOLDER_PATH/$prompt_file' does not exist."
     exit 1
 fi
+
+# Read input text
 input_text=$(cat "$FOLDER_PATH/$prompt_file")
+
+# Build command arguments array
+args=("-m" "$model")
 
 # Set temperature based on thinking mode
 if [ "$thinking_mode" = true ]; then
-    base_cmd="llm -m \"$model\"  -o thinking 1 -o temperature 1 --no-stream"
+    args+=("-o" "thinking" "1" "-o" "temperature" "1")
 else
-    base_cmd="llm -m \"$model\" -o temperature 0.1 --no-stream"
+    args+=("-o" "temperature" "0.1")
 fi
 
-# Construct the command with additional options
-cmd="echo \"$input_text\" | $base_cmd"
-# Add any additional options
-for ((i=0; i<${#llm_options[@]}; i+=3)); do
-    cmd+=" ${llm_options[i]} ${llm_options[i+1]} ${llm_options[i+2]}"
+args+=("--no-stream")
+
+# Add any additional options from llm_options array
+for ((i=0; i<${#llm_options[@]}; i++)); do
+    args+=("${llm_options[i]}")
 done
-# echo $cmd #.............. print
-# Execute the command
-llm_response=$(eval "$cmd")
+echo "${args[@]}"
+llm_response=$(echo "$input_text" | llm "${args[@]}")
+
 echo "$llm_response"
+
+# Get logs and extract information
 logs=$(llm logs -n 1 --json)
 id=$(echo "$logs" | jq -r '.[0].id')
 model=$(echo "$logs" | jq -r '.[0].response_json.model')
 response_id=$(echo "$logs" | jq -r '.[0].response_json.id')
-#openai
+
+# Handle OpenAI-specific fields
 object_type=$(echo "$logs" | jq -r '.[0].response_json.object')
-completion_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.completion_tokens')
-prompt_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.prompt_tokens')
 total_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.total_tokens')
-reasoning_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.completion_tokens_details.reasoning_tokens')
-cached_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.prompt_tokens_details.cached_tokens')
-#claude
+
+# Handle Claude-specific fields
 input_tokens=$(echo "$logs" | jq -r '.[0].input_tokens')
 output_tokens=$(echo "$logs" | jq -r '.[0].output_tokens')
+
+# Handle Gemini-specific fields and pricing
+if [[ $model == *"gemini"* ]]; then
+  input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 1.25 / 1000000}")
+  output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 10.00 / 1000000}")
+  gemini_info="**gemini usage**:
+- input_tokens: $input_tokens (price: \$${input_price})
+- output_tokens: $output_tokens (price: \$${output_price})
+"
+else
+  gemini_info=""
+fi
+
+# Pricing for GPT-4.1
 if [[ $model == *"gpt"* ]]; then
+  input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 2.00 / 1000000}")
+  output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 8.00 / 1000000}")
   openai_info="**Object type**: $object_type
 **openai usage**:
-- completion_tokens: $completion_tokens
-- prompt_tokens: $prompt_tokens
-- total_tokens: $total_tokens
-- reasoning_tokens: $reasoning_tokens
-- cached_tokens: $cached_tokens"
+- output_tokens: $output_tokens (price: \$${output_price})
+- input_tokens: $input_tokens (price: \$${input_price})
+- total_tokens: $total_tokens"
 else
   openai_info=""
 fi
+
+# Pricing for Claude 3.7 Sonnet
 if [[ $model == *"claude"* ]]; then
+  input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 3.00 / 1000000}")
+  output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 15.00 / 1000000}")
   claude_info="**claude usage**:
-- input_tokens: $input_tokens
-- output_tokens: $output_tokens
+- input_tokens: $input_tokens (price: \$${input_price})
+- output_tokens: $output_tokens (price: \$${output_price})
 "
 else
   claude_info=""
 fi
+
 llm_request_log="
 # llm id: $id
 **Model**: $model
 **Response id**: $response_id
 $openai_info
 $claude_info
+$gemini_info
 ## Input Text:
 $input_text
 ## Output Text:
