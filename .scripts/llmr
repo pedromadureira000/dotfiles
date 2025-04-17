@@ -1,5 +1,5 @@
 #!/bin/bash
-FOLDER_PATH=~/Dropbox/.meta/configs/llm
+FOLDER_PATH=~/meta/configs/llm
 BREAKLINES=$(printf "%0.s-" {1..50})
 prompt_file="1.prompt.md"
 response_file="prompt-response.md"
