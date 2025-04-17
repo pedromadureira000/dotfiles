@@ -1,2 +1,0 @@
-#!/bin/bash
-duplicity incremental --encrypt-key=$dup_bk_key_id ~/Documents ftp://$ftp_user:$ftp_user_pass@$ftp_domain/documents_backup
