@@ -1,28 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
 import os
 
 from typing import List  # noqa: F401
@@ -153,27 +128,33 @@ keys = [
     Key([mod], "5", lazy.spawn(f"xrandr --output {screen_name} --mode {screen_size} --rate 48.05 --brightness 0.5")),
     Key([mod, "control"], "s", lazy.spawn(f"xrandr --output HDMI-1 --mode 1920x1080 --same-as eDP-1")),
 
-    # second monitor 
+    # ----/ second monitor 
     Key([mod, "control"], "1", lazy.to_screen(0)), # go to main monitor
     Key([mod, "control"], "2", lazy.to_screen(1)), # go to second monitor
 
-    # Documents
+    # ---- / Documents
     Key([mod, "control"], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/0✅Work-TODO.1.md"))),
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.cache-memory.md"))),
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/z.work-memory/2.work-memory.md"))),
+
+    # --- / llm
     Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-code-response.md"))),
-    Key([mod, "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-response.md"))),
-    # llm
+    Key(["control","mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-response.md"))),
+    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/log/prompt-response.md"))),
+
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
+
     Key([mod], "m", lazy.spawn(open_terminal_with_command(run_llm_with_claude_cmd))),
-    Key([mod], "7", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
-    # configs
+    Key(["mod1"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
+
+    # --- / configs
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
     # --- / Available
-    #  Key(["mod1"], "m", lazy.spawn(open_terminal_with_command_in_writing_mode(f""))),
+    #  Key([mod], "7", lazy.spawn()),
+    #  Key([mod, "control"], "7", lazy.spawn()),
     #  Key([mod, "control"], "9", lazy.spawn("")),
     #  Key([mod], "w", lazy.spawn()),
     #  Key([mod, "control"], "0", lazy.spawn(chosen_terminal())),

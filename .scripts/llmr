@@ -89,6 +89,7 @@ for ((i=0; i<${#llm_options[@]}; i++)); do
     args+=("${llm_options[i]}")
 done
 echo "${args[@]}"
+echo "Current time: $(date '+%H:%M:%S')"
 echo "$BREAKLINES"
 llm_response=$(echo "$input_text" | llm "${args[@]}")
 
