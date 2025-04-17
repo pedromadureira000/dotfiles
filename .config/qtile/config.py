@@ -44,8 +44,8 @@ terminal = guess_terminal()
 username = os.getlogin()
 
 llm_model_options = {
-    #  "gemini":"gemini-2.5-pro-exp-03-25", #free
-    "gemini": "gemini-2.5-pro-preview-03-25", #paid
+    "gemini":"gemini-2.5-pro-exp-03-25", #free
+    #  "gemini": "gemini-2.5-pro-preview-03-25", #paid
     "openai": "openai/gpt-4.1",
     "claude": "claude-3.7-sonnet",
 }
@@ -59,8 +59,8 @@ run_llm_with_claude_cmd = (
     f"{f' -o thinking_budget {thinking_budget}' if claude_extended_thinking and thinking_budget else ''}"
 )
 
-run_llm_with_openai_cmd = f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"
-
+#  run_llm_with_openai_cmd = f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"
+run_llm_with_openai_cmd = f"llmr --model {llm_model_options['openai']}"
 run_llm_with_gemini_cmd = f"llmr --model {llm_model_options['gemini']}"
 
 def chosen_terminal(app, terminal="kitty"):
@@ -168,8 +168,8 @@ keys = [
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/prompt-code.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Documents/sync_vault/.meta/configs/llm/1.prompt.md"))),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(run_llm_with_claude_cmd))),
-    Key([mod], "7", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
-    Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
+    Key([mod], "7", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
+    Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
     # configs
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
     # --- / Available
