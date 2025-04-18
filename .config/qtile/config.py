@@ -18,6 +18,11 @@ mod = "mod4"
 terminal = guess_terminal()
 username = os.getlogin()
 
+def open_llmr():
+    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/{os.environ["USER"]}/.local/bin\\"; llmr openai/gpt-4.1 default; exec bash"'
+
+
+
 llm_model_options = {
     "gemini":"gemini-2.5-pro-exp-03-25", #free
     #  "gemini": "gemini-2.5-pro-preview-03-25", #paid
@@ -28,15 +33,15 @@ llm_model_options = {
 claude_extended_thinking = False
 thinking_budget = 1026  # 1024 is the default
 run_llm_with_claude_cmd = (
-    f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md "
+    f"llmr_old --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md "
     f"--model {llm_model_options['claude']}"
     f"{' --thinking' if claude_extended_thinking else ''}"
     f"{f' -o thinking_budget {thinking_budget}' if claude_extended_thinking and thinking_budget else ''}"
 )
 
-#  run_llm_with_openai_cmd = f"llmr --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"
-run_llm_with_openai_cmd = f"llmr --model {llm_model_options['openai']}"
-run_llm_with_gemini_cmd = f"llmr --model {llm_model_options['gemini']}"
+#  run_llm_with_openai_cmd = f"llmr_old --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"
+run_llm_with_openai_cmd = f"llmr_old --model {llm_model_options['openai']}"
+run_llm_with_gemini_cmd = f"llmr_old --model {llm_model_options['gemini']}"
 
 def chosen_terminal(app, terminal="kitty"):
     if terminal == "kitty":
@@ -139,16 +144,17 @@ keys = [
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
 
     # --- / llm
-    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/log/prompt-code-response.md"))),
-    Key(["control","mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/log/prompt-response.md"))),
-    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/log/prompt-response.md"))),
+    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/log/prompt-code-response.md"))),
+    Key(["control","mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/log/prompt-response.md"))),
+    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/log/prompt-response.md"))),
 
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/1.prompt.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/prompt-code.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/1.prompt.md"))),
 
+    Key(["mod1"], "m", lazy.spawn(open_llmr())),
     Key([mod], "m", lazy.spawn(open_terminal_with_command(run_llm_with_claude_cmd))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
-    Key(["mod1"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
+    #  Key(["mod1"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
 
     # --- / configs
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),

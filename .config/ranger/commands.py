@@ -137,3 +137,31 @@ class rclone_get_file(Command):
             self.fm.run(f'rclone copy sync-vault:/sync_vault/"{selected_file}" . --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16')
         else:
             self.fm.notify("No file selected!")
+
+class llmr_with_files(Command):
+    """
+    Send selected files to llmr command
+    """
+    def execute(self):
+        import subprocess
+
+        # Get selected files or current file if none selected
+        if self.fm.thistab.get_selection():
+            selected_files = [f.path for f in self.fm.thistab.get_selection()]
+        elif self.fm.thisfile:
+            selected_files = [self.fm.thisfile.path]
+        else:
+            self.fm.notify("No files selected!")
+            return
+
+        # Build the command
+        cmd = ['alacritty', '--option', 'font.size=20', '-e', 'bash', '-c']
+
+        # Construct the llmr command with files
+        llmr_cmd = f"llmr openai/gpt-4.1 default {' '.join(selected_files)}"
+        shell_cmd = f'export PATH="$PATH:/home/{os.environ["USER"]}/.local/bin"; echo "{llmr_cmd}"; {llmr_cmd}; exec bash'
+
+        cmd.append(shell_cmd)
+
+        # Run the command
+        subprocess.Popen(cmd)
