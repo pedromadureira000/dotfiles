@@ -134,17 +134,17 @@ keys = [
 
     # ---- / Documents
     Key([mod, "control"], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/0.Work-TODO.1.md"))),
-    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/z.work-memory/1.cache-memory.md"))),
-    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/z.work-memory/1.work-memory.md"))),
-    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/z.work-memory/2.work-memory.md"))),
+    Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.cache-memory.md"))),
+    Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.work-memory.md"))),
+    Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
 
     # --- / llm
-    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/configs/llm/log/prompt-code-response.md"))),
-    Key(["control","mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/configs/llm/log/prompt-response.md"))),
-    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/configs/llm/log/prompt-response.md"))),
+    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/log/prompt-code-response.md"))),
+    Key(["control","mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/log/prompt-response.md"))),
+    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/log/prompt-response.md"))),
 
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/configs/llm/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/meta/configs/llm/1.prompt.md"))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/prompt-code.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/1.prompt.md"))),
 
     Key([mod], "m", lazy.spawn(open_terminal_with_command(run_llm_with_claude_cmd))),
     Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
