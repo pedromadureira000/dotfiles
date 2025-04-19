@@ -7,7 +7,6 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import qtile
-from datetime import datetime
 
 
 screen_name = os.environ.get('SCREEN_NAME')
@@ -18,46 +17,27 @@ mod = "mod4"
 terminal = guess_terminal()
 username = os.getlogin()
 
-def open_llmr():
-    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/{os.environ["USER"]}/.local/bin\\"; llmr openai/gpt-4.1 default; exec bash"'
-
-
+def open_llmr(model, mode):
+    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/{os.environ["USER"]}/.local/bin\\"; llmr {model} {mode}; exec bash"'
 
 llm_model_options = {
     "gemini":"gemini-2.5-pro-exp-03-25", #free
     #  "gemini": "gemini-2.5-pro-preview-03-25", #paid
     "openai": "openai/gpt-4.1",
-    "claude": "claude-3.7-sonnet",
+    "claude": "claude-3.7-sonnet", # for thinking: -o thinking 1 -o thinking_budget 1025
 }
 
-claude_extended_thinking = False
-thinking_budget = 1026  # 1024 is the default
-run_llm_with_claude_cmd = (
-    f"llmr_old --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md "
-    f"--model {llm_model_options['claude']}"
-    f"{' --thinking' if claude_extended_thinking else ''}"
-    f"{f' -o thinking_budget {thinking_budget}' if claude_extended_thinking and thinking_budget else ''}"
-)
-
-#  run_llm_with_openai_cmd = f"llmr_old --prompt prompt-code.md --response prompt-code-response.md --log prompt-code-log.md --model {llm_model_options['openai']}"
-run_llm_with_openai_cmd = f"llmr_old --model {llm_model_options['openai']}"
-run_llm_with_gemini_cmd = f"llmr_old --model {llm_model_options['gemini']}"
+class LLMMode:
+    default = "default"
+    coding = "coding"
+    coding_prompt_generator = "coding-prompt-generator"
+    code_analyst = "code-analyst"
 
 def chosen_terminal(app, terminal="kitty"):
     if terminal == "kitty":
         return f'kitty {app}'
     else:
         return f'alacritty --option font.size=20 --command {app}'
-
-def open_terminal_with_command(command):
-    escaped_command = command.replace('"', '\\"')
-    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/ph/.local/bin\\"; echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
-    #  return f'alacritty --option font.size=20 -e bash -c "source ~/.bashrc; echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
-    #  return f'alacritty --option font.size=20 -e bash -c "echo \\"{escaped_command}\\"; read -p \'Press enter to run...\'; {escaped_command}; exec bash"'
-
-def open_terminal_with_command_in_writing_mode(command):
-    escaped_command = command.replace('"', '\\"')
-    return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/ph/.local/bin\\"; echo -n \\"{escaped_command}\\"; read -e -p \' \' user_input; {escaped_command}$user_input; exec bash"'
 
 keys = [
     # Switch between windows
@@ -144,23 +124,28 @@ keys = [
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
 
     # --- / llm
-    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/log/prompt-code-response.md"))),
-    Key(["control","mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/log/prompt-response.md"))),
-    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/log/prompt-response.md"))),
+    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/last-log.md.md"))),
+    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/default/last-log.md.md"))),
+    Key(["mod1", "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding-prompt-generator/last-log.md.md"))),
 
-    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/prompt-code.md"))),
-    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_old/1.prompt.md"))),
+    Key([mod], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/output.md"))),
+    Key([mod, "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/default/output.md"))),
+    Key(["mod1"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding-prompt-generator/output.md"))),
+    Key(["mod1", "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/code-analyst/output.md"))),
 
-    Key(["mod1"], "m", lazy.spawn(open_llmr())),
-    Key([mod], "m", lazy.spawn(open_terminal_with_command(run_llm_with_claude_cmd))),
-    Key([mod, "control"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_openai_cmd))),
-    #  Key(["mod1"], "m", lazy.spawn(open_terminal_with_command(run_llm_with_gemini_cmd))),
+    Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/task.md"))),
+    Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/default/task.md"))),
+    Key(["mod1"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding-prompt-generator/task.md"))),
+    Key(["mod1", "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/code-analyst/task.md"))),
+
+    Key([mod], "m", lazy.spawn(open_llmr(llm_model_options["claude"], LLMMode.coding))),
+    Key([mod, "control"], "m", lazy.spawn(open_llmr(llm_model_options["openai"], LLMMode.default))),
+    Key(["mod1"], "m", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.coding_prompt_generator))),
+    Key(["mod1", "control"], "y", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.code_analyst))),
 
     # --- / configs
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
     # --- / Available
-    #  Key([mod], "7", lazy.spawn()),
-    #  Key([mod, "control"], "7", lazy.spawn()),
     #  Key([mod, "control"], "9", lazy.spawn("")),
     #  Key([mod], "w", lazy.spawn()),
     #  Key([mod, "control"], "0", lazy.spawn(chosen_terminal())),

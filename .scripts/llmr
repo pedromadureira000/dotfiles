@@ -1,8 +1,6 @@
 #!/bin/bash
 
 llmr() {
-    echo "....llmr"
-
     # Default values
     local model="openai/gpt-4.1"
     local mode="default"
@@ -126,10 +124,11 @@ llmr() {
     echo "Mode: $mode"
 
     echo "--------------------------------------------"
-
+    #claude_thinking_arguments = "-o thinking 1 -o thinking_budget 1025"
+    local claude_thinking_arguments=""
     # Call llm with the assembled prompt
     local llm_response
-    llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}" --no-stream)
+    llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}"  "${claude_thinking_arguments}" --no-stream)
 
     # Get logs and extract information
     local logs
