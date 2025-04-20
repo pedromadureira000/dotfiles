@@ -33,19 +33,17 @@ llmr() {
     done
 
     # Map mode numbers to names
-    local mode_map=(
-        ["1"]="default"
-        ["2"]="coding"
-        ["3"]="coding-prompt-generator"
-        ["4"]="code-analyst"
-    )
+    declare -A mode_map
+    mode_map["1"]="default"
+    mode_map["2"]="coding"
+    mode_map["3"]="coding-prompt-generator"
+    mode_map["4"]="code-analyst"
 
     # Map model letters to names
-    local model_map=(
-        ["g"]="gemini-2.5-pro-preview-03-25"
-        ["o"]="openai/gpt-4.1"
-        ["c"]="claude-3.7-sonnet"
-    )
+    declare -A model_map
+    model_map["g"]="gemini-2.5-pro-preview-03-25"
+    model_map["o"]="openai/gpt-4.1"
+    model_map["c"]="claude-3.7-sonnet"
 
     # Interactive mode selection
     local confirmed=false

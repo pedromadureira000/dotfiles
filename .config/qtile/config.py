@@ -120,13 +120,16 @@ keys = [
     # ---- / Documents
     Key([mod, "control"], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/0.Work-TODO.1.md"))),
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.cache-memory.md"))),
+
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
+    Key(["mod1"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/3.work-memory.md"))),
+    Key(["mod1", "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/4.work-memory.md"))),
 
     # --- / llm
-    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/last-log.md.md"))),
-    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/default/last-log.md.md"))),
-    Key(["mod1", "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding-prompt-generator/last-log.md.md"))),
+    Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/last-log.md"))),
+    Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/default/last-log.md"))),
+    Key(["mod1", "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding-prompt-generator/last-log.md"))),
 
     Key([mod], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/output.md"))),
     Key([mod, "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/default/output.md"))),
