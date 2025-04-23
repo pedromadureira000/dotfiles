@@ -12,7 +12,8 @@ require('mason-lspconfig').setup({
   -- Replace the language servers listed here with the ones you want to install
   ensure_installed = {
     'pyright',
-    'lua_ls'
+    'lua_ls',
+    'dartls'
   },
   handlers = {
     lsp_zero.default_setup,
@@ -58,8 +59,14 @@ lsp_config["dartls"].setup({
 })
 
 vim.diagnostic.config({
+  underline = true,
   virtual_text = true,
   signs = true,
-  underline = true,
   update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = "always",
+  },
 })
+    -- , vim.diagnostic.get_namespace("Lua Diagnostics."))

@@ -23,7 +23,9 @@ def open_llmr(model, mode):
 llm_model_options = {
     "gemini":"gemini-2.5-pro-exp-03-25", #free
     #  "gemini": "gemini-2.5-pro-preview-03-25", #paid
-    "openai": "openai/gpt-4.1",
+    #  "openai": "openai/gpt-4.1",
+    #  "openai": "openai/o3",
+    "openai": "openai/o4-mini",
     "claude": "claude-3.7-sonnet", # for thinking: -o thinking 1 -o thinking_budget 1025
 }
 
@@ -101,7 +103,7 @@ keys = [
     #-----/ Scripts
     Key([mod], "space", lazy.spawn("toggle_keyboard_layout.sh")),
     Key([mod, "control"], "d", lazy.spawn("discord")),
-    #  Key([mod, "control"], "t", lazy.spawn("telegram-desktop")),
+    Key(["mod1", "control"], "t", lazy.spawn("telegram-desktop")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -l 5 -fn 'sans-10'")),
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
     Key([mod, "lock"], "Escape", lazy.spawn("sudo reboot")),

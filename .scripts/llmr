@@ -2,7 +2,8 @@
 
 llmr() {
     # Default values
-    local model="openai/gpt-4.1"
+    local model="openai/o4-mini"
+    # local model="openai/gpt-4.1"
     local mode="default"
     local files=()
     local named_args=()
@@ -41,8 +42,12 @@ llmr() {
 
     # Map model letters to names
     declare -A model_map
-    model_map["g"]="gemini-2.5-pro-preview-03-25"
-    model_map["o"]="openai/gpt-4.1"
+    # model_map["g"]="gemini-2.5-pro-preview-03-25"
+    model_map["g"]="gemini-2.5-pro-exp-03-25"
+    model_map["o"]="openai/o4-mini"
+    # model_map["o"]="openai/gpt-4.1"
+    model_map["o3"]="openai/o3"
+    model_map["o4"]="openai/o4-mini"
     model_map["c"]="claude-3.7-sonnet"
 
     # Interactive mode selection
@@ -57,7 +62,7 @@ llmr() {
         echo "Options:"
         echo "  Press Enter to confirm and run"
         echo "  Type a number to change mode (1=default, 2=coding, 3=coding-prompt-generator, 4=code-analyst)"
-        echo "  Type a letter to change model (g=gemini, o=openai, c=claude)"
+        echo "  Type a letter to change model (g=gemini, o=openai, o3=openai/o3, o4=openai/o4-mini, c=claude)"
         echo "  Type 'x' to add a named argument"
         echo "  Type 'm' to specify a custom model name"
 
@@ -122,11 +127,10 @@ llmr() {
     echo "Mode: $mode"
 
     echo "--------------------------------------------"
-    #claude_thinking_arguments = "-o thinking 1 -o thinking_budget 1025"
-    local claude_thinking_arguments=""
     # Call llm with the assembled prompt
     local llm_response
-    llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}"  "${claude_thinking_arguments}" --no-stream)
+    llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}" --no-stream)
+    # llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}"  -o thinking 1 -o thinking_budget 1025 --no-stream)
 
     # Get logs and extract information
     local logs
