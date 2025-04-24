@@ -13,7 +13,6 @@ require('mason-lspconfig').setup({
   ensure_installed = {
     'pyright',
     'lua_ls',
-    'dartls'
   },
   handlers = {
     lsp_zero.default_setup,

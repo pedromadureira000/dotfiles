@@ -21,8 +21,8 @@ def open_llmr(model, mode):
     return f'alacritty --option font.size=20 -e bash -c "export PATH=\\"$PATH:/home/{os.environ["USER"]}/.local/bin\\"; llmr {model} {mode}; exec bash"'
 
 llm_model_options = {
-    "gemini":"gemini-2.5-pro-exp-03-25", #free
-    #  "gemini": "gemini-2.5-pro-preview-03-25", #paid
+    #  "gemini":"gemini-2.5-pro-exp-03-25", #free
+    "gemini": "gemini-2.5-pro-preview-03-25", #paid
     #  "openai": "openai/gpt-4.1",
     #  "openai": "openai/o3",
     "openai": "openai/o4-mini",
@@ -146,7 +146,7 @@ keys = [
     Key([mod], "m", lazy.spawn(open_llmr(llm_model_options["claude"], LLMMode.coding))),
     Key([mod, "control"], "m", lazy.spawn(open_llmr(llm_model_options["openai"], LLMMode.default))),
     Key(["mod1"], "m", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.coding_prompt_generator))),
-    Key(["mod1", "control"], "y", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.code_analyst))),
+    Key(["mod1", "control"], "m", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.code_analyst))),
 
     # --- / configs
     Key([mod, "control"], "0", lazy.spawn(chosen_terminal(f"nvim /home/{username}/.config/qtile/config.py"))),
