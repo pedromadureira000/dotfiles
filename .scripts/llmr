@@ -2,8 +2,8 @@
 
 llmr() {
     # Default values
-    local model="openai/o4-mini"
-    # local model="openai/gpt-4.1"
+    # local model="openai/o4-mini"
+    local model="openai/gpt-4.1"
     local mode="default"
     local files=()
     local named_args=()
@@ -46,8 +46,8 @@ llmr() {
     # Map model letters to names
     declare -A model_map
     model_map["g"]="gemini-2.5-pro-preview-03-25"
-    model_map["o"]="openai/o4-mini"
-    # model_map["o"]="openai/gpt-4.1"
+    # model_map["o"]="openai/o4-mini"
+    model_map["o"]="openai/gpt-4.1"
     model_map["c"]="claude-3.7-sonnet"
 
     # Interactive mode selection
@@ -275,15 +275,23 @@ $llm_response
     echo "$log_content" > "$mode_folder/last-log.md"
     echo "$log_content" > "$log_file"
 
-    # Display the response and additional information
-    echo "$llm_response"
-    echo ""
-    echo "----------------------------------------"
-    echo "Model: $model_used"
-    echo "Input tokens: $input_tokens"
-    echo "Output tokens: $output_tokens"
-    echo "Total tokens: $total_tokens"
-    echo "Log saved to: $log_file"
+    # -----/ Display the response and additional information
+    # echo "$llm_response"
+    # echo ""
+    # echo "----------------------------------------"
+    # echo "Model: $model_used"
+    # echo "Input tokens: $input_tokens"
+    # echo "Output tokens: $output_tokens"
+    # echo "Total tokens: $total_tokens"
+    # echo "Log saved to: $log_file"
+
+    # -----/ Save logs and output
+    echo "$llm_response" > "$mode_folder/output.md"
+    echo "$log_content" > "$mode_folder/last-log.md"
+    echo "$log_content" > "$log_file"
+
+    # Open the output file in nvim instead of displaying in terminal
+    kitty nvim "$mode_folder/output.md"
 }
 
 # Execute the function with script arguments

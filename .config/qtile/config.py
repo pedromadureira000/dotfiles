@@ -24,9 +24,9 @@ def open_llmr(model, mode):
 llm_model_options = {
     #  "gemini":"gemini-2.5-pro-exp-03-25", #free
     "gemini": "gemini-2.5-pro-preview-03-25", #paid
-    #  "openai": "openai/gpt-4.1",
     #  "openai": "openai/o3",
-    "openai": "openai/o4-mini",
+    "openai": "openai/gpt-4.1",
+    #  "openai": "openai/o4-mini",
     "claude": "claude-3.7-sonnet", # for thinking: -o thinking 1 -o thinking_budget 1025
 }
 
@@ -36,11 +36,8 @@ class LLMMode:
     coding_prompt_generator = "coding-prompt-generator"
     code_analyst = "code-analyst"
 
-def chosen_terminal(app, terminal="kitty"):
-    if terminal == "kitty":
-        return f'kitty {app}'
-    else:
-        return f'alacritty --option font.size=20 --command {app}'
+def chosen_terminal(app):
+    return f'kitty {app}'
 
 keys = [
     # Switch between windows
