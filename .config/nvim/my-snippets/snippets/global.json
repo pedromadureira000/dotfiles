@@ -59,6 +59,31 @@
         "body": "AppConfig.logger.d('record: $record');",
         "description": "logg print"
     },
+    "h1": {
+        "prefix": "h1",
+        "body": "${1:header}\n======================================",
+        "description": "markdown header 1"
+    },
+    "h2": {
+        "prefix": "h2",
+        "body": "${1:header}\n-------------------------------",
+        "description": "markdown header 2"
+    },
+    "h3": {
+        "prefix": "h3",
+        "body": "$### ________________________ {1:header}",
+        "description": "markdown header 3"
+    },
+    "h4": {
+        "prefix": "h4",
+        "body": "$#### ~~~~~~~~~~~~~~ {1:header}",
+        "description": "markdown header 4"
+    },
+    "h5": {
+        "prefix": "h5",
+        "body": "$##### {1:header}",
+        "description": "markdown header 5"
+    },
     "logg import": {
         "prefix": "logg import",
         "body": "import \"package:fight_gym/config/app_config.dart\";",

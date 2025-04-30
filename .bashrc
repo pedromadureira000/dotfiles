@@ -59,6 +59,7 @@ alias restart_dhcp='sudo systemctl restart dhcpcd'
 alias restart_iwd='sudo systemctl restart iwd'
 alias status_dhcp='sudo systemctl status dhcpcd'
 alias status_iwd='sudo systemctl status iwd'
+alias restart_networkmanager='sudo systemctl restart NetworkManager'
 
 LLM_OPENAI_SHOW_RESPONSES=1
 
@@ -74,8 +75,6 @@ export BROWSER=brave
 export TERM=alacritty
 
 # For check 'flutter doctor' boxe
-#export CHROME_EXECUTABLE=google-chrome-stable
-export CHROME_EXECUTABLE=brave
 export ANDROID_HOME=$HOME/android-sdk
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
@@ -106,4 +105,6 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$HOME/development/flutter/bin:$PATH"
 
-export CHROME_EXECUTABLE="/usr/bin/brave"
+# export CHROME_EXECUTABLE="/usr/bin/brave"
+export CHROME_EXECUTABLE=google-chrome-stable
+# export CHROME_EXECUTABLE=brave

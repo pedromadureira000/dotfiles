@@ -119,25 +119,6 @@ class fzf_locate(Command):
                 self.fm.select_file(fzf_file)
 
 
-class rclone_send_file(Command):
-    def execute(self):
-        if self.fm.thisfile:
-            selected_file = self.fm.thisfile.path
-            print(f'selected_file: {selected_file}')
-            # /home/ph/Documents/sync_vault
-            #  self.fm.run(f'rclone copy "{selected_file}" sync-vault:/sync_vault --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16')
-        #  rclone copy /home/ph/Documents/sync_vault/Personal🧑/1.Definition/1.Routine.md sync-vault:/sync_vault/Personal🧑/1.Definition/ --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16
-        else:
-            self.fm.notify("No file selected!")
-
-class rclone_get_file(Command):
-    def execute(self):
-        if self.fm.thisfile:
-            selected_file = self.fm.thisfile.path
-            self.fm.run(f'rclone copy sync-vault:/sync_vault/"{selected_file}" . --progress --stats-one-line -v --create-empty-src-dirs --fast-list --transfers=8 --checkers=16')
-        else:
-            self.fm.notify("No file selected!")
-
 class llmr_with_files(Command):
     """
     Send selected files to llmr command

@@ -8,7 +8,9 @@ llmr() {
     local files=()
     local named_args=()
     local base_folder="$HOME/utils/llmr"
-    local use_reasoning=false  # New flag for reasoning mode
+    local use_reasoning=false  # Flag for reasoning mode
+    local user_task_input=""   # Variable to store user task input
+    local user_provided_task=false # Flag to track if user provided task via 'i'
 
     # Parse positional arguments
     if [[ $# -ge 1 ]]; then
@@ -44,18 +46,22 @@ llmr() {
     # Map model letters to names
     declare -A model_map
     model_map["g"]="gemini-2.5-pro-preview-03-25"
-    # model_map["g"]="gemini-2.5-pro-exp-03-25"
     model_map["o"]="openai/o4-mini"
-    model_map["O"]="openai/o3"
     # model_map["o"]="openai/gpt-4.1"
     model_map["c"]="claude-3.7-sonnet"
 
     # Interactive mode selection
     local confirmed=false
     while [[ "$confirmed" != true ]]; do
+        local mode_folder_preview="$base_folder/$mode" # For display
         echo "Current settings:"
         echo "  Model: $model"
         echo "  Mode: $mode"
+        if [[ "$user_provided_task" == true ]]; then
+            echo "  Task: Provided via input (will override $mode_folder_preview/task.md)"
+        else
+            echo "  Task: From $mode_folder_preview/task.md"
+        fi
         echo "  Reasoning mode: $(if $use_reasoning; then echo "ON"; else echo "OFF"; fi)"
         echo "  Files: ${files[*]}"
         echo "  Named args: ${named_args[*]}"
@@ -63,7 +69,8 @@ llmr() {
         echo "Options:"
         echo "  Press Enter to confirm and run"
         echo "  Type a number to change mode (1=default, 2=coding, 3=coding-prompt-generator, 4=code-analyst)"
-        echo "  Type a letter to change model (g=gemini, o=openai, O=openai/o3, c=claude)"
+        echo "  Type a letter to change model (g=gemini, o=openai, c=claude)"
+        echo "  Type 'i' to input task text directly (press Ctrl+D when finished)"
         echo "  Type 'r' to toggle reasoning mode (for Claude model)"
         echo "  Type 'x' to add a named argument"
         echo "  Type 'm' to specify a custom model name"
@@ -74,8 +81,20 @@ llmr() {
             confirmed=true
         elif [[ "$choice" =~ ^[1-4]$ ]]; then
             mode="${mode_map[$choice]}"
+            user_task_input="" # Reset custom task if mode changes
+            user_provided_task=false
         elif [[ "$choice" =~ ^[goc]$ ]]; then
             model="${model_map[$choice]}"
+        elif [[ "$choice" == "i" ]]; then
+            echo "Enter task text (press Ctrl+D when finished):"
+            user_task_input=$(cat) # Read until EOF (Ctrl+D)
+            if [[ -n "$user_task_input" ]]; then
+                 user_provided_task=true
+                 echo "Task input captured."
+            else
+                 echo "No task input provided."
+                 user_provided_task=false # Ensure flag is false if input is empty
+            fi
         elif [[ "$choice" == "r" ]]; then
             use_reasoning=$(! $use_reasoning; echo $?)
             use_reasoning=$([[ $use_reasoning -eq 0 ]])
@@ -91,6 +110,9 @@ llmr() {
         else
             echo "Invalid choice. Please try again."
         fi
+        # Clear screen or add space before next iteration (optional)
+        # clear # Uncomment for cleaner display each time
+        echo "--------------------------------------------" # Separator
     done
 
     # Create necessary directories
@@ -98,8 +120,8 @@ llmr() {
     local log_folder="$mode_folder/log"
     mkdir -p "$log_folder"
 
-    # Ensure required files exist
-    touch "$mode_folder/task.md"
+    # Ensure required files exist (instructions, output, last-log)
+    # task.md is now optional if user provides input
     touch "$mode_folder/instructions.md"
     touch "$mode_folder/output.md"
     touch "$mode_folder/last-log.md"
@@ -116,18 +138,32 @@ $(cat "$mode_folder/instructions.md")
 "
     fi
 
-    # Add task
-    if [[ -f "$mode_folder/task.md" ]]; then
+    # Add task: Prioritize user input, then fallback to task.md
+    if [[ "$user_provided_task" == true ]]; then
+        prompt+="<task>
+$user_task_input
+</task>
+
+"
+    elif [[ -f "$mode_folder/task.md" ]]; then
+        # Ensure task.md exists before attempting to read
+        touch "$mode_folder/task.md" # Ensure it exists if not provided by user
         prompt+="<task>
 $(cat "$mode_folder/task.md")
 </task>
 
 "
+    else
+         # If no user input and no task.md, maybe add a placeholder or warning?
+         # For now, just omits the task section if neither is present.
+         echo "Warning: No task provided via input ('i') or found in $mode_folder/task.md"
     fi
+
 
     # Add context from files if provided
     if [[ ${#files[@]} -gt 0 ]]; then
         local context
+        # Assuming files-to-prompt command exists and works as intended
         context=$(files-to-prompt "${files[@]}")
         prompt+="<context>
 $context
@@ -160,40 +196,63 @@ $context
     # Get logs and extract information
     local logs
     logs=$(llm logs -n 1 --json)
-    local id=$(echo "$logs" | jq -r '.[0].id')
-    local model_used=$(echo "$logs" | jq -r '.[0].response_json.model')
-    local response_id=$(echo "$logs" | jq -r '.[0].response_json.id')
+    # Add error handling for logs in case llm fails
+    if [[ -z "$logs" || "$logs" == "[]" ]]; then
+        echo "Error: Failed to retrieve logs from llm."
+        echo "LLM Response (if any):"
+        echo "$llm_response"
+        return 1
+    fi
+
+    local id=$(echo "$logs" | jq -r '.[0].id // "N/A"')
+    local model_used=$(echo "$logs" | jq -r '.[0].response_json.model // "N/A"')
+    local response_id=$(echo "$logs" | jq -r '.[0].response_json.id // "N/A"')
 
     # Handle token information and pricing
-    local input_tokens=$(echo "$logs" | jq -r '.[0].input_tokens')
-    local output_tokens=$(echo "$logs" | jq -r '.[0].output_tokens')
-    local total_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.total_tokens')
-    local object_type=$(echo "$logs" | jq -r '.[0].response_json.object')
+    local input_tokens=$(echo "$logs" | jq -r '.[0].input_tokens // 0')
+    local output_tokens=$(echo "$logs" | jq -r '.[0].output_tokens // 0')
+    # Use total_tokens from usage if available, otherwise sum input/output
+    local total_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.total_tokens // "null"')
+    if [[ "$total_tokens" == "null" || "$total_tokens" == "0" ]]; then
+        total_tokens=$((input_tokens + output_tokens))
+    fi
+    local object_type=$(echo "$logs" | jq -r '.[0].response_json.object // "N/A"')
 
     # Calculate pricing based on model
     local model_info=""
+    local input_price=0
+    local output_price=0
 
+    # Use case-insensitive matching for model names
+    shopt -s nocasematch
     if [[ $model_used == *"gemini"* ]]; then
-        local input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 1.25 / 1000000}")
-        local output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 10.00 / 1000000}")
+        input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 1.25 / 1000000}")
+        output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 10.00 / 1000000}") # Example pricing
         model_info="**gemini usage**:
 - input_tokens: $input_tokens (price: \$${input_price})
 - output_tokens: $output_tokens (price: \$${output_price})"
-    elif [[ $model_used == *"gpt"* ]]; then
-        local input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 2.00 / 1000000}")
-        local output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 8.00 / 1000000}")
+    elif [[ $model_used == *"gpt"* || $model_used == *"openai"* ]]; then
+         # Adjust pricing per specific OpenAI model if needed
+        input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 2.00 / 1000000}") # Example pricing for o4-mini?
+        output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 8.00 / 1000000}") # Example pricing for o4-mini?
         model_info="**Object type**: $object_type
 **openai usage**:
 - input_tokens: $input_tokens (price: \$${input_price})
 - output_tokens: $output_tokens (price: \$${output_price})
 - total_tokens: $total_tokens"
     elif [[ $model_used == *"claude"* ]]; then
-        local input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 3.00 / 1000000}")
-        local output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 15.00 / 1000000}")
+        input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 3.00 / 1000000}") # Example pricing for Sonnet 3.7
+        output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 15.00 / 1000000}") # Example pricing for Sonnet 3.7
         model_info="**claude usage**:
 - input_tokens: $input_tokens (price: \$${input_price})
 - output_tokens: $output_tokens (price: \$${output_price})"
+    else
+         model_info="**Unknown model usage**:
+- input_tokens: $input_tokens
+- output_tokens: $output_tokens
+- total_tokens: $total_tokens"
     fi
+    shopt -u nocasematch # Turn off case-insensitive matching
 
     # Create log content
     local log_content="
@@ -203,7 +262,9 @@ $context
 $model_info
 
 # Input Text:
+\`\`\`
 $prompt
+\`\`\`
 
 # Output Text:
 $llm_response
@@ -224,4 +285,7 @@ $llm_response
     echo "Total tokens: $total_tokens"
     echo "Log saved to: $log_file"
 }
+
+# Execute the function with script arguments
 llmr "$@"
+

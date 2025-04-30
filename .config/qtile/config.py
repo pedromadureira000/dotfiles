@@ -1,16 +1,17 @@
 import os
-
 from typing import List  # noqa: F401
-
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import qtile
+from datetime import datetime
 
 
 screen_name = os.environ.get('SCREEN_NAME')
 screen_size = os.environ.get('SCREEN_SIZE')
+
+date_journal_filename = datetime.now().strftime('%Y-%m')
 
 
 mod = "mod4"
@@ -127,6 +128,7 @@ keys = [
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
     Key(["mod1"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/3.work-memory.md"))),
     Key(["mod1", "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/4.work-memory.md"))),
+    Key([mod, "control"], "j", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/4.Writing/Journal/{date_journal_filename}.md"))),
 
     # --- / llm
     Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/last-log.md"))),
