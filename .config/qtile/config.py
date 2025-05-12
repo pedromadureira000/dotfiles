@@ -125,7 +125,7 @@ keys = [
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
     Key(["mod1"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/3.work-memory.md"))),
     Key(["mod1", "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/4.work-memory.md"))),
-    Key([mod, "control"], "j", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/4.Writing/Journal/{date_journal_filename}.md"))),
+    Key([mod, "control"], "j", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/4.Writing/1.Journal/{date_journal_filename}.md"))),
 
     # --- / llm
     Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr/coding/last-log.md"))),
