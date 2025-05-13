@@ -61,28 +61,33 @@
     },
     "h1": {
         "prefix": "h1",
-        "body": ": =============/${1:header}/==============\n======================================",
+        "body": ": ==================== (${1:header})\n======================",
         "description": "markdown header 1"
     },
     "h2": {
         "prefix": "h2",
-        "body": ": -------------/${1:header}/--------------\n--------------------------------------",
+        "body": ": ------------- (${1:header})\n---------------",
         "description": "markdown header 2"
     },
     "h3": {
         "prefix": "h3",
-        "body": "$### ________________________ {1:header}",
+        "body": "### ________ 3 (${1:header})",
         "description": "markdown header 3"
     },
     "h4": {
         "prefix": "h4",
-        "body": "$#### ~~~~~~~~~~~~~~ {1:header}",
+        "body": "#### ~~~ 4 (${1:header})",
         "description": "markdown header 4"
     },
     "h5": {
         "prefix": "h5",
-        "body": "$##### {1:header}",
+        "body": "##### (${1:header})",
         "description": "markdown header 5"
+    },
+    "omitted": {
+        "prefix": "omitted",
+        "body": "// --- omitted ---",
+        "description": "omitted for code prompt"
     },
     "logg import": {
         "prefix": "logg import",
