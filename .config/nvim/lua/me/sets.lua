@@ -70,3 +70,6 @@ vim.g['airline#extensions#whitespace#enabled'] = 0
 
 -- avante recommended
 vim.opt.laststatus = 3
+
+-- tagbar
+vim.g.tagbar_width = 60

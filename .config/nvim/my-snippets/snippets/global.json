@@ -1,22 +1,7 @@
 {
-    "xml-simple": {
-        "prefix": "xml-simple",
-        "body": "<instruction>\n${1:instruction}\n</instruction>\n<code>\n${2:code}\n</code>\n<question>\n${3:question}\n</question>",
-        "description": "prompt"
-    },
-    "xml-django": {
-        "prefix": "xml-django",
-        "body": "<instruction>\nYour task is to provide the required code according to the user's request. Follow these instructions precisely:\n1. Return ONLY the asked code.\n2. Do not include any explanations, comments, or line numbers in your response.\n3. Follow the SAME indentation in the returned code as in the code sent by the user.\n</instruction>\n<code>\nThe relevant django views and models:\n```python\n```\nThe structure of django template I use:\n```html\n{% extends 'base.html' %}\n{% load static %}\n\n{% block title %}\n{% endblock %}\n\n{% block custom_css %}\n{% endblock %}\n\n{% block content %}\n{% endblock %}\n```\n</code>\n<question>\n</question>",
-        "description": "prompt"
-    },
-    "prompt": {
-        "prefix": "prompt",
-        "body": "a",
-        "description": "js print"
-    },
     "console.log": {
         "prefix": "console",
-        "body": "console.log('>>>>>>>snippet: ', ${1:snippet})$0",
+        "body": "console.log('>>>>>>>snippet: ', ${0:snippet})",
         "description": "js print"
     },
     "3-back-quotes": {
@@ -26,7 +11,7 @@
     },
     "dedent": {
         "prefix": "dedent",
-        "body": "dedent(\"\"\"\n$0\n\"\"\").strip(),",
+        "body": "dedent(f\"\"\"\n$0\n\"\"\").strip()",
         "description": "dedent"
     },
     "thumbs up": {
@@ -41,47 +26,42 @@
     },
     "slashes 1": {
         "prefix": "----",
-        "body": "---------------------------/${1:name}",
+        "body": "---------------------------/${0:name}",
         "description": "many slashes"
     },
     "slashes 2": {
         "prefix": "----",
-        "body": "------------------------/${1:name}/---------------------$0",
+        "body": "------------------------/${0:name}/---------------------",
         "description": "many slashes 2"
-    },
-    "code-prompt-xml": {
-        "prefix": "code-prompt-xml",
-        "body": "<instruction>${0:instruction}</instruction><code>${1:code}</code><question>${2:question}</question>",
-        "description": "many slashes"
     },
     "logg": {
         "prefix": "logg",
-        "body": "AppConfig.logger.d('record: $record');",
+        "body": "AppConfig.logger.d('$0');",
         "description": "logg print"
     },
     "h1": {
         "prefix": "h1",
-        "body": ": ==================== (${1:header})\n======================",
+        "body": "# ==================== ${0:header}",
         "description": "markdown header 1"
     },
     "h2": {
         "prefix": "h2",
-        "body": ": ------------- (${1:header})\n---------------",
+        "body": "## --------------- ${0:header}",
         "description": "markdown header 2"
     },
     "h3": {
         "prefix": "h3",
-        "body": "### ________ 3 (${1:header})",
+        "body": "### _______ ${0:header}",
         "description": "markdown header 3"
     },
     "h4": {
         "prefix": "h4",
-        "body": "#### ~~~ 4 (${1:header})",
+        "body": "#### ~~~ ${0:header}",
         "description": "markdown header 4"
     },
     "h5": {
         "prefix": "h5",
-        "body": "##### (${1:header})",
+        "body": "##### ${0:header}",
         "description": "markdown header 5"
     },
     "omitted": {

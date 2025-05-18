@@ -4,14 +4,14 @@
         "body": [
             "print(",
             "    f\"▶️\"*16,",
-            "    f\"snippet: {${1:snippet}$0}; \"",
+            "    f\"snippet: {${0:snippet}}; \"",
             ")"
         ],
         "description": "print2"
     },
     "print": {
         "prefix": "print",
-        "body": "print(f\"▶️\"*16, f\"${2:snippet}: {${1:snippet}}$0; \")",
+        "body": "print(f\"▶️\"*16, f\"snippet: $0snippet; \")",
         "description": "python print"
     }
 }

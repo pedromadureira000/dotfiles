@@ -1,7 +1,7 @@
 {
     "console.log": {
         "prefix": "console",
-        "body": "console.log('>>>>>>>snippet: ', ${1:snippet})$0",
+        "body": "console.log('>>>>>>>snippet: ', $0",
         "description": "js print"
     }
 }
