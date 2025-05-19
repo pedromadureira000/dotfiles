@@ -23,12 +23,17 @@ llmr() {
         shift
     fi
 
-    # Parse remaining arguments as files
+    # Parse remaining arguments as files or named arguments
     while [[ $# -gt 0 ]]; do
         if [[ "$1" == "--"* ]]; then
-            # Handle named arguments (--arg value format)
-            named_args+=("$1" "$2")
-            shift 2
+            # Handle named arguments (--arg value format or --flag format)
+            if [[ $# -gt 1 ]] && ! [[ "$2" == "--"* ]]; then
+                named_args+=("$1" "$2")
+                shift 2
+            else
+                named_args+=("$1") # Handle flags without values
+                shift 1
+            fi
         else
             # Handle file paths
             files+=("$1")
@@ -46,7 +51,6 @@ llmr() {
     # Map model letters to names
     declare -A model_map
     model_map["g"]="gemini-2.5-pro-preview-03-25"
-    # model_map["o"]="openai/o4-mini"
     model_map["o"]="openai/gpt-4.1"
     model_map["c"]="claude-3.7-sonnet"
 
@@ -72,8 +76,6 @@ llmr() {
         echo "  Type a letter to change model (g=gemini, o=openai, c=claude)"
         echo "  Type 'i' to input task text directly (press Ctrl+D when finished)"
         echo "  Type 'r' to toggle reasoning mode (for Claude model)"
-        echo "  Type 'x' to add a named argument"
-        echo "  Type 'm' to specify a custom model name"
 
         read -r choice
 
@@ -98,33 +100,19 @@ llmr() {
         elif [[ "$choice" == "r" ]]; then
             use_reasoning=$(! $use_reasoning; echo $?)
             use_reasoning=$([[ $use_reasoning -eq 0 ]])
-        elif [[ "$choice" == "x" ]]; then
-            echo "Enter argument name (with --): "
-            read -r arg_name
-            echo "Enter argument value: "
-            read -r arg_value
-            named_args+=("$arg_name" "$arg_value")
-        elif [[ "$choice" == "m" ]]; then
-            echo "Enter custom model name: "
-            read -r model
         else
             echo "Invalid choice. Please try again."
         fi
-        # Clear screen or add space before next iteration (optional)
-        # clear # Uncomment for cleaner display each time
         echo "--------------------------------------------" # Separator
     done
 
-    # Create necessary directories
+    # Create necessary directories for mode files (instructions, task)
     local mode_folder="$base_folder/$mode"
-    local log_folder="$mode_folder/log"
-    mkdir -p "$log_folder"
+    mkdir -p "$mode_folder"
 
-    # Ensure required files exist (instructions, output, last-log)
-    # task.md is now optional if user provides input
+    # Ensure required files exist for prompt building
     touch "$mode_folder/instructions.md"
-    touch "$mode_folder/output.md"
-    touch "$mode_folder/last-log.md"
+    # task.md is optional if user provides input
 
     # Build the prompt
     local prompt=""
@@ -146,7 +134,6 @@ $user_task_input
 
 "
     elif [[ -f "$mode_folder/task.md" ]]; then
-        # Ensure task.md exists before attempting to read
         touch "$mode_folder/task.md" # Ensure it exists if not provided by user
         prompt+="<task>
 $(cat "$mode_folder/task.md")
@@ -154,8 +141,6 @@ $(cat "$mode_folder/task.md")
 
 "
     else
-         # If no user input and no task.md, maybe add a placeholder or warning?
-         # For now, just omits the task section if neither is present.
          echo "Warning: No task provided via input ('i') or found in $mode_folder/task.md"
     fi
 
@@ -172,128 +157,43 @@ $context
 "
     fi
 
-    # Current timestamp for log file
-    local timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-    local log_file="$log_folder/$timestamp.md"
-
-    echo "Running llm with model: $model"
+    echo "Running Python LLMRunner with model: $model"
     echo "Mode: $mode"
-    if $use_reasoning && [[ $model == *"claude"* ]]; then
-        echo "Reasoning mode: ON"
+    
+    local model_provider=""
+    if [[ "$model" == "openai/"* ]]; then
+        model_provider="openai"
+    elif [[ "$model" == "gemini"* ]]; then
+        model_provider="gemini"
+    elif [[ "$model" == "claude"* ]]; then
+        model_provider="claude"
+    else
+        echo "Error: Could not determine model provider from model name: $model"
+        exit 1
     fi
 
+    local python_cli_args=()
+    python_cli_args+=("--model_provider" "$model_provider")
+    python_cli_args+=("--model_name" "$model")
+    python_cli_args+=("--execution_type" "MODEL_NON_STREAM") 
+    python_cli_args+=("--mode" "$mode")
+
+    # Add existing named arguments
+    python_cli_args+=("${named_args[@]}")
+
+    if $use_reasoning && [[ "$model_provider" == "claude" ]]; then
+        echo "Reasoning mode: ON (for Claude)"
+        # Add --thinking flag and --thinking_budget, ensuring not to duplicate if already in named_args
+        # For simplicity, we add them. More complex logic could check named_args.
+        python_cli_args+=("--thinking")
+        python_cli_args+=("--thinking_budget" "1025")
+    fi
+    
     echo "--------------------------------------------"
-    # Call llm with the assembled prompt
-    local llm_response
-    if $use_reasoning && [[ $model == *"claude"* ]]; then
-        # Use reasoning mode for Claude
-        llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}" -o thinking 1 -o thinking_budget 1025 --no-stream)
-    else
-        # Default mode
-        llm_response=$(echo -e "$prompt" | llm -m "$model" "${named_args[@]}" --no-stream)
-    fi
-
-    # Get logs and extract information
-    local logs
-    logs=$(llm logs -n 1 --json)
-    # Add error handling for logs in case llm fails
-    if [[ -z "$logs" || "$logs" == "[]" ]]; then
-        echo "Error: Failed to retrieve logs from llm."
-        echo "LLM Response (if any):"
-        echo "$llm_response"
-        return 1
-    fi
-
-    local id=$(echo "$logs" | jq -r '.[0].id // "N/A"')
-    local model_used=$(echo "$logs" | jq -r '.[0].response_json.model // "N/A"')
-    local response_id=$(echo "$logs" | jq -r '.[0].response_json.id // "N/A"')
-
-    # Handle token information and pricing
-    local input_tokens=$(echo "$logs" | jq -r '.[0].input_tokens // 0')
-    local output_tokens=$(echo "$logs" | jq -r '.[0].output_tokens // 0')
-    # Use total_tokens from usage if available, otherwise sum input/output
-    local total_tokens=$(echo "$logs" | jq -r '.[0].response_json.usage.total_tokens // "null"')
-    if [[ "$total_tokens" == "null" || "$total_tokens" == "0" ]]; then
-        total_tokens=$((input_tokens + output_tokens))
-    fi
-    local object_type=$(echo "$logs" | jq -r '.[0].response_json.object // "N/A"')
-
-    # Calculate pricing based on model
-    local model_info=""
-    local input_price=0
-    local output_price=0
-
-    # Use case-insensitive matching for model names
-    shopt -s nocasematch
-    if [[ $model_used == *"gemini"* ]]; then
-        input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 1.25 / 1000000}")
-        output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 10.00 / 1000000}") # Example pricing
-        model_info="**gemini usage**:
-- input_tokens: $input_tokens (price: \$${input_price})
-- output_tokens: $output_tokens (price: \$${output_price})"
-    elif [[ $model_used == *"gpt"* || $model_used == *"openai"* ]]; then
-         # Adjust pricing per specific OpenAI model if needed
-        input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 2.00 / 1000000}") # Example pricing for o4-mini?
-        output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 8.00 / 1000000}") # Example pricing for o4-mini?
-        model_info="**Object type**: $object_type
-**openai usage**:
-- input_tokens: $input_tokens (price: \$${input_price})
-- output_tokens: $output_tokens (price: \$${output_price})
-- total_tokens: $total_tokens"
-    elif [[ $model_used == *"claude"* ]]; then
-        input_price=$(awk "BEGIN {printf \"%.6f\", $input_tokens * 3.00 / 1000000}") # Example pricing for Sonnet 3.7
-        output_price=$(awk "BEGIN {printf \"%.6f\", $output_tokens * 15.00 / 1000000}") # Example pricing for Sonnet 3.7
-        model_info="**claude usage**:
-- input_tokens: $input_tokens (price: \$${input_price})
-- output_tokens: $output_tokens (price: \$${output_price})"
-    else
-         model_info="**Unknown model usage**:
-- input_tokens: $input_tokens
-- output_tokens: $output_tokens
-- total_tokens: $total_tokens"
-    fi
-    shopt -u nocasematch # Turn off case-insensitive matching
-
-    # Create log content
-    local log_content="
-# llm id: $id
-**Model**: $model_used
-**Response id**: $response_id
-$model_info
-
-# Input Text:
-\`\`\`
-$prompt
-\`\`\`
-
-# Output Text:
-$llm_response
-"
-
-    # Save logs and output
-    echo "$llm_response" > "$mode_folder/output.md"
-    echo "$log_content" > "$mode_folder/last-log.md"
-    echo "$log_content" > "$log_file"
-
-    # -----/ Display the response and additional information
-    # echo "$llm_response"
-    # echo ""
-    # echo "----------------------------------------"
-    # echo "Model: $model_used"
-    # echo "Input tokens: $input_tokens"
-    # echo "Output tokens: $output_tokens"
-    # echo "Total tokens: $total_tokens"
-    # echo "Log saved to: $log_file"
-
-    # -----/ Save logs and output
-    echo "$llm_response" > "$mode_folder/output.md"
-    echo "$log_content" > "$mode_folder/last-log.md"
-    echo "$log_content" > "$log_file"
-
-    # Open the output file in nvim instead of displaying in terminal
-    kitty nvim "$mode_folder/output.md"
+    # Call Python script with the assembled prompt via stdin and arguments
+    # Ensure the path to llm_runner.py is correct
+    echo -e "$prompt" | python "$HOME/.scripts/llmr_python/llm_runner.py" "${python_cli_args[@]}"
 }
 
 # Execute the function with script arguments
 llmr "$@"
-
