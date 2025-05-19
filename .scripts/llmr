@@ -7,7 +7,7 @@ llmr() {
     local mode="default"
     local files=()
     local named_args=()
-    local base_folder="$HOME/utils/llmr"
+    local base_folder="$HOME/utils/llmr_py_runs"
     local use_reasoning=false  # Flag for reasoning mode
     local user_task_input=""   # Variable to store user task input
     local user_provided_task=false # Flag to track if user provided task via 'i'
@@ -119,7 +119,8 @@ llmr() {
 
     # Add instructions
     if [[ -f "$mode_folder/instructions.md" ]]; then
-        prompt+="<instructions>
+        prompt+="
+<instructions>
 $(cat "$mode_folder/instructions.md")
 </instructions>
 

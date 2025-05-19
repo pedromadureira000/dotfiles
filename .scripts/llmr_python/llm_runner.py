@@ -123,7 +123,7 @@ class LLMRunner:
 
         return model_info_str
 
-    def _save_logs(self, mode: str, prompt_text_with_system: str, llm_response_obj: llm.Response, full_response_text: str):
+    def _save_logs(self, mode: str, llm_response_obj: llm.Response, prompt_text_with_system: str, full_response_text: str):
         mode_folder = self.base_folder / mode
         log_folder = mode_folder / "log"
         log_folder.mkdir(parents=True, exist_ok=True)
@@ -133,8 +133,6 @@ class LLMRunner:
         last_log_file = mode_folder / "last-log.md"
         output_file = mode_folder / "output.md"
 
-        #  if llm_response_obj and hasattr(llm_response_obj, 'id') and hasattr(llm_response_obj, 'model') and hasattr(llm_response_obj, 'usage'):
-        print(f"▶️"*16, f"llm_response_obj: {llm_response_obj}")
         llm_internal_id = "<No ID Found>"
         if hasattr(llm_response_obj, 'id'):
             llm_internal_id = llm_response_obj.id
@@ -176,13 +174,17 @@ class LLMRunner:
             # llm internal id: {llm_internal_id}
             **Model**: {model_name_actually_used}
             **API Response id**: {api_specific_response_id}
+        """).strip()
+        log_content += "\n\n" + dedent(f"""
             {pricing_info_str}
+        """).strip()
 
+        log_content += "\n\n" + dedent(f"""
             # Input:
-            ```
             {prompt_text_with_system}
-            ```
+        """).strip()
 
+        log_content += "\n\n" + dedent(f"""
             # Output:
             {full_response_text}
         """).strip()
@@ -190,10 +192,6 @@ class LLMRunner:
         output_file.write_text(full_response_text, encoding='utf-8')
         last_log_file.write_text(log_content, encoding='utf-8')
         log_file.write_text(log_content, encoding='utf-8')
-
-        print(f"Output saved to: {output_file}")
-        print(f"Log saved to: {log_file}")
-        print(f"Last log updated: {last_log_file}")
 
     async def _get_response_object_from_logs(self, model_instance, full_response_text):
         # Helper to fetch last log entry and construct a mock Response object
@@ -296,7 +294,15 @@ class LLMRunner:
              prompt_args["key"] = api_key_to_use
         
         system_prompt_text = kwargs.get("system")
-        full_prompt_for_log = f"System: {system_prompt_text}\nUser: {prompt_text}" if system_prompt_text else f"User: {prompt_text}"
+        if system_prompt_text:
+            full_prompt_for_log = dedent(f"""
+                System:
+                {system_prompt_text}
+                User:
+                {prompt_text}
+            """).strip()
+        else:
+            full_prompt_for_log = dedent(f"{prompt_text}")
 
 
         # Common params from kwargs
@@ -317,12 +323,19 @@ class LLMRunner:
 
         full_response_text = ""
         llm_response_obj = None # This will be llm.Response or a compatible wrapper
-
-        print(f"▶️"*16, f"{model_name}; {execution_type}; {prompt_args}; ")
+        # Printing it
+        PRINTING_ARGS_INFO = True
+        if PRINTING_ARGS_INFO:
+            print(f"▶️"*16, f"{model_name}; {execution_type}; ")
+            for key, value in prompt_args.items():
+                if key != "prompt" and key != "key":
+                    print(f"{key}: {value}")
+        print(f"▶️"*16, f"\n")
         if execution_type == LLMExecutionType.MODEL_NON_STREAM:
             llm_response_obj = model_instance.prompt(**prompt_args)
             full_response_text = llm_response_obj.text()
             print(full_response_text)
+            print(f"▶️"*16, f"\n")
         elif execution_type == LLMExecutionType.MODEL_STREAM:
             response_chunks = []
             stream_iterator = model_instance.prompt(**prompt_args)
@@ -350,7 +363,7 @@ class LLMRunner:
         elif execution_type == LLMExecutionType.ASYNC_MODEL_STREAM:
             full_response_text, llm_response_obj = asyncio.run(self._handle_async_stream(model_instance, prompt_args))
         try: 
-            self._save_logs(current_mode, full_prompt_for_log, llm_response_obj, full_response_text)
+            self._save_logs(current_mode, llm_response_obj, full_prompt_for_log, full_response_text)
         except Exception as err:
             print(f"▶️"*16, f"\n")
             print(f"▶️"*16, f"Didn't manage to save logs. Got error: {err}")
@@ -428,256 +441,8 @@ json_schema = {
 }
 
 if __name__ == "__main__":
-    def testing_this_one(test):
-        #  if test == "Running OpenAI Example (MODEL_NON_STREAM)":
-        #  if test == "Running Gemini Example (MODEL_STREAM)":
-        #  if test == "claude":
-        #  if test == "OpenAI Async example":
-        #  if test == "OpenAI Example with Attachment":
-        #  if test == "Running Gemini Example (MODEL_NON_STREAM) JSON":
-        #  if test == "nano MODEL_NON_STREAM Json Response":
-        #  if test == "claude MODEL_NON_STREAM Json Response":
-        if test == "no":
-            return True
-        else:
-            return False
+    parser = argparse.ArgumentParser(description="LLM Runner CLI")    
 
-    # --- OpenAI Example ---
-    if testing_this_one("Running OpenAI Example (MODEL_NON_STREAM)"):
-        print("\n--- Running OpenAI Example (MODEL_NON_STREAM) ---")
-        try:
-            runner.run_openai(
-                model_name="openai/gpt-4o-mini", # TODO FIXME mentions to "gpt-4o-mini" instead of openai/gpt-4o-mini
-                execution_type=LLMExecutionType.MODEL_NON_STREAM,
-                prompt=simple_prompt,
-                mode="openai_jokes", # just folder to put logs (to use instead of default_mode)
-                system="You are a friendly comedian.",
-                temperature=0.7,
-                max_output_tokens=1200
-            )
-        except Exception as e:
-            print(f"Error running OpenAI: {e}")
-    else:
-        print("\nSkipping OpenAI example")
-
-    # --- Gemini Example ---
-    if testing_this_one("Running Gemini Example (MODEL_STREAM)"):
-        print("\n--- Running Gemini Example (MODEL_STREAM) ---")
-        try:
-            runner.run_gemini(
-                system=system_prompt, # system only 
-                model_name="gemini-2.5-flash-preview-04-17", # Or "gemini-2.5-pro-preview-03-25"
-                execution_type=LLMExecutionType.MODEL_STREAM,
-                prompt="What are two key features of the Python language?",
-                mode="gemini_python_features",
-                temperature=0.8,
-                max_output_tokens=1200,
-            )
-        except Exception as e:
-            print(f"Error running Gemini: {e}")
-    else:
-        print("\nSkipping Gemini example")
-
-    if testing_this_one("Running Gemini Example (MODEL_NON_STREAM) JSON"):
-        print("\n--- Running Gemini Example (MODEL_NON_STREAM) JSON ---")
-        try:
-            full_response_text, llm_response_obj = runner.run_gemini(
-                prompt=prompt_for_json_request,
-                system=system_prompt_for_json_request,
-                model_name="gemini-2.5-pro-preview-03-25",
-                execution_type=LLMExecutionType.MODEL_STREAM,
-                mode="gemini_json_request",
-                #  temperature=0.8, # don't work work with 'json_object=True'
-                #  top_p=0.9,
-                #  top_k=40,
-                #  max_output_tokens=1200, # don't work work with 'json_object=True'
-                json_object=True,
-                schema=json_schema,
-                #  google_search=False,  # Not permited with json_object I guess?
-                #  thinking_budget=0, # Not permited with json_object I guess?
-                attachments=[],
-                    #  application/ogg, application/pdf, audio/aac, audio/aiff,
-                    #  audio/flac, audio/mp3, audio/mpeg, audio/ogg, audio/wav,
-                    #  image/heic, image/heif, image/jpeg, image/png, image/webp,
-                    #  text/csv, text/plain, video/3gpp, video/avi, video/mov, video/mp4,
-                    #  video/mpeg, video/mpg, video/quicktime, video/webm, video/wmv,
-                    #  video/x-flv
-            )
-            print(f"▶️"*16, f"> full_response_text: {full_response_text}; ")
-            jsonresponse = json.loads(full_response_text)
-            print(f"▶️"*16, f"jsonresponse: {jsonresponse}; ")
-        except Exception as e:
-            print(f"Error running Gemini: {e}")
-    else:
-        print("\nSkipping Gemini example")
-
-    # --- Claude Example ---
-    if testing_this_one("claude"):
-        print("\n--- Running Claude Example (MODEL_NON_STREAM) ---")
-        claude_model = "claude-3.7-sonnet"
-        try:
-            runner.run_claude(
-                model_name=claude_model,
-                execution_type=LLMExecutionType.MODEL_NON_STREAM,
-                prompt="Explain black holes in simple terms for a child.",
-                mode="claude_science_explain",
-                system="You are a patient science educator.",
-                temperature=0.6,
-                max_tokens=1200
-            )
-            
-            print("\n--- Running Claude Example (MODEL_STREAM with Thinking) ---")
-            runner.run_claude(
-                model_name=claude_model, # Use a model that supports thinking well
-                execution_type=LLMExecutionType.MODEL_STREAM,
-                prompt="Outline a plan to build a small community garden. Think step-by-step before you start writing the plan.",
-                mode="claude_planning_thinking",
-                system="You are a helpful project planner.",
-                temperature=1.0, # Often recommended for thinking
-                max_tokens=1200,
-                thinking=True,
-                thinking_budget=1024 
-            )
-        except Exception as e:
-            print(f"Error running Claude: {e}")
-    else:
-        print("\nSkipping Claude example")
-
-    # --- Async Example (OpenAI ASYNC_MODEL_STREAM) ---
-    if testing_this_one("OpenAI Async example"):
-        print("\n--- Running OpenAI Async Example (ASYNC_MODEL_STREAM) ---")
-        try:
-            runner.run_openai(
-                model_name="openai/gpt-4o-mini",
-                execution_type=LLMExecutionType.ASYNC_MODEL_STREAM,
-                prompt="List three common use cases for JSON.",
-                mode="openai_async_json_uses",
-                max_output_tokens=1200
-            )
-        except Exception as e:
-            print(f"Error running async OpenAI: {e}")
-    else:
-        print("\nSkipping OpenAI Async example")
-
-    # --- Example with attachments (if model supports it) ---
-    # This requires a file named "example_image.jpg" in the same directory
-    # or a publicly accessible image URL.
-    # Check model.attachment_types for supported types.
-    # For example, gpt-4o-mini supports images.
-    if testing_this_one("OpenAI Example with Attachment"):
-        print("\n--- Running OpenAI Example with Attachment (MODEL_NON_STREAM) ---")
-        attachments_list = []
-        attachments_list.append(llm.Attachment(path="/home/ph/Downloads/image.jpeg"))
-        # You can also use URLs if the model/plugin supports it:
-        # attachments_list.append(llm.Attachment.url("https://.../some_image.jpg"))
-        try:
-            # Ensure the model supports image attachments
-            # model_to_check = llm.get_model("gpt-4o-mini")
-            # if "image/jpeg" not in model_to_check.attachment_types: # type: ignore
-            #    print("gpt-4o-mini (via llm) does not list image/jpeg in attachment_types. Skipping image attachment test.")
-            # else:
-            runner.run_openai(
-                model_name="openai/gpt-4o-mini", 
-                execution_type=LLMExecutionType.MODEL_NON_STREAM,
-                prompt="Describe this image.",
-                mode="openai_image_description",
-                attachments=[
-                    llm.Attachment(path="/home/ph/Downloads/image.jpeg")
-                    #  llm.Attachment(url="https://static.simonwillison.net/static/2024/pelicans.jpg")
-                ],
-                max_output_tokens=1200
-            )
-        except Exception as e:
-            print(f"Error running OpenAI with attachment: {e}")
-
-
-    if testing_this_one("nano MODEL_NON_STREAM Json Response"):
-        print("\n--- Running OpenAI Example (MODEL_NON_STREAM) ---")
-        try:
-            full_response_text, llm_response_obj = runner.run_openai(
-                prompt=prompt_for_json_request,
-                system=system_prompt_for_json_request,
-                schema=json_schema,
-                model_name="openai/gpt-4o-mini", # TODO FIXME mentions to "gpt-4o-mini" instead of openai/gpt-4o-mini
-                execution_type=LLMExecutionType.MODEL_NON_STREAM,
-                mode="openai_nano_json", # just folder to put logs (to use instead of default_mode)
-                temperature=0.7,
-                max_output_tokens=1200,
-                store=False, # Whether to store the generated model response for later retrieval via API.
-                truncation="auto", # For conversations
-                  #  The truncation strategy to use for the model response. If 'auto' and
-                  #  the context of this response and previous ones exceeds the model's
-                  #  context window size, the model will truncate the response to fit the
-                  #  context window by dropping input items in the middle of the
-                  #  conversation.
-                image_detail="low",
-                  #  low = fixed tokens per image.
-                  #  high = more tokens for larger images.
-                  #  auto = model decides. Default is low.
-            )
-            print(f"▶️"*16, f"> full_response_text: {full_response_text}; ")
-            jsonresponse = json.loads(full_response_text)
-            print(f"▶️"*16, f"jsonresponse: {jsonresponse}; ")
-
-        except Exception as e:
-            print(f"Error running OpenAI: {e}")
-    else:
-        print("\nSkipping nano MODEL_NON_STREAM Json Response")
-
-    if testing_this_one("claude MODEL_NON_STREAM Json Response"):
-        print("\n--- claude MODEL_NON_STREAM Json Response ---")
-        try:
-            full_response_text, llm_response_obj = runner.run_claude(
-                prompt=prompt_for_json_request,
-                system=system_prompt_for_json_request,
-                schema=json_schema,
-                model_name="claude-3.7-sonnet",
-                execution_type=LLMExecutionType.MODEL_NON_STREAM,
-                mode="claude_json", # just folder to put logs (to use instead of default_mode)
-                temperature=0.7,
-                max_tokens=1200,
-                thinking=False,
-            )
-            print(f"▶️"*16, f"> full_response_text: {full_response_text}; ")
-            jsonresponse = json.loads(full_response_text)
-            print(f"▶️"*16, f"jsonresponse: {jsonresponse}; ")
-
-        except Exception as e:
-            print(f"Error running OpenAI: {e}")
-    else:
-        print("\nSkipping nano MODEL_NON_STREAM Json Response")
-
-
-
-    #  OpenAI Chat: gpt-4o-mini-audio-preview
-      #  Options:
-        #  temperature: float
-        #  max_tokens: int
-        #  top_p: float
-        #  frequency_penalty: float
-        #  presence_penalty: float
-        #  stop: str
-        #  logit_bias: dict, str
-        #  seed: int
-        #  json_object: boolean
-      #  Attachment types:
-        #  audio/mpeg, audio/wav
-      #  Features:
-      #  - streaming
-      #  - async
-
-
-    parser = argparse.ArgumentParser(description="LLM Runner CLI")
-
-
-                #  model_name="openai/gpt-4o-mini", # TODO FIXME mentions to "gpt-4o-mini" instead of openai/gpt-4o-mini
-                #  execution_type=LLMExecutionType.MODEL_NON_STREAM,
-                #  prompt=simple_prompt,
-                #  mode="openai_jokes", # just folder to put logs (to use instead of default_mode)
-                #  system="You are a friendly comedian.",
-                #  temperature=0.7,
-                #  max_output_tokens=1200
-    
     # Required arguments from Bash script
     parser.add_argument("--model_provider", required=True, choices=["openai", "gemini", "claude"], help="The model provider.")
     parser.add_argument("--model_name", required=True, help="The specific model name.")
@@ -750,7 +515,6 @@ if __name__ == "__main__":
         # remove gemini ones
         for key in gemini_only_args:
             args_dict.pop(key)
-        args_dict.pop('mode')
     if model_provider == "gemini":
         # remove openai ones
         for key in openai_only_args:
@@ -758,7 +522,6 @@ if __name__ == "__main__":
         # remove claude ones
         for key in claude_only_args:
             args_dict.pop(key)
-        args_dict.pop('mode')
 
     try:
         execution_type_enum = LLMExecutionType[execution_type_str]
@@ -788,9 +551,9 @@ if __name__ == "__main__":
 
 
     response = None
+
     try:
         if model_provider == "openai":
-            print(f"▶️"*16, f"about to run run_openai ")
             response = runner.run_openai(
                 model_name=model_name,
                 execution_type=execution_type_enum,
@@ -819,13 +582,6 @@ if __name__ == "__main__":
             # This case should ideally not be reached if choices are enforced by argparse for model_provider
             print(f"Error: Unknown model_provider '{model_provider}'", file=sys.stderr)
             sys.exit(1)
-
-        if response:
-            # _run_model for non-streaming returns response.text which is a string
-            # For streaming, it yields chunks. This script assumes non-streaming based on MODEL_NON_STREAM.
-            print(response)
-            print(f"▶️"*16, f"final response: {response}; ")
-
     except Exception as e:
         print(f"An error occurred during LLM execution: {e}", file=sys.stderr)
         import traceback
