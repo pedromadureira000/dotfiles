@@ -194,6 +194,9 @@ $context
     # Call Python script with the assembled prompt via stdin and arguments
     # Ensure the path to llm_runner.py is correct
     echo -e "$prompt" | python "$HOME/.scripts/llmr_python/llm_runner.py" "${python_cli_args[@]}"
+
+    # Open the output file in nvim instead of displaying in terminal
+    kitty nvim "$mode_folder/output.md"
 }
 
 # Execute the function with script arguments
