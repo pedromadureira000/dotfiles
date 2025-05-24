@@ -22,6 +22,39 @@ import sys
 #    export GOOGLE_API_KEY="..." (for llm-gemini, or LLM_GEMINI_KEY depending on plugin version)
 #    export ANTHROPIC_API_KEY="..."
 
+def get_attachments(attachments_file):
+    _resolved_attachments_file_path = os.path.normpath(os.path.expanduser(attachments_file))
+
+    attachments = []  # Initialize/re-initialize the list for attachments
+
+    # Check if the attachments file exists and is not empty
+    if os.path.exists(_resolved_attachments_file_path) and os.path.getsize(_resolved_attachments_file_path) > 0:
+        with open(_resolved_attachments_file_path, "r") as f:
+            lines = f.readlines()
+        
+        for line_number, raw_line in enumerate(lines, 1):
+            line = raw_line.strip()
+            if not line:  # Skip empty or whitespace-only lines
+                continue
+
+            # Determine if the line is a URL or a file path
+            if line.startswith("http://") or line.startswith("https://"):
+                print(f"▶️"*16, f"adding url to attachments {line}")
+                attachments.append(llm.Attachment(url=line))
+            elif line.startswith("/") or line.startswith("~"):
+                # Expand user-specific path if it starts with '~' (e.g., "~/Documents/file.txt")
+                path = os.path.expanduser(line)
+                print(f"▶️"*16, f"adding path to attachments {path}")
+                attachments.append(llm.Attachment(path=path))
+            else:
+                # Line is in an invalid format
+                raise ValueError(
+                    f"Invalid format in attachments file '{_resolved_attachments_file_path}' "
+                    f"on line {line_number}: '{line}'. Each line must be a valid file path "
+                    "(starting with '/' or '~') or a URL (starting with 'http://' or 'https://')."
+                )
+    return attachments
+
 
 
 class LLMExecutionType(Enum):
@@ -549,6 +582,13 @@ if __name__ == "__main__":
     
     run_kwargs = processed_run_kwargs
 
+    # Add attachments
+    attachments_file = f"~/utils/llmr_py_runs/{mode_for_logging}/attachments.md"
+    attachments = get_attachments(attachments_file)
+    if attachments:
+        print(f"▶️"*16, f"attachments: {attachments}; ")
+    if attachments:
+        run_kwargs["attachments"] = attachments
 
     response = None
 
