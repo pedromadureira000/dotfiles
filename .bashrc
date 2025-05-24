@@ -47,7 +47,7 @@ alias top_biggest_folders='du -h --max-depth=1 | sort -hr | head -5'
 alias top_biggest_files='find . -maxdepth 1 -type f -exec du -h {} + | sort -hr | head -5'
 
 alias free_space='df -a -h /'
-alias used_memory='free -h'
+alias memory_used='free -h'
 alias cl='clear'
 alias diff='git diff HEAD~1 HEAD'
 alias make_script='chmod +x'

@@ -123,8 +123,8 @@ keys = [
 
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
-    Key(["mod1"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/3.work-memory.md"))),
-    Key(["mod1", "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/4.work-memory.md"))),
+    Key(["mod1"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/3.personal-memory.md"))),
+    Key(["mod1", "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/4.personal-memory.md"))),
     Key([mod, "control"], "j", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/4.Writing/1.Journal/{date_journal_filename}.md"))),
 
     # --- / llm
