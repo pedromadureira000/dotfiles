@@ -6,54 +6,147 @@ from datetime import datetime
 from pathlib import Path
 from textwrap import dedent
 from enum import Enum
-import logging # For llm library's own logging control if needed
 import argparse
 import sys
+from strip_tags import strip_tags
+import requests
+import mimetypes
+import tempfile
 
-# Configure llm library logging if it's too verbose by default
-# logging.getLogger("llm").setLevel(logging.WARNING)
+SUPPORTED_ATTACHMENT_TYPES = {
+    "gemini": {
+        "application/ogg", "application/pdf", "audio/aac", "audio/aiff",
+        "audio/flac", "audio/mp3", "audio/mpeg", "audio/ogg", "audio/wav",
+        "image/heic", "image/heif", "image/jpeg", "image/png", "image/webp",
+        "text/csv", "text/plain", "video/3gpp", "video/avi", "video/mov", "video/mp4",
+        "video/mpeg", "video/mpg", "video/quicktime", "video/webm", "video/wmv",
+        "video/x-flv"
+    },
+    "openai": {
+        "application/pdf", "image/gif", "image/jpeg", "image/png", "image/webp",
+    },
+    "claude": {
+        "application/pdf", "image/gif", "image/jpeg", "image/png", "image/webp",
+    },
+    "unknown": set() # Default: unknown models support no listed types.
+                     # Consider a permissive default if preferred:
+                     # e.g., set().union(*SUPPORTED_ATTACHMENT_TYPES.values())
+}
 
-# --- IMPORTANT ---
-# For these examples to run, you need:
-# 1. `llm` library installed (`pip install llm`)
-# 2. Model-specific plugins installed (e.g., `pip install llm-openai llm-gemini llm-claude`)
-# 3. API keys set as environment variables:
-#    export OPENAI_API_KEY="sk-..."
-#    export GOOGLE_API_KEY="..." (for llm-gemini, or LLM_GEMINI_KEY depending on plugin version)
-#    export ANTHROPIC_API_KEY="..."
+def get_model_family(model_id: str) -> str:
+    """Determines the model family from its ID for MIME type checking."""
+    model_id_lower = model_id.lower()
+    if "gemini" in model_id_lower:
+        return "gemini"
+    elif "gpt" in model_id_lower or "openai" in model_id_lower: # Catches "openai/gpt-4.1" etc.
+        return "openai"
+    elif "claude" in model_id_lower:
+        return "claude"
+    else:
+        # This print can be noisy if many unknown models are used.
+        # Consider logging this instead or making it configurable.
+        # print(f"Warning: Unknown model family for model ID '{model_id}'. Attachment type filtering may be restrictive.")
+        return "unknown"
 
-def get_attachments(attachments_file):
+def get_attachments(attachments_file, model_id_str): # model is an llm.Model instance
     _resolved_attachments_file_path = os.path.normpath(os.path.expanduser(attachments_file))
 
-    attachments = []  # Initialize/re-initialize the list for attachments
+    attachments = []
+    plain_text_websites = []
 
-    # Check if the attachments file exists and is not empty
+    model_family = get_model_family(model_id_str)
+    allowed_mimetypes = SUPPORTED_ATTACHMENT_TYPES.get(model_family, set())
+
+    if not allowed_mimetypes and model_family != "unknown":
+        print(f"Warning: No allowed MIME types configured for model family '{model_family}' (model ID: '{model_id_str}'). No attachments requiring type validation will be processed.")
+    elif model_family == "unknown" and not allowed_mimetypes:
+         print(f"Warning: Model family is 'unknown' (model ID: '{model_id_str}') and no default MIME types are set. Attachments may not be processed correctly.")
+
     if os.path.exists(_resolved_attachments_file_path) and os.path.getsize(_resolved_attachments_file_path) > 0:
         with open(_resolved_attachments_file_path, "r") as f:
             lines = f.readlines()
         
         for line_number, raw_line in enumerate(lines, 1):
             line = raw_line.strip()
-            if not line:  # Skip empty or whitespace-only lines
+            if not line:
                 continue
 
-            # Determine if the line is a URL or a file path
             if line.startswith("http://") or line.startswith("https://"):
-                print(f"▶️"*16, f"adding url to attachments {line}")
-                attachments.append(llm.Attachment(url=line))
+                try:
+                    head_response = requests.head(line, allow_redirects=True, timeout=10)
+                    head_response.raise_for_status()
+                    # Normalize content_type: take part before ';', lowercase.
+                    content_type = head_response.headers.get('content-type', '').split(';')[0].strip().lower()
+
+                    if not content_type:
+                        print(f"Warning: Could not determine content type for URL {line} (from file line {line_number}). Skipping.")
+                        continue
+
+                    if content_type == 'text/html':
+                        print(f"Processing HTML URL (extracting plain text): {line}")
+                        get_response = requests.get(line, timeout=30)
+                        get_response.raise_for_status()
+                        html_content = get_response.text
+                        
+                        plain_text = strip_tags(html_content, minify=True)
+                        
+                        plain_text_from_url = dedent(f"""
+                            <website-plain-text-content>
+                            <url>
+                            {line}
+                            </url>
+                            <content>
+                            {plain_text}
+                            </content>
+                            </website-plain-text-content>
+                        """).strip()
+                        plain_text_websites.append(plain_text_from_url)
+                        print(f"  Extracted plain text content from: {line}")
+                    
+                    elif content_type in allowed_mimetypes:
+                        attachments.append(llm.Attachment(url=line))
+                        print(f"Processing URL (type: {content_type}): {line}")
+                    else:
+                        print(f"Warning: Unsupported content type '{content_type}' for URL {line} (from file line {line_number}) by model (family: {model_family}, ID: {model_id_str}). Skipping.")
+
+                except requests.exceptions.RequestException as e:
+                    print(f"Error fetching or processing URL {line} (from file line {line_number}): {e}. Skipping.")
+                    continue
+            
             elif line.startswith("/") or line.startswith("~"):
-                # Expand user-specific path if it starts with '~' (e.g., "~/Documents/file.txt")
                 path = os.path.expanduser(line)
-                print(f"▶️"*16, f"adding path to attachments {path}")
-                attachments.append(llm.Attachment(path=path))
+                if not os.path.isfile(path): # Check if it's a file and exists
+                    print(f"Warning: Local file path {path} (from file line {line_number}) does not exist or is not a file. Skipping.")
+                    continue
+                
+                mime_type, _ = mimetypes.guess_type(path)
+                if mime_type is None:
+                    # Fallback for common text types if mimetypes.guess_type fails
+                    lower_path = path.lower()
+                    if lower_path.endswith(".txt"):
+                        mime_type = "text/plain"
+                    elif lower_path.endswith(".csv"):
+                        mime_type = "text/csv"
+                    else:
+                        print(f"Warning: Could not determine MIME type for local file {path} (from file line {line_number}). Skipping.")
+                        continue
+                
+                mime_type = mime_type.lower() # Normalize MIME type
+
+                if mime_type in allowed_mimetypes:
+                    attachments.append(llm.Attachment(path=path))
+                    print(f"Processing local file (type: {mime_type}): {path}")
+                else:
+                    print(f"Warning: Unsupported MIME type '{mime_type}' for local file {path} (from file line {line_number}) by model (family: {model_family}, ID: {model_id_str}). Skipping.")
+            
             else:
-                # Line is in an invalid format
+                # Original error for invalid line format
                 raise ValueError(
                     f"Invalid format in attachments file '{_resolved_attachments_file_path}' "
                     f"on line {line_number}: '{line}'. Each line must be a valid file path "
                     "(starting with '/' or '~') or a URL (starting with 'http://' or 'https://')."
                 )
-    return attachments
+    return attachments, plain_text_websites
 
 
 
@@ -584,7 +677,10 @@ if __name__ == "__main__":
 
     # Add attachments
     attachments_file = f"~/utils/llmr_py_runs/{mode_for_logging}/attachments.md"
-    attachments = get_attachments(attachments_file)
+    attachments, plain_text_from_links = get_attachments(attachments_file, model_name)
+    if plain_text_from_links:
+        print(f"▶️"*16, f"plain_text_from_links: {plain_text_from_links}")
+        prompt_text += f"\n\n # Plain Text Links\n\n {plain_text_from_links}"
     if attachments:
         print(f"▶️"*16, f"attachments: {attachments}; ")
     if attachments:
