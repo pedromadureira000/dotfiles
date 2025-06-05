@@ -9,6 +9,16 @@
         "body": "```\n$0\n```",
         "description": "3-back-quotes"
     },
+    "block-code-python": {
+        "prefix": "fp",
+        "body": "```python\n$0\n```",
+        "description": "3-back-quotes"
+    },
+    "block-code-dart": {
+        "prefix": "fd",
+        "body": "```dart\n$0\n```",
+        "description": "3-back-quotes"
+    },
     "dedent": {
         "prefix": "dedent",
         "body": "dedent(f\"\"\"\n$0\n\"\"\").strip()",

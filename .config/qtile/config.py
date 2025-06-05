@@ -120,6 +120,7 @@ keys = [
     # ---- / Documents
     Key([mod, "control"], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/0.Work-TODO.1.md"))),
     Key([mod], "t", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.info-cache.md"))),
+    #  "/home/ph/utils/llmr_py_runs/default/attachments.md"
 
     Key([mod], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/1.work-memory.md"))),
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
