@@ -45,12 +45,12 @@ llmr() {
     declare -A mode_map
     mode_map["1"]="default"
     mode_map["2"]="coding"
-    mode_map["3"]="coding-prompt-generator"
+    mode_map["3"]="default2"
     mode_map["4"]="code-analyst"
 
     # Map model letters to names
     declare -A model_map
-    model_map["g"]="gemini-2.5-pro-preview-03-25"
+    model_map["g"]="gemini-2.5-pro-preview-05-06"
     model_map["o"]="openai/gpt-4.1"
     model_map["c"]="claude-3.7-sonnet"
 
@@ -72,7 +72,7 @@ llmr() {
         echo ""
         echo "Options:"
         echo "  Press Enter to confirm and run"
-        echo "  Type a number to change mode (1=default, 2=coding, 3=coding-prompt-generator, 4=code-analyst)"
+        echo "  Type a number to change mode (1=default, 2=coding, 3=default2, 4=code-analyst)"
         echo "  Type a letter to change model (g=gemini, o=openai, c=claude)"
         echo "  Type 'i' to input task text directly (press Ctrl+D when finished)"
         echo "  Type 'r' to toggle reasoning mode (for Claude model)"

@@ -33,7 +33,7 @@ llm_model_options = {
 class LLMMode:
     default = "default"
     coding = "coding"
-    coding_prompt_generator = "coding-prompt-generator"
+    default2 = "default2"
     code_analyst = "code-analyst"
 
 def chosen_terminal(app):
@@ -126,26 +126,26 @@ keys = [
     Key([mod, "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/2.work-memory.md"))),
     Key(["mod1"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/3.personal-memory.md"))),
     Key(["mod1", "control"], "n", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/z.work-memory/4.personal-memory.md"))),
-    Key([mod, "control"], "j", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/4.Writing/1.Journal/{date_journal_filename}.md"))),
+    Key(["mod1", "control"], "j", lazy.spawn(chosen_terminal(f"nvim /home/{username}/Dropbox/4.Writing/1.Journal/{date_journal_filename}.md"))),
 
     # --- / llm
     Key([mod, "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/coding/last-log.md"))),
     Key(["mod1"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/default/last-log.md"))),
-    Key(["mod1", "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/coding-prompt-generator/last-log.md"))),
+    Key(["mod1", "control"], "u", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/default2/last-log.md"))),
 
     Key([mod], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/coding/output.md"))),
     Key([mod, "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/default/output.md"))),
-    Key(["mod1"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/coding-prompt-generator/output.md"))),
+    Key(["mod1"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/default2/output.md"))),
     Key(["mod1", "control"], "7", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/code-analyst/output.md"))),
 
     Key([mod], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/coding/task.md"))),
     Key([mod, "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/default/task.md"))),
-    Key(["mod1"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/coding-prompt-generator/task.md"))),
+    Key(["mod1"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/default2/task.md"))),
     Key(["mod1", "control"], "y", lazy.spawn(chosen_terminal(f"nvim /home/{username}/utils/llmr_py_runs/code-analyst/task.md"))),
 
     Key([mod], "m", lazy.spawn(open_llmr(llm_model_options["claude"], LLMMode.coding))),
     Key([mod, "control"], "m", lazy.spawn(open_llmr(llm_model_options["openai"], LLMMode.default))),
-    Key(["mod1"], "m", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.coding_prompt_generator))),
+    Key(["mod1"], "m", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.default2))),
     Key(["mod1", "control"], "m", lazy.spawn(open_llmr(llm_model_options["gemini"], LLMMode.code_analyst))),
 
     # --- / configs
