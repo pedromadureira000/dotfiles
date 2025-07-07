@@ -176,7 +176,13 @@ $context
     local python_cli_args=()
     python_cli_args+=("--model_provider" "$model_provider")
     python_cli_args+=("--model_name" "$model")
-    python_cli_args+=("--execution_type" "MODEL_NON_STREAM") 
+    # python_cli_args+=("--execution_type" "MODEL_NON_STREAM") 
+    python_cli_args+=("--execution_type" "MODEL_STREAM") 
+    # MODEL_NON_STREAM = "run_model_non_stream"
+    # MODEL_STREAM = "run_model_stream"
+    # ASYNC_MODEL_NON_STREAM = "run_async_model_no_stream"
+    # ASYNC_MODEL_STREAM = "run_async_model_stream"
+
     python_cli_args+=("--mode" "$mode")
 
     # Add existing named arguments

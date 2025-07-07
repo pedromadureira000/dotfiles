@@ -17,10 +17,10 @@ alias ls='ls --color=auto'
 export PS1='\[\e[0;36m\][\u@\h \w]\$ \[\e[0m\]'
 
 #--- pyenv
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init --path)"
-# eval "$(pyenv virtualenv-init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
 
 # Aliases
 alias mng='python $VIRTUAL_ENV/../manage.py'

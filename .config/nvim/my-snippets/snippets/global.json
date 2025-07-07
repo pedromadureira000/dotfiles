@@ -46,7 +46,7 @@
     },
     "logg": {
         "prefix": "logg",
-        "body": "AppConfig.logger.d('$0');",
+        "body": "AppConfig.logger.d(\"$0\");",
         "description": "logg print"
     },
     "h1": {
