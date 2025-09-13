@@ -108,3 +108,11 @@ export PATH="$HOME/development/flutter/bin:$PATH"
 # export CHROME_EXECUTABLE="/usr/bin/brave"
 export CHROME_EXECUTABLE=google-chrome-stable
 # export CHROME_EXECUTABLE=brave
+
+# pnpm
+export PNPM_HOME="/home/ph/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

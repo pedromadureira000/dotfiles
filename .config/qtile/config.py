@@ -101,7 +101,7 @@ keys = [
     #-----/ Scripts
     Key([mod], "space", lazy.spawn("toggle_keyboard_layout.sh")),
     Key([mod, "control"], "d", lazy.spawn("discord")),
-    Key(["mod1", "control"], "t", lazy.spawn("telegram-desktop")),
+    Key(["mod1", "control"], "t", lazy.spawn("Telegram")),
     Key([mod, "control"], "p", lazy.spawn("passmenu -l 5 -fn 'sans-10'")),
     Key([mod, "mod1"], "Escape", lazy.spawn("sudo shutdown now")),
     Key([mod, "lock"], "Escape", lazy.spawn("sudo reboot")),
