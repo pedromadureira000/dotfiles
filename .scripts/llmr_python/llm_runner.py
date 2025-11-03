@@ -703,6 +703,7 @@ if __name__ == "__main__":
                 execution_type=execution_type_enum,
                 prompt=prompt_text,
                 mode=mode_for_logging,
+                max_output_tokens=800000,
                 **run_kwargs
             )
         elif model_provider == "claude":

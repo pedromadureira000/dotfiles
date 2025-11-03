@@ -146,3 +146,49 @@ class llmr_with_files(Command):
 
         # Run the command
         subprocess.Popen(cmd)
+
+class prompt_with_files(Command):
+    """
+    Generate a prompt from selected files and save it as a task for mode 'default2'.
+    """
+    def execute(self):
+        import subprocess
+        import os
+
+        if self.fm.thistab.get_selection():
+            selected_files = [f.path for f in self.fm.thistab.get_selection()]
+        elif self.fm.thisfile:
+            selected_files = [self.fm.thisfile.path]
+        else:
+            self.fm.notify("No files selected!", bad=True)
+            return
+
+        home_dir = os.path.expanduser('~')
+
+        try:
+            executable_path = os.path.join(home_dir, ".local/bin/files-to-prompt")
+            cmd = [executable_path] + selected_files
+            prompt_content = subprocess.check_output(cmd, text=True)
+        except FileNotFoundError:
+            self.fm.notify(f"Error: '{executable_path}' not found.", bad=True)
+            return
+        except subprocess.CalledProcessError as e:
+            self.fm.notify(f"Error running files-to-prompt: {e}", bad=True)
+            return
+
+        output_path = os.path.join(home_dir, "utils/llmr_py_runs/default2/task.md")
+
+        try:
+            output_dir = os.path.dirname(output_path)
+            os.makedirs(output_dir, exist_ok=True)
+        except OSError as e:
+            self.fm.notify(f"Error creating directory: {e}", bad=True)
+            return
+
+        try:
+            with open(output_path, 'a', encoding='utf-8') as f:
+                f.write("\n" + prompt_content)
+            self.fm.notify(f"Prompt appended to {output_path}")
+        except IOError as e:
+            self.fm.notify(f"Error writing to file: {e}", bad=True)
+            return

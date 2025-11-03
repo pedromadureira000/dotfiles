@@ -23,7 +23,7 @@ def open_llmr(model, mode):
 
 llm_model_options = {
     #  "gemini":"gemini-2.5-pro-exp-03-25", #free
-    "gemini": "gemini-2.5-pro-preview-03-25", #paid
+    "gemini": "gemini-2.5-pro-preview-05-06", #paid
     #  "openai": "openai/o3",
     "openai": "openai/gpt-4.1",
     #  "openai": "openai/o4-mini",
