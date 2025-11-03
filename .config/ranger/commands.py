@@ -167,7 +167,7 @@ class prompt_with_files(Command):
 
         try:
             executable_path = os.path.join(home_dir, ".local/bin/files-to-prompt")
-            cmd = [executable_path] + selected_files
+            cmd = [executable_path] + selected_files + ["--markdown"]
             prompt_content = subprocess.check_output(cmd, text=True)
         except FileNotFoundError:
             self.fm.notify(f"Error: '{executable_path}' not found.", bad=True)
