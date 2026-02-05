@@ -17,10 +17,11 @@ alias ls='ls --color=auto'
 export PS1='\[\e[0;36m\][\u@\h \w]\$ \[\e[0m\]'
 
 #--- pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
+#----/ don't remember what this was for.but it is causing o my os to crash.
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init --path)"
+# eval "$(pyenv virtualenv-init -)"
 
 # Aliases
 alias mng='python $VIRTUAL_ENV/../manage.py'
@@ -85,8 +86,8 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 source /usr/share/fzf/completion.bash
 source /usr/share/fzf/key-bindings.bash
 
-if [[ "$(tty)" = "/dev/tty1" ]]; then
-	startx
+if [[ "$(tty)" = "/dev/tty1" && -z "$DISPLAY" ]]; then
+    exec startx
 fi
 
 
