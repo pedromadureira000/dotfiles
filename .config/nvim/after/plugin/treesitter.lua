@@ -13,10 +13,10 @@ require("nvim-treesitter.configs").setup({
 		"yaml",
 		"bash",
         "python",
-        -- "markdown",
-        -- "markdown_inline",
-	},
-	highlight = {
+        "markdown",
+        "markdown_inline",
+        },
+        highlight = {
 		enable = true, -- false will disable the whole extension
 		-- disable = { "markdown", "markdown_inline"},
 	},

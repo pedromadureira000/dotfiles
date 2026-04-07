@@ -33,7 +33,7 @@ local plugins = {
     priority = 1000,
     opts = {},
   },
-  {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  {'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate'},
   'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes',
   -- 'Yggdroot/indentLine', # causing weird identation on cursor
@@ -55,7 +55,6 @@ local plugins = {
     -- Language support, mainly for indentation because it's more stable than treesitter
   "dart-lang/dart-vim-plugin",
   -- commentary
-  'pedromadureira000/nerdcommenter_with_lazy_fix',
   {
     'MeanderingProgrammer/render-markdown.nvim',
     opts = {
