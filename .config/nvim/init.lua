@@ -1,3 +1,12 @@
+-- Neovim 0.12 Compatibility Layer
+-- Fixes "ft_to_lang is a nil value" in Telescope and other plugins
+if not vim.treesitter.ft_to_lang then
+  vim.treesitter.ft_to_lang = function(ft)
+    local success, lang = pcall(vim.treesitter.language.get_lang, ft)
+    return success and lang or ft
+  end
+end
+
 require("me.remap")
 require("me.plugins")
 require("me.sets")

@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   -- File manager
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.5',
+    'nvim-telescope/telescope.nvim',
     dependencies = { {'nvim-lua/plenary.nvim'} }
   },
   'preservim/nerdtree',
@@ -38,7 +38,6 @@ local plugins = {
   'vim-airline/vim-airline-themes',
   -- 'Yggdroot/indentLine', # causing weird identation on cursor
   -- LSP
-  {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
   {'neovim/nvim-lspconfig'},
 	-- Simpler installation of LSP servers
   {'williamboman/mason.nvim'},

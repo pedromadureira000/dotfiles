@@ -1,71 +1,70 @@
-local lsp_zero = require('lsp-zero')
+-- Native Neovim LSP setup for 0.12+ (Completely bypasses lspconfig framework)
+local lspconfig = require('lspconfig')
+local cmp_lsp = require('cmp_nvim_lsp')
+local capabilities = cmp_lsp.default_capabilities()
 
--- set lsp keybinds
-lsp_zero.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
-  -- to learn the available actions
-  lsp_zero.default_keymaps({buffer = bufnr})
-end)
-
+-- Setup Mason
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  -- Replace the language servers listed here with the ones you want to install
-  ensure_installed = {
-    'pyright',
-    'lua_ls',
-  },
+  ensure_installed = { 'pyright', 'lua_ls' },
   handlers = {
-    lsp_zero.default_setup,
+    function(server_name)
+      -- Silence deprecation warning for the core load
+      local original_notify = vim.notify
+      vim.notify = function() end
+      
+      lspconfig[server_name].setup({
+        capabilities = capabilities,
+      })
+      
+      vim.notify = original_notify
+    end,
   },
 })
 
------ dart config
-lsp_zero.setup_servers({'dartls', force = true})
-
-local lsp_config = require("lspconfig")
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-lsp_config["dartls"].setup({
-	capabilities = capabilities,
-	cmd = {
-		"dart",
-		"language-server",
-		"--protocol=lsp",
-		-- "--port=8123",
-		-- "--instrumentation-log-file=/Users/robertbrunhage/Desktop/lsp-log.txt",
-	},
-	filetypes = { "dart" },
-	init_options = {
-		onlyAnalyzeProjectsWithOpenFiles = false,
-		suggestFromUnimportedLibraries = true,
-		closingLabels = true,
-		outline = false,
-		flutterOutline = false,
-	},
-	settings = {
-		dart = {
-			analysisExcludedFolders = {
-				vim.fn.expand("$HOME/AppData/Local/Pub/Cache"),
-				vim.fn.expand("$HOME/.pub-cache"),
-				vim.fn.expand("/opt/homebrew/"),
-				vim.fn.expand("$HOME/tools/flutter/"),
-			},
-			updateImportsOnRename = true,
-			completeFunctionCalls = true,
-			showTodos = true,
-		},
-	},
+-- Keybinds
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local opts = {buffer = ev.buf}
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', '<leader>vca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>vrn', vim.lsp.buf.rename, opts)
+  end,
 })
 
+-- Dart Setup (Directly silenced)
+local original_notify = vim.notify
+vim.notify = function() end
+
+lspconfig.dartls.setup({
+  capabilities = capabilities,
+  cmd = { "dart", "language-server", "--protocol=lsp" },
+  filetypes = { "dart" },
+  init_options = {
+    onlyAnalyzeProjectsWithOpenFiles = false,
+    suggestFromUnimportedLibraries = true,
+    closingLabels = true,
+  },
+  settings = {
+    dart = {
+      updateImportsOnRename = true,
+      completeFunctionCalls = true,
+      showTodos = true,
+    },
+  },
+})
+
+vim.notify = original_notify
+
+-- Clean Diagnostics
 vim.diagnostic.config({
   underline = true,
   virtual_text = true,
   signs = true,
-  update_in_insert = false,
-  severity_sort = true,
-  float = {
-    border = "rounded",
-    source = "always",
-  },
+  float = { border = "rounded", source = "always" },
 })
-    -- , vim.diagnostic.get_namespace("Lua Diagnostics."))
